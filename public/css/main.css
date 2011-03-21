@@ -1,0 +1,54 @@
+body, input {
+  font-family: helvetica;
+  color: #444444; }
+
+#app {
+  width: 600px;
+  margin: 40px auto; }
+
+.album-search-bar {
+  display: inline-block;
+  margin-bottom: 16px; }
+  .album-search-bar label {
+    font-size: 24px;
+    color: #cccccc;
+    display: block;
+    margin-bottom: 8px; }
+  .album-search-bar input {
+    float: left;
+    font-size: 24px;
+    padding: 8px;
+    width: 500px;
+    border: 1px solid #cccccc;
+    -webkit-box-shadow: 1px 1px 2px #aaaaaa;
+    -moz-box-shadow: 1px 1px 2px #aaaaaa;
+    outline: none; }
+  .album-search-bar .spinner {
+    float: left;
+    margin-left: 10px;
+    margin-top: 8px;
+    display: block;
+    width: 32px;
+    height: 32px;
+    background: url(/img/spinner.gif); }
+
+.album-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 500px;
+  padding: 0 5px; }
+  .album-list li {
+    padding: 4px;
+    border: 1px solid #cccccc;
+    border-width: 1px 0 0 0; }
+    .album-list li:first-child {
+      border-width: 0; }
+    .album-list li.selected {
+      background: #ccccff; }
+    .album-list li .title {
+      font-size: 18px;
+      margin-bottom: 2px; }
+    .album-list li .artist {
+      font-size: 14px;
+      color: #888888; }

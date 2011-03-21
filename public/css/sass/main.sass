@@ -1,0 +1,66 @@
+=box-shadow($args)
+  -webkit-box-shadow: $args
+  -moz-box-shadow: $args
+
+body, input
+  font-family: helvetica
+  color: #444
+
+#app
+  width: 600px
+  margin: 40px auto
+
+.album-search-bar
+  display: inline-block
+  margin-bottom: 16px
+
+  label
+    font-size: 24px
+    color: #ccc
+    display: block
+    margin-bottom: 8px
+
+  input
+    float: left
+    font-size: 24px
+    padding: 8px
+    width: 500px
+    border: 1px solid #ccc
+    +box-shadow(1px 1px 2px #aaa)
+    outline: none
+
+  .spinner
+    float: left
+    margin-left: 10px
+    margin-top: 8px
+    display: block
+    width: 32px
+    height: 32px
+    background: url(/img/spinner.gif)
+    
+.album-list
+  list-style: none
+  margin: 0
+  padding: 0
+  width: 500px
+  padding: 0 5px
+
+  li
+    padding: 4px
+    border: 1px solid #ccc
+    border-width: 1px 0 0 0
+
+    &:first-child
+      border-width: 0
+
+    &.selected
+      background: #ccf
+
+    .title
+      font-size: 18px
+      margin-bottom: 2px
+
+    .artist
+      font-size: 14px
+      color: #888
+

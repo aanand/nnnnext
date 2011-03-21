@@ -1,0 +1,19 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    camping (2.1)
+      rack (>= 1.0)
+    haml (3.0.25)
+    rack (1.2.2)
+    rack-coffee (0.3.4)
+      rack
+    tilt (1.2.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  camping
+  haml
+  rack-coffee
+  tilt
