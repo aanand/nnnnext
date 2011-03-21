@@ -22,10 +22,14 @@ module Nnnnext
 
   set :views, root + "views"
 
-  Sass::Plugin.options[:css_location] = root + "public/css"
+  use Rack::Coffee,
+    root:   root + "public",
+    urls:   ["/coffee"],
+    nowrap: true
 
-  use Rack::Coffee, root: root + "public", urls: ["/coffee"], nowrap: true
+  Sass::Plugin.options[:css_location] = root + "public/css"
   use Sass::Plugin::Rack
+
   use Rack::Static, root: root + "public", urls: ["/js", "/css", "/img", "/favicon.ico"]
 end
 
