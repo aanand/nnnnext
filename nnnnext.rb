@@ -1,10 +1,19 @@
 require "bundler"
 Bundler.setup
 
+$:.unshift("lib")
+
+# stdlib
+require "json"
+
+# gems
 require "camping"
 require "haml"
 require "rack/coffee"
 require "sass/plugin/rack"
+
+# lib
+require "album_search"
 
 Camping.goes :Nnnnext
 
@@ -27,6 +36,18 @@ module Nnnnext::Controllers
       @js += %w(models/album views/album-views main).map { |n| "/coffee/#{n}.js" }
 
       render :index
+    end
+  end
+
+  class Albums
+    def get
+      "[]"
+    end
+  end
+
+  class AlbumsSearch
+    def get
+      AlbumSearch.search(@input.q).to_json
     end
   end
 end

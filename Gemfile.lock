@@ -10,7 +10,10 @@ GEM
   specs:
     camping (2.1)
       rack (>= 1.0)
+    crack (0.1.8)
     haml (3.0.25)
+    httparty (0.7.4)
+      crack (= 0.1.8)
     rack (1.2.2)
     tilt (1.2.2)
 
@@ -20,5 +23,6 @@ PLATFORMS
 DEPENDENCIES
   camping
   haml
+  httparty
   rack-coffee!
   tilt
