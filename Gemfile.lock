@@ -1,3 +1,10 @@
+GIT
+  remote: git://github.com/aanand/rack-coffee.git
+  revision: 76a0a0bca244519973232a72f02b6d8572b7bb20
+  specs:
+    rack-coffee (0.3.4)
+      rack
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -5,8 +12,6 @@ GEM
       rack (>= 1.0)
     haml (3.0.25)
     rack (1.2.2)
-    rack-coffee (0.3.4)
-      rack
     tilt (1.2.2)
 
 PLATFORMS
@@ -15,5 +20,5 @@ PLATFORMS
 DEPENDENCIES
   camping
   haml
-  rack-coffee
+  rack-coffee!
   tilt
