@@ -18,11 +18,12 @@ module AlbumSearch
     releases = [releases].flatten
 
     releases.each do |release|
+      id     = release["id"]
       title  = release["title"]
       artist = release["artist"]["name"]
 
       unless albums.any? { |a| a[:title] == title and a[:artist] == artist }
-        albums << { title: title, artist: artist }
+        albums << { id: id, title: title, artist: artist }
       end
     end
     
