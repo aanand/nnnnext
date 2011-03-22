@@ -14,7 +14,10 @@ module AlbumSearch
 
     albums = []
 
-    response["metadata"]["release_list"]["release"].each do |release|
+    releases = response["metadata"]["release_list"]["release"]
+    releases = [releases].flatten
+
+    releases.each do |release|
       title  = release["title"]
       artist = release["artist"]["name"]
 
