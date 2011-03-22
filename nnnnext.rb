@@ -13,6 +13,7 @@ require "haml"
 require "rack/coffee"
 require "sass/plugin/rack"
 require "oa-oauth"
+require "mongoid"
 
 # lib
 require "album_search"
@@ -25,7 +26,7 @@ module Nnnnext
   end
 
   def self.omniauth
-    @omniauth ||= Hash.new { |key| ENV["OMNIAUTH_#{key.upcase}"] }.tap do |omniauth|
+    @omniauth ||= Hash.new { |hsh, key| ENV["OMNIAUTH_#{key.upcase}"] }.tap do |omniauth|
       omniauth_file = root + "config/omniauth.yml"
 
       if File.exist?(omniauth_file)
@@ -42,6 +43,20 @@ module Nnnnext
     else
       ENV["SESSION_SECRET"]
     end
+  end
+
+  def self.mongoid
+    @mongoid ||= Hash.new { |hsh, key| ENV["MONGOID_#{key.upcase}"] }.tap do |mongoid|
+      mongoid_file = root + "config/mongoid.yml"
+
+      if File.exist?(mongoid_file)
+        mongoid.merge!(YAML.load_file(mongoid_file))
+      end
+    end
+  end
+
+  Mongoid.configure do |config|
+    config.from_hash(mongoid)
   end
 
   set :views, root + "views"
@@ -76,7 +91,16 @@ module Nnnnext::Controllers
 
   class AuthTwitterCallback
     def get
-      @state['user_info'] = @env['omniauth.auth']['user_info']
+      auth = @env['omniauth.auth']
+
+      # require 'pp'; pp auth
+
+      user = User.find_or_create_by(twitter_uid: auth["uid"])
+      user.attributes = auth["user_info"]
+      user.save!
+
+      @state[:user_id] = user.id
+
       redirect '/'
     end
   end
@@ -96,7 +120,7 @@ end
 
 module Nnnnext::Helpers
   def user_info
-    @state['user_info']
+    @state[:user_id] && Nnnnext::Models::User.find(@state[:user_id])
   end
 
   def js_includes
@@ -113,6 +137,12 @@ module Nnnnext::Helpers
              views/album-search
              main
             ).map { |n| "/coffee/#{n}.js" }
+  end
+end
+
+module Nnnnext::Models
+  class User
+    include Mongoid::Document
   end
 end
 
