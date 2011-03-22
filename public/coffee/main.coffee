@@ -13,7 +13,9 @@ class AppView extends Backbone.View
     @albumSearch       = new AlbumSearch({queueCollection: CurrentAlbums})
     @currentAlbumsList = new CurrentAlbumsList({collection: CurrentAlbums, search: @albumSearch})
 
-    if CurrentAlbums.length > 0
+    if UserInfo?
+      @header.section = "nav"
+    else if CurrentAlbums.length > 0
       @header.section = "sign-in"
     else
       @header.section = "intro"
@@ -25,7 +27,7 @@ class AppView extends Backbone.View
       album.collection = CurrentAlbums
       # album.sync = CurrentAlbums.sync
       album.save()
-      @header.switchTo("sign-in")
+      @header.switchTo("sign-in") unless UserInfo?
 
     $(window).keydown (e) => @albumSearch.handleKeypress(e)
 

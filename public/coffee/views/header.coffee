@@ -3,7 +3,10 @@ class Header extends Backbone.View
 
   template: _.template('
     <div class="intro">What are you listening to?</div>
-    <div class="sign-in"><a href="/auth/twitter">Sign in with Twitter</a> to save your list.</div>
+    <div class="sign-in"><a href="/auth/twitter">Sign in with Twitter</a> to save and share your list.</div>
+    <ul class="nav">
+      <li class="username"/>
+    </ul>
   ')
 
   render: ->
@@ -14,6 +17,9 @@ class Header extends Backbone.View
         .css({ position: "absolute", top: "0" })
         .not(".#{@section}")
           .hide()
+
+    if UserInfo?
+      @$(".username").text("@#{UserInfo.nickname}")
 
     this
 

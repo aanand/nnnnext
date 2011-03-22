@@ -69,28 +69,15 @@ end
 module Nnnnext::Controllers
   class Index
     def get
-      @js =  %w(jquery
-                json2
-                underscore
-                backbone/backbone
-                Backbone.localStorage/Backbone.localStorage
-               ).map { |n| "/js/#{n}.js" }
-
-      @js += %w(models/album
-                views/header
-                views/album-views
-                views/album-search
-                main
-               ).map { |n| "/coffee/#{n}.js" }
-
+      @headers["content-type"] = "text/html; charset=utf-8"
       render :index
     end
   end
 
   class AuthTwitterCallback
     def get
-      @headers["content-type"] = "application/json; charset=utf-8"
-      JSON.generate(@env['omniauth.auth'], indent: "  ", object_nl: "\n", array_nl: "\n")
+      @state['user_info'] = @env['omniauth.auth']['user_info']
+      redirect '/'
     end
   end
 
@@ -106,3 +93,26 @@ module Nnnnext::Controllers
     end
   end
 end
+
+module Nnnnext::Helpers
+  def user_info
+    @state['user_info']
+  end
+
+  def js_includes
+    js = %w(jquery
+            json2
+            underscore
+            backbone/backbone
+            Backbone.localStorage/Backbone.localStorage
+           ).map { |n| "/js/#{n}.js" }
+
+    js += %w(models/album
+             views/header
+             views/album-views
+             views/album-search
+             main
+            ).map { |n| "/coffee/#{n}.js" }
+  end
+end
+
