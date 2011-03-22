@@ -69,8 +69,17 @@ end
 module Nnnnext::Controllers
   class Index
     def get
-      @js =  %w(jquery json2 underscore backbone).map    { |n| "/js/#{n}.js"     }
-      @js += %w(models/album views/album-views main).map { |n| "/coffee/#{n}.js" }
+      @js =  %w(jquery
+                json2
+                underscore
+                backbone
+               ).map { |n| "/js/#{n}.js" }
+
+      @js += %w(models/album
+                views/album-views
+                views/album-search
+                main
+               ).map { |n| "/coffee/#{n}.js" }
 
       render :index
     end

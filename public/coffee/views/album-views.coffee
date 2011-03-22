@@ -21,7 +21,7 @@ class AlbumList extends Backbone.View
   className: 'album-list'
 
   initialize: ->
-    _.bindAll(this, "addOne", "populate")
+    _.bindAll(this, "addOne", "populate", "show", "hide")
 
     @collection.bind "add",     @addOne
     @collection.bind "refresh", @populate
@@ -47,56 +47,4 @@ class CurrentAlbumsList extends AlbumList
   ')
 
   className: "#{AlbumList.prototype.className} current-albums-list"
-
-class AlbumSearchList extends AlbumList
-  itemTemplate: _.template('
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
-  ')
-
-  className: "#{AlbumList.prototype.className} album-search-list"
-
-  select: (index) ->
-    if index < 0 or index >= @collection.length
-      @selectedIndex = null
-      @trigger("selectionExit")
-    else
-      @selectedIndex = index
-
-    @setHighlight()
-
-  selectFirst:    -> @select(0)
-  selectLast:     -> @select(@collection.length-1)
-  selectPrevious: -> @select(@selectedIndex-1)
-  selectNext:     -> @select(@selectedIndex+1)
-
-  getSelection: ->
-    return null unless @selectedIndex?
-    @collection.at(@selectedIndex)
-
-  setHighlight: ->
-    @$('.selected').removeClass('selected')
-
-    if album = @getSelection()
-      $(album.view.el).addClass('selected')
-
-class AlbumSearchBar extends Backbone.View
-  template: _.template('
-    <label>What are you listening to?</label>
-    <input type="text"/>
-    <div class="spinner" style="display:none"/>
-  ')
-
-  className: 'album-search-bar'
-
-  render: ->
-    $(@el).html(@template())
-    this
-
-  clear: -> @$('input').val('')
-  focus: -> @$('input').focus()
-  blur:  -> @$('input').blur()
-
-  showSpinner: -> @$('.spinner').show()
-  hideSpinner: -> @$('.spinner').hide()
 
