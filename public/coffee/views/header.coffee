@@ -6,13 +6,15 @@ class Header extends Backbone.View
     <div class="sign-in"><a href="/auth/twitter">Sign in with Twitter</a> to save your list.</div>
   ')
 
-  initialize: (options) ->
-    @section = options.section if options? and options.section?
-
   render: ->
-    $(@el).html(@template()).css({ position: "relative", overflow: "hidden" })
-    $(@el).children().css({ position: "absolute", top: "0" }).hide()
-    $(@el).children(".#{@section}").show()
+    $(@el)
+      .html(@template())
+      .css({ position: "relative", overflow: "hidden" })
+      .children()
+        .css({ position: "absolute", top: "0" })
+        .not(".#{@section}")
+          .hide()
+
     this
 
   switchTo: (newSection) ->
