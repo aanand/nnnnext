@@ -12,6 +12,8 @@ body, input {
   color: #cccccc;
   display: block;
   margin-bottom: 8px; }
+  .header a {
+    color: #888888; }
   .header ul {
     list-style: none;
     margin: 0;
