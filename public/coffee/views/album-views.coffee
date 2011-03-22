@@ -20,7 +20,9 @@ class AlbumList extends Backbone.View
   tagName: 'ul'
   className: 'album-list'
 
-  initialize: ->
+  populateMethod: 'append'
+
+  initialize: (options) ->
     _.bindAll(this, "addOne", "populate", "show", "hide")
 
     @collection.bind "add",     @addOne
@@ -32,7 +34,7 @@ class AlbumList extends Backbone.View
   populate: ->
     $(@el).empty()
     @collection.forEach (album) =>
-      $(@el).append(@makeView(album).render().el)
+      $(@el)[@populateMethod](@makeView(album).render().el)
 
   makeView: (album) ->
     new AlbumView({model: album, template: @itemTemplate})
@@ -47,4 +49,6 @@ class CurrentAlbumsList extends AlbumList
   ')
 
   className: "#{AlbumList.prototype.className} current-albums-list"
+
+  populateMethod: 'prepend'
 

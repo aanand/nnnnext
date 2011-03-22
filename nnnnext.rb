@@ -72,10 +72,12 @@ module Nnnnext::Controllers
       @js =  %w(jquery
                 json2
                 underscore
-                backbone
+                backbone/backbone
+                Backbone.localStorage/Backbone.localStorage
                ).map { |n| "/js/#{n}.js" }
 
       @js += %w(models/album
+                views/header
                 views/album-views
                 views/album-search
                 main

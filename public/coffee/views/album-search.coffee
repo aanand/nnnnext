@@ -1,6 +1,6 @@
 class AlbumSearch extends Backbone.View
   initialize: (options) ->
-    @queue_collection = options.queue_collection
+    @queueCollection = options.queueCollection
 
     @collection = new AlbumCollection()
     @bar        = new AlbumSearchBar({collection: @collection})
@@ -39,9 +39,7 @@ class AlbumSearch extends Backbone.View
     @trigger("finishSearch")
 
   selectAlbum: ->
-    album = @list.getSelection()
-    @queue_collection.add(album)
-    album.save()
+    @queueCollection.add(@list.getSelection())
 
     @list.hide()
     @setFocus('bar')
@@ -113,7 +111,6 @@ class AlbumSearchList extends AlbumList
 
 class AlbumSearchBar extends Backbone.View
   template: _.template('
-    <label>What are you listening to?</label>
     <input type="text"/>
     <div class="spinner" style="display:none"/>
   ')

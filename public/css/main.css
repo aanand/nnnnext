@@ -6,14 +6,16 @@ body, input {
   width: 600px;
   margin: 40px auto; }
 
+.header {
+  font-size: 20px;
+  height: 30px;
+  color: #cccccc;
+  display: block;
+  margin-bottom: 8px; }
+
 .album-search-bar {
   display: inline-block;
   margin-bottom: 16px; }
-  .album-search-bar label {
-    font-size: 24px;
-    color: #cccccc;
-    display: block;
-    margin-bottom: 8px; }
   .album-search-bar input {
     float: left;
     font-size: 24px;
