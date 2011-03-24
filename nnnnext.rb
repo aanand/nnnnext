@@ -132,9 +132,11 @@ module Nnnnext::Helpers
            ).map { |n| "/js/#{n}.js" }
 
     js += %w(models/album
+             views/tabbable
              views/header
-             views/album-views
-             views/album-search
+             views/album-view
+             views/album-list
+             views/album-search-bar
              main
             ).map { |n| "/coffee/#{n}.js" }
   end

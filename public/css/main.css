@@ -52,8 +52,9 @@ body, input {
     border-width: 1px 0 0 0; }
     .album-list li:first-child {
       border-width: 0; }
-    .album-list li.selected {
-      background: #ccccff; }
+    .album-list li:focus {
+      background: #ccccff;
+      outline: none; }
     .album-list li .title {
       font-size: 18px;
       margin-bottom: 2px; }

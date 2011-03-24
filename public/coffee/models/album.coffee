@@ -12,3 +12,4 @@ class AlbumCollection extends Backbone.Collection
     if options?
       @localStorage = options.localStorage
       @sync         = options.sync
+      @comparator   = options.comparator
