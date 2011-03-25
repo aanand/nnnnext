@@ -3,7 +3,6 @@ class AlbumView extends Backbone.View
 
   events:
     "keypress": "handleKeypress"
-    "click": "focus"
 
   initialize: (options) ->
     @list = options.list
@@ -34,12 +33,10 @@ _.extend AlbumView.prototype, Tabbable
 
 class CurrentAlbumView extends AlbumView
   template: _.template('
-    <div class="controls">
-      <div class="rate">
-        <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
-      </div>
-      <div class="delete"></div>
+    <div class="rate">
+      <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
     </div>
+    <div class="delete"></div>
     <div class="title"><%= title %></div>
     <div class="artist"><%= artist %></div>
   ')
@@ -50,6 +47,19 @@ class CurrentAlbumView extends AlbumView
       "mouseout .rate":       "clearStars"
       "click .rate span":     "rate"
       "click .delete":        "delete"
+
+  render: ->
+    super()
+
+    rating = @model.get("rating")
+
+    if rating?
+      stars = @$(".rate span").get()
+
+      $(@el).addClass("has-rating")
+      $(stars.slice(0, rating)).addClass("rated")
+
+    this
 
   highlightStars: (e) ->
     @clearStars()

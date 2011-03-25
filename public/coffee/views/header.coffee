@@ -3,11 +3,14 @@ class Header extends Backbone.View
 
   template: _.template('
     <div class="intro">What are you listening to?</div>
-    <div class="sign-in"><a href="/auth/twitter">Sign in with Twitter</a> to save and share your list.</div>
     <ul class="nav">
-      <li class="username"/>
+      <li class="current"><a href="/current">Current</a></li>
+      <li class="archived"><a href="/archived">Archived</a></li>
     </ul>
   ')
+
+  events:
+    "click .nav a": "navClick"
 
   render: ->
     $(@el)
@@ -18,10 +21,22 @@ class Header extends Backbone.View
         .not(".#{@section}")
           .hide()
 
-    if UserInfo?
-      @$(".username").text("@#{UserInfo.nickname}")
+    @navigate(@href) if @href?
 
     this
+
+  navClick: (e) ->
+    e.preventDefault()
+    href = $(e.target).attr("href")
+    @navigate(href)
+    @trigger("navigate", href)
+
+  navigate: (href) ->
+    @href = href
+    @$('.nav a')
+      .removeClass('current')
+      .filter("[href='#{@href}']")
+        .addClass('current')
 
   switchTo: (newSection) ->
     return if newSection == @section

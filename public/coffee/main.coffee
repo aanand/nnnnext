@@ -1,9 +1,3 @@
-window.CurrentAlbums = new AlbumCollection({
-  localStorage: new Store("current-albums")
-  sync: Backbone.localSync
-  comparator: (a) -> -a.get("added")
-})
-
 window.AlbumSearchResults = new AlbumCollection
 
 class AppView extends Backbone.View
@@ -11,22 +5,26 @@ class AppView extends Backbone.View
 
   initialize: ->
     CurrentAlbums.fetch()
+    ArchivedAlbums.fetch()
 
     @header = new Header
+    @header.href = "/current"
 
-    if UserInfo?
+    if CurrentAlbums.length > 0 or ArchivedAlbums.length > 0
       @header.section = "nav"
-    else if CurrentAlbums.length > 0
-      @header.section = "sign-in"
     else
       @header.section = "intro"
 
-    @searchBar         = new AlbumSearchBar({collection: AlbumSearchResults})
-    @searchResultsList = new AlbumSearchList({collection: AlbumSearchResults})
-    @currentAlbumsList = new CurrentAlbumsList({collection: CurrentAlbums, search: @albumSearch})
+    @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
+    @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
+    @currentAlbumsList  = new CurrentAlbumsList({collection: CurrentAlbums})
+    @archivedAlbumsList = new CurrentAlbumsList({collection: ArchivedAlbums})
 
-    _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "handleKeypress")
+    @lists = [@searchResultsList, @currentAlbumsList, @archivedAlbumsList]
 
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "handleKeypress")
+
+    @header.bind            "navigate", @navigate
     @searchBar.bind         "submit",  @startSearch
     @searchResultsList.bind "select",  @addAlbum
     AlbumSearchResults.bind "refresh", @finishSearch
@@ -36,10 +34,19 @@ class AppView extends Backbone.View
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
     @el.append(@currentAlbumsList.render().el)
+    @el.append(@archivedAlbumsList.render().el)
 
     @currentAlbumsList.populate()
+    @archivedAlbumsList.populate()
     @switchList("currentAlbumsList")
     @searchBar.focus()
+
+  navigate: (href) ->
+    switch href
+      when "/current"
+        @switchList("currentAlbumsList")
+      when "/archived"
+        @switchList("archivedAlbumsList")
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -77,10 +84,10 @@ class AppView extends Backbone.View
 
     @switchList("currentAlbumsList")
     @searchBar.clear().focus()
-    @header.switchTo("sign-in") unless UserInfo?
+    @header.switchTo("nav")
 
   switchList: (listName) ->
-    @currentList.hide() if @currentList?
+    @lists.forEach (l) -> l.hide()
     @currentList = this[listName]
     @currentList.show()
     @setTabIndex(0)

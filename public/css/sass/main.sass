@@ -19,11 +19,24 @@ body, input
 
   a
     color: #888
+    text-decoration: none
+    
+    &.current
+      color: #a44
 
   ul
     list-style: none
     margin: 0
     padding: 0
+
+    li
+      display: inline-block
+
+      &:before
+        content: "• "
+
+      &:first-child:before
+        content: ""
 
 .album-search-bar
   display: inline-block
@@ -60,6 +73,10 @@ body, input
     border-width: 1px 0 0 0
     position: relative
 
+    $control-normal: #ddd
+    $rating-normal: #aaa
+    $control-hover: #a44
+
     &:first-child
       border-width: 0
 
@@ -75,37 +92,48 @@ body, input
       font-size: 14px
       color: #888
 
-    .controls
+    .rate, .delete
       display: none
       position: absolute
+      cursor: pointer
+      color: $control-normal
+
+    .rate
+      top: 8px
+      right: 48px
+
+      span:after
+        font-size: 20px
+        content: "★"
+
+      span.selected:after
+        color: $control-hover
+
+      span.rated:after
+        color: $rating-normal
+
+      &:hover span.rated:after
+        color: $control-normal
+
+      &:hover span.selected.rated:after
+        color: $control-hover
+
+    .delete
       top: 8px
       right: 8px
 
+      &:after
+        font-size: 26px
+        content: "✕"
+
+      &:hover:after
+        color: #aaa
+
+    &:hover, &:focus
       .rate, .delete
-        display: inline-block
-        cursor: pointer
-        color: #ddd
+        display: block
 
-      .rate
-        span:after
-          font-size: 20px
-          content: "★"
-
-        span.selected:after
-          color: #aaa
-
-      .delete
-        margin-left: 8px
-
-        &:after
-          font-size: 26px
-          content: "✕"
-          vertical-align: -2px
-
-        &:hover:after
-          color: #aaa
-
-    &:hover .controls, &:focus .controls
+    &.has-rating .rate
       display: block
 
 .album-search-list li
