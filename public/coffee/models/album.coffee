@@ -32,6 +32,6 @@ CurrentAlbums = new AlbumCollection({
 ArchivedAlbums = new AlbumCollection({
   localStorage: new Store("archived-albums")
   sync: Backbone.localSync
-  comparator: (a) -> -a.get("added")
+  comparator: (a) -> -a.get("archived")
 })
 
