@@ -58,12 +58,13 @@ body, input
     padding: 4px
     border: 1px solid #ccc
     border-width: 1px 0 0 0
+    position: relative
 
     &:first-child
       border-width: 0
 
     &:focus
-      background: #ccf
+      background: #def
       outline: none
 
     .title
@@ -74,3 +75,38 @@ body, input
       font-size: 14px
       color: #888
 
+    .controls
+      display: none
+      position: absolute
+      top: 8px
+      right: 8px
+
+      .rate, .delete
+        display: inline-block
+        cursor: pointer
+        color: #ddd
+
+      .rate
+        span:after
+          font-size: 20px
+          content: "★"
+
+        span.selected:after
+          color: #aaa
+
+      .delete
+        margin-left: 8px
+
+        &:after
+          font-size: 26px
+          content: "✕"
+          vertical-align: -2px
+
+        &:hover:after
+          color: #aaa
+
+    &:hover .controls, &:focus .controls
+      display: block
+
+.album-search-list li
+  cursor: pointer

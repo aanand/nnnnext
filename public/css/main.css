@@ -1,3 +1,4 @@
+@charset "UTF-8";
 body, input {
   font-family: helvetica;
   color: #444444; }
@@ -49,11 +50,12 @@ body, input {
   .album-list li {
     padding: 4px;
     border: 1px solid #cccccc;
-    border-width: 1px 0 0 0; }
+    border-width: 1px 0 0 0;
+    position: relative; }
     .album-list li:first-child {
       border-width: 0; }
     .album-list li:focus {
-      background: #ccccff;
+      background: #ddeeff;
       outline: none; }
     .album-list li .title {
       font-size: 18px;
@@ -61,3 +63,30 @@ body, input {
     .album-list li .artist {
       font-size: 14px;
       color: #888888; }
+    .album-list li .controls {
+      display: none;
+      position: absolute;
+      top: 8px;
+      right: 8px; }
+      .album-list li .controls .rate, .album-list li .controls .delete {
+        display: inline-block;
+        cursor: pointer;
+        color: #dddddd; }
+      .album-list li .controls .rate span:after {
+        font-size: 20px;
+        content: "★"; }
+      .album-list li .controls .rate span.selected:after {
+        color: #aaaaaa; }
+      .album-list li .controls .delete {
+        margin-left: 8px; }
+        .album-list li .controls .delete:after {
+          font-size: 26px;
+          content: "✕";
+          vertical-align: -2px; }
+        .album-list li .controls .delete:hover:after {
+          color: #aaaaaa; }
+    .album-list li:hover .controls, .album-list li:focus .controls {
+      display: block; }
+
+.album-search-list li {
+  cursor: pointer; }

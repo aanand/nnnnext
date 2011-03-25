@@ -11,7 +11,7 @@ class AlbumList extends Backbone.View
     @collection.bind "refresh", @populate
 
   addOne: (album) ->
-    view       = new AlbumView({model: album, template: @itemTemplate, list: this})
+    view       = new @itemViewClass({model: album, list: this})
     album.view = view
     el         = view.render().el
 
@@ -36,18 +36,10 @@ _.extend AlbumList.prototype, Tabbable, {
 }
 
 class CurrentAlbumsList extends AlbumList
-  itemTemplate: _.template('
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
-  ')
-
+  itemViewClass: CurrentAlbumView
   className: "#{AlbumList.prototype.className} current-albums-list"
 
 class AlbumSearchList extends AlbumList
-  itemTemplate: _.template('
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
-  ')
-
+  itemViewClass: SearchAlbumView
   className: "#{AlbumList.prototype.className} album-search-list"
 

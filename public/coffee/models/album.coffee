@@ -1,5 +1,8 @@
 class Album extends Backbone.Model
   sync: Backbone.localSync
+
+  rate: (rating) ->
+    console.log(rating)
   
   clear: ->
     @destroy()
