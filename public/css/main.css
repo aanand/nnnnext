@@ -59,7 +59,7 @@ body, input {
   .album-list li {
     padding: 4px;
     border: 1px solid #cccccc;
-    border-width: 1px 0 0 0;
+    border-width: 0 0 1px 0;
     position: relative; }
     .album-list li:focus {
       background: #ddeeff;
