@@ -31,7 +31,7 @@ class AlbumView extends Backbone.View
 
 _.extend AlbumView.prototype, Tabbable
 
-class CurrentAlbumView extends AlbumView
+class SavedAlbumView extends AlbumView
   template: _.template('
     <div class="rate">
       <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
@@ -72,7 +72,10 @@ class CurrentAlbumView extends AlbumView
     @model.rate(parseInt($(e.target).attr('data-rating')))
 
   delete: ->
-    @model.clear()
+    @model.delete()
+
+  show: -> $(@el).show()
+  hide: -> $(@el).hide()
 
 class SearchAlbumView extends AlbumView
   template: _.template('

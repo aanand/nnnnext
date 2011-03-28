@@ -2,30 +2,47 @@ class AlbumList extends Backbone.View
   tagName: 'ul'
   className: 'album-list'
 
-  populateMethod: 'append'
-
   initialize: (options) ->
-    _.bindAll(this, "addOne", "populate", "show", "hide")
+    _.bindAll(this, "updateAlbum", "populate", "show", "hide")
 
-    @collection.bind "add",     @addOne
+    @collection.bind "modelSaved", @updateAlbum
     @collection.bind "refresh", @populate
 
-  addOne: (album) ->
-    view       = new @itemViewClass({model: album, list: this})
-    album.view = view
-    el         = view.render().el
-
-    index    = @collection.indexOf(album)
-    children = $(@el).children()
-
-    if children[index]
-      $(el).insertBefore(children[index])
+  updateAlbum: (album) ->
+    if album.view?
+      @updateAlbumView(album)
     else
-      $(el).appendTo(@el)
+      album.view = new @itemViewClass({model: album, list: this})
+      @updateAlbumView(album)
+
+      albumEl  = $(album.view.el)
+      index    = @collection.indexOf(album)
+      children = $(@el).children()
+
+      if children[index]
+        albumEl.insertBefore(children[index])
+      else
+        albumEl.appendTo(@el)
 
   populate: ->
     $(@el).empty()
-    @collection.forEach (album) => @addOne(album)
+    @collection.forEach (album) => @updateAlbum(album)
+
+  filter: (state) ->
+    @filterState = state
+
+    @collection.forEach (album) =>
+      @updateAlbumView(album)
+
+  updateAlbumView: (album) ->
+    album.view.render()
+
+    return unless @filterState?
+
+    if album.get("state") == @filterState
+      album.view.show()
+    else
+      album.view.hide()
 
   show: -> $(@el).show()
   hide: -> $(@el).hide()
@@ -35,9 +52,9 @@ _.extend AlbumList.prototype, Tabbable, {
     @collection.map (album) -> album.view.el
 }
 
-class CurrentAlbumsList extends AlbumList
-  itemViewClass: CurrentAlbumView
-  className: "#{AlbumList.prototype.className} current-albums-list"
+class SavedAlbumsList extends AlbumList
+  itemViewClass: SavedAlbumView
+  className: "#{AlbumList.prototype.className} saved-albums-list"
 
 class AlbumSearchList extends AlbumList
   itemViewClass: SearchAlbumView

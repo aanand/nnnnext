@@ -1,26 +1,30 @@
-window.AlbumSearchResults = new AlbumCollection
+SavedAlbums = new AlbumCollection {
+  localStorage: new Store("albums")
+  sync:         Backbone.localSync
+  comparator:   (a) -> -a.get("updated")
+}
+
+AlbumSearchResults = new AlbumCollection
 
 class AppView extends Backbone.View
   el: $('#app')
 
   initialize: ->
-    CurrentAlbums.fetch()
-    ArchivedAlbums.fetch()
+    SavedAlbums.fetch()
 
     @header = new Header
     @header.href = "/current"
 
-    if CurrentAlbums.length > 0 or ArchivedAlbums.length > 0
+    if SavedAlbums.length > 0
       @header.section = "nav"
     else
       @header.section = "intro"
 
     @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
-    @currentAlbumsList  = new CurrentAlbumsList({collection: CurrentAlbums})
-    @archivedAlbumsList = new CurrentAlbumsList({collection: ArchivedAlbums})
+    @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
 
-    @lists = [@searchResultsList, @currentAlbumsList, @archivedAlbumsList]
+    @lists = [@searchResultsList, @savedAlbumsList]
 
     _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "handleKeypress")
 
@@ -33,20 +37,19 @@ class AppView extends Backbone.View
     @el.append(@header.render().el)
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
-    @el.append(@currentAlbumsList.render().el)
-    @el.append(@archivedAlbumsList.render().el)
+    @el.append(@savedAlbumsList.render().el)
 
-    @currentAlbumsList.populate()
-    @archivedAlbumsList.populate()
-    @switchList("currentAlbumsList")
+    @savedAlbumsList.populate()
+    @savedAlbumsList.filter("current")
+    @switchList("savedAlbumsList")
     @searchBar.focus()
 
   navigate: (href) ->
     switch href
       when "/current"
-        @switchList("currentAlbumsList")
+        @savedAlbumsList.filter("current")
       when "/archived"
-        @switchList("archivedAlbumsList")
+        @savedAlbumsList.filter("archived")
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -77,12 +80,9 @@ class AppView extends Backbone.View
     @switchList("searchResultsList")
 
   addAlbum: (album) ->
-    album.set({"added": new Date().getTime()})
-    CurrentAlbums.add(album)
-    album.collection = CurrentAlbums
-    album.save()
+    album.addTo(SavedAlbums)
 
-    @switchList("currentAlbumsList")
+    @switchList("savedAlbumsList")
     @searchBar.clear().focus()
     @header.switchTo("nav")
 
@@ -98,4 +98,4 @@ _.extend AppView.prototype, Tabbable, {
       .concat(@currentList.getTabbableElements())
 }
 
-window.App = new AppView
+App = new AppView

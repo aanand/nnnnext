@@ -1,18 +1,44 @@
 class Album extends Backbone.Model
   sync: Backbone.localSync
 
-  rate: (rating) ->
-    if @collection == CurrentAlbums
-      @clear()
-      ArchivedAlbums.add(this)
+  addTo: (collection) ->
+    @view = null
+    @collection = collection
+    @collection.add(this)
 
-    @set({"rating": rating, "archived": new Date().getTime()})
+    @set {
+      state:   "current"
+      updated: new Date().getTime()
+    }
+
     @save()
-    @view.render()
-  
-  clear: ->
-    @destroy()
-    @view.remove()
+
+  rate: (rating) ->
+    @set {
+      rating:  rating
+      state:   "archived"
+      updated: new Date().getTime()
+    }
+
+    @save()
+
+  delete: ->
+    @set {
+      state:   "deleted"
+      updated: new Date().getTime()
+    }
+
+    @save()
+
+  save: (attrs, options) ->
+    if @collection?
+      options ||= {}
+      originalSuccess = options.success
+      options.success = (model, resp) =>
+        originalSuccess(model, resp) if originalSuccess?
+        @collection.trigger("modelSaved", this)
+
+    super(attrs, options)
 
 class AlbumCollection extends Backbone.Collection
   model: Album
@@ -22,16 +48,4 @@ class AlbumCollection extends Backbone.Collection
       @localStorage = options.localStorage
       @sync         = options.sync
       @comparator   = options.comparator
-
-CurrentAlbums = new AlbumCollection({
-  localStorage: new Store("current-albums")
-  sync: Backbone.localSync
-  comparator: (a) -> -a.get("added")
-})
-
-ArchivedAlbums = new AlbumCollection({
-  localStorage: new Store("archived-albums")
-  sync: Backbone.localSync
-  comparator: (a) -> -a.get("archived")
-})
 
