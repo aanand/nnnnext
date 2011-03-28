@@ -1,33 +1,33 @@
 =box-shadow($args)
   -webkit-box-shadow: $args
-  -moz-box-shadow: $args
+  -moz-box-shadow:    $args
 
 body, input
   font-family: helvetica
-  color: #444
+  color:       #444
 
 #app
-  width: 600px
+  width:  600px
   margin: 40px auto
 
 .header
-  font-size: 20px
-  height: 30px
-  color: #ccc
-  display: block
+  font-size:     20px
+  height:        30px
+  color:         #ccc
+  display:       block
   margin-bottom: 8px
 
   a
-    color: #888
+    color:           #888
     text-decoration: none
-    
+
     &.current
       color: #a44
 
   ul
     list-style: none
-    margin: 0
-    padding: 0
+    margin:     0
+    padding:    0
 
     li
       display: inline-block
@@ -39,69 +39,69 @@ body, input
         content: ""
 
 .album-search-bar
-  display: inline-block
+  display:       inline-block
   margin-bottom: 16px
 
   input
-    float: left
+    float:     left
     font-size: 24px
-    padding: 8px
-    width: 500px
-    border: 1px solid #ccc
+    padding:   8px
+    width:     500px
+    border:    1px solid #ccc
+    outline:   none
     +box-shadow(1px 1px 2px #aaa)
-    outline: none
 
   .spinner
-    float: left
+    float:       left
     margin-left: 10px
-    margin-top: 8px
-    display: block
-    width: 32px
-    height: 32px
-    background: url(/img/spinner.gif)
-    
+    margin-top:  8px
+    display:     block
+    width:       32px
+    height:      32px
+    background:  url(/img/spinner.gif)
+
 .album-list
   list-style: none
-  margin: 0
-  padding: 0
-  width: 500px
-  padding: 0 5px
+  margin:     0
+  padding:    0
+  width:      500px
+  padding:    0 5px
 
   li
-    padding: 4px
-    border: 1px solid #ccc
+    padding:      4px
+    border:       1px solid #ccc
     border-width: 1px 0 0 0
-    position: relative
+    position:     relative
 
     $control-normal: #ddd
-    $rating-normal: #aaa
-    $control-hover: #a44
+    $rating-normal:  #aaa
+    $control-hover:  #a44
 
     &:focus
       background: #def
-      outline: none
+      outline:    none
 
     .title
-      font-size: 18px
+      font-size:     18px
       margin-bottom: 2px
 
     .artist
       font-size: 14px
-      color: #888
+      color:     #888
 
     .rate, .delete
-      display: none
+      display:  none
       position: absolute
-      cursor: pointer
-      color: $control-normal
+      cursor:   pointer
+      color:    $control-normal
 
     .rate
-      top: 8px
+      top:   8px
       right: 48px
 
       span:after
         font-size: 20px
-        content: "★"
+        content:   "★"
 
       span.selected:after
         color: $control-hover
@@ -116,12 +116,12 @@ body, input
         color: $control-hover
 
     .delete
-      top: 8px
+      top:   8px
       right: 8px
 
       &:after
         font-size: 26px
-        content: "✕"
+        content:   "✕"
 
       &:hover:after
         color: #aaa
