@@ -55,6 +55,7 @@ class AppView extends Backbone.View
 
   finishSync: ->
     @syncingMessage.hide()
+    @header.switchTo("nav") if SavedAlbums.length > 0
 
   navigate: (href) ->
     switch href
