@@ -2,22 +2,30 @@ class Header extends Backbone.View
   className: 'header'
 
   template: _.template('
-    <div class="intro">What are you listening to?</div>
-    <ul class="nav">
-      <li class="current"><a href="/current">Current</a></li>
-      <li class="archived"><a href="/archived">Archived</a></li>
-    </ul>
+    <div class="sections">
+      <div class="intro">What are you listening to?</div>
+      <ul class="nav">
+        <li class="current"><a href="/current">Current</a></li>
+        <li class="archived"><a href="/archived">Archived</a></li>
+      </ul>
+    </div>
+
+    <div class="sync-controls">
+      <div class="button"/>
+      <div class="spinner" style="display: none"/>
+    </div>
   ')
 
   events:
     "click .nav a": "navClick"
+    "click .sync-controls .button": "syncClick"
 
   render: ->
     $(@el)
       .html(@template())
       .css({ position: "relative", overflow: "hidden" })
-      .children()
-        .css({ position: "absolute", top: "0" })
+      .find(".sections > *")
+        .css({ position: "absolute", top: "0", left: "0", right: "0" })
         .not(".#{@section}")
           .hide()
 
@@ -30,6 +38,9 @@ class Header extends Backbone.View
     href = $(e.target).attr("href")
     @navigate(href)
     @trigger("navigate", href)
+  
+  syncClick: (e) ->
+    @trigger("syncButtonClick")
 
   navigate: (href) ->
     @href = href
@@ -42,7 +53,7 @@ class Header extends Backbone.View
     return if newSection == @section
 
     height   = $(@el).height()
-    sections = $(@el).children()
+    sections = @$(".sections").children()
 
     sections.filter(".#{@section}")
       .animate({top: -height})
@@ -53,4 +64,12 @@ class Header extends Backbone.View
       .animate({top: 0})
 
     @section = newSection
+
+  syncing: (inProgress) ->
+    if inProgress
+      @$(".sync-controls .button").hide()
+      @$(".sync-controls .spinner").show()
+    else
+      @$(".sync-controls .button").show()
+      @$(".sync-controls .spinner").hide()
 

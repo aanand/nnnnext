@@ -4,8 +4,9 @@ body, input {
   color: #444444; }
 
 #app {
-  width: 600px;
-  margin: 40px auto; }
+  width: 520px;
+  margin: 40px auto;
+  position: relative; }
 
 .header {
   font-size: 20px;
@@ -18,19 +19,32 @@ body, input {
     text-decoration: none; }
     .header a.current {
       color: #aa4444; }
-  .header ul {
+  .header .nav {
     list-style: none;
     margin: 0;
     padding: 0; }
-    .header ul li {
+    .header .nav li {
       display: inline-block; }
-      .header ul li:before {
+      .header .nav li:before {
         content: "• "; }
-      .header ul li:first-child:before {
+      .header .nav li:first-child:before {
         content: ""; }
+  .header .sync-controls {
+    position: absolute;
+    top: 4px;
+    right: 4px; }
+    .header .sync-controls .button, .header .sync-controls .spinner {
+      width: 16px;
+      height: 16px; }
+    .header .sync-controls .button {
+      background: url(/img/sync-button.gif);
+      cursor: pointer; }
+    .header .sync-controls .spinner {
+      background: url(/img/sync-spinner.gif); }
 
 .album-search-bar {
   display: inline-block;
+  width: 600px;
   margin-bottom: 16px; }
   .album-search-bar input {
     float: left;

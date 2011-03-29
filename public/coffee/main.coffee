@@ -23,13 +23,13 @@ class AppView extends Backbone.View
     @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
     @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
-    @syncingMessage     = new SyncingMessage
 
     @lists = [@searchResultsList, @savedAlbumsList]
 
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "startSync", "finishSync", "handleKeypress")
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress")
 
     @header.bind            "navigate", @navigate
+    @header.bind            "syncButtonClick", @startSyncOrSignIn
     @searchBar.bind         "submit",  @startSearch
     @searchResultsList.bind "select",  @addAlbum
     AlbumSearchResults.bind "refresh", @finishSearch
@@ -41,7 +41,6 @@ class AppView extends Backbone.View
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
     @el.append(@savedAlbumsList.render().el)
-    @el.append(@syncingMessage.render().el)
 
     @savedAlbumsList.populate()
     @savedAlbumsList.filter("current")
@@ -52,11 +51,18 @@ class AppView extends Backbone.View
 
   startSync: ->
     return unless UserInfo?
-    @syncingMessage.show()
+    @header.syncing(true)
     Sync.start(SavedAlbums, "/albums/sync")
 
+  startSyncOrSignIn: ->
+    if UserInfo?
+      @startSync()
+    else
+      if window.confirm("Sign in with Twitter to start saving your list?")
+        window.location.href = "/auth/twitter"
+
   finishSync: ->
-    @syncingMessage.hide()
+    window.setTimeout((=> @header.syncing(false)), 500)
     @header.switchTo("nav") if SavedAlbums.length > 0
 
   navigate: (href) ->

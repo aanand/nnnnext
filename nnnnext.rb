@@ -182,7 +182,6 @@ module Nnnnext::Helpers
              views/album-view
              views/album-list
              views/album-search-bar
-             views/syncing-message
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }
