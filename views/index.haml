@@ -7,7 +7,7 @@
   %body
     #app
   %script{ type: "text/javascript" }
-    = "UserInfo = #{user_info.to_json}"
+    = "UserInfo = #{user.to_json}"
   - js_includes.each do |path|
     %script{ type: "text/javascript", src: path }
 

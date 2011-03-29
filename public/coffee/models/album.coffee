@@ -2,32 +2,24 @@ class Album extends Backbone.Model
   sync: Backbone.localSync
 
   addTo: (collection) ->
-    @view = null
     @collection = collection
     @collection.add(this)
 
-    @set {
-      state:   "current"
-      updated: new Date().getTime()
-    }
-
-    @save()
+    @update { state: "current" }
 
   rate: (rating) ->
-    @set {
-      rating:  rating
-      state:   "archived"
-      updated: new Date().getTime()
-    }
-
-    @save()
+    @update { rating: rating, state: "archived" }
 
   delete: ->
-    @set {
-      state:   "deleted"
-      updated: new Date().getTime()
-    }
+    @update { state: "deleted" }
 
+  update: (attrs) ->
+    attrs.updated = new Date().getTime()
+
+    if attrs.state? and attrs.state != @get("state")
+      attrs.stateChanged = attrs.updated
+
+    @set(attrs)
     @save()
 
   save: (attrs, options) ->
@@ -36,6 +28,7 @@ class Album extends Backbone.Model
       originalSuccess = options.success
       options.success = (model, resp) =>
         originalSuccess(model, resp) if originalSuccess?
+        @collection.sort()
         @collection.trigger("modelSaved", this)
 
     super(attrs, options)
@@ -48,4 +41,3 @@ class AlbumCollection extends Backbone.Collection
       @localStorage = options.localStorage
       @sync         = options.sync
       @comparator   = options.comparator
-

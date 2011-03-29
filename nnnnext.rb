@@ -106,22 +106,61 @@ module Nnnnext::Controllers
     end
   end
 
-  class Albums
-    def get
-      "[]"
-    end
-  end
-
   class AlbumsSearch
     def get
       AlbumSearch.search(@input.q).to_json
     end
   end
+
+  class AlbumsSync
+    def post
+      client_albums  = JSON.parse(@request.body.read)
+      updated_albums = Set.new(user.albums)
+
+      client_albums.each do |client_album|
+        album_attrs      = client_album.slice("id", "artist", "title")
+        user_album_attrs = client_album.except(*album_attrs.keys)
+        id               = client_album["id"]
+        album            = Models::Album.where(_id: id).first
+
+        if album.nil?
+          puts "Album #{id} does not exist on server, creating."
+          album = Models::Album.create(album_attrs)
+        end
+
+        user_album = updated_albums.find { |ua| ua.album_id == id }
+
+        if user_album
+          if user_album.updated < client_album["updated"]
+            user_album.update_attributes(user_album_attrs)
+            updated_albums.delete(user_album)
+
+            puts "Album #{id} is behind on server (#{user_album.updated} < #{client_album["updated"]})."
+            puts "Updated server copy: #{user_album.to_json}"
+          elsif user_album.updated > client_album["updated"]
+            puts "Album #{id} is behind on client. (#{user_album.updated} > #{client_album["updated"]})"
+            puts "Sending updated album: #{user_album.to_json}"
+          else
+            puts "Album #{id} is in sync. (#{user_album.updated})"
+            updated_albums.delete(user_album)
+          end
+        else
+          user_album = user.albums.create(user_album_attrs.merge(album: album))
+
+          puts "Album #{id} is not in user's list on server."
+          puts "Created server copy: #{user_album.to_json}"
+        end
+      end
+
+      @headers["content-type"] = "application/json; charset=utf-8"
+      updated_albums.to_a.to_json
+    end
+  end
 end
 
 module Nnnnext::Helpers
-  def user_info
-    @state[:user_id] && Nnnnext::Models::User.find(@state[:user_id])
+  def user
+    @user ||= (@state[:user_id] && Nnnnext::Models::User.find(@state[:user_id]))
   end
 
   def js_includes
@@ -138,6 +177,8 @@ module Nnnnext::Helpers
              views/album-view
              views/album-list
              views/album-search-bar
+             views/syncing-message
+             sync
              main
             ).map { |n| "/coffee/#{n}.js" }
   end
@@ -146,6 +187,46 @@ end
 module Nnnnext::Models
   class User
     include Mongoid::Document
+
+    references_many :albums, class_name: "Nnnnext::Models::UserAlbum"
+  end
+
+  class UserAlbum
+    include Mongoid::Document
+
+    referenced_in :user,  class_name: "Nnnnext::Models::User"
+
+    field :state,        type: String
+    field :stateChanged, type: Integer
+    field :rating,       type: Integer
+    field :updated,      type: Integer
+    field :album_id,     type: String
+
+    def album
+      @album ||= Album.find(album_id)
+    end
+
+    def album=(a)
+      self.album_id = (a.id)
+      @album = a
+    end
+
+    def as_json(options=nil)
+      attributes.except(:album_id).merge(
+        id:      album.id,
+        artist:  album.artist,
+        title:   album.title,
+      ).as_json(options)
+    end
+  end
+
+  class Album
+    include Mongoid::Document
+
+    identity type: String
+
+    field :artist, type: String
+    field :title,  type: String
   end
 end
 

@@ -2,47 +2,13 @@ class AlbumList extends Backbone.View
   tagName: 'ul'
   className: 'album-list'
 
-  initialize: (options) ->
-    _.bindAll(this, "updateAlbum", "populate", "show", "hide")
-
-    @collection.bind "modelSaved", @updateAlbum
-    @collection.bind "refresh", @populate
-
-  updateAlbum: (album) ->
-    if album.view?
-      @updateAlbumView(album)
-    else
-      album.view = new @itemViewClass({model: album, list: this})
-      @updateAlbumView(album)
-
-      albumEl  = $(album.view.el)
-      index    = @collection.indexOf(album)
-      children = $(@el).children()
-
-      if children[index]
-        albumEl.insertBefore(children[index])
-      else
-        albumEl.appendTo(@el)
-
   populate: ->
     $(@el).empty()
-    @collection.forEach (album) => @updateAlbum(album)
-
-  filter: (state) ->
-    @filterState = state
-
     @collection.forEach (album) =>
-      @updateAlbumView(album)
+      $(@el).append(@makeView(album).el)
 
-  updateAlbumView: (album) ->
-    album.view.render()
-
-    return unless @filterState?
-
-    if album.get("state") == @filterState
-      album.view.show()
-    else
-      album.view.hide()
+  makeView: (album) ->
+    album.view = new @itemViewClass({model: album, list: this}).render()
 
   show: -> $(@el).show()
   hide: -> $(@el).hide()
@@ -55,6 +21,49 @@ _.extend AlbumList.prototype, Tabbable, {
 class SavedAlbumsList extends AlbumList
   itemViewClass: SavedAlbumView
   className: "#{AlbumList.prototype.className} saved-albums-list"
+
+  initialize: (options) ->
+    _.bindAll(this, "makeView", "modelSaved")
+
+    @collection.bind "add",        @makeView
+    @collection.bind "modelSaved", @modelSaved
+
+  makeView: (album) ->
+    view = super(album)
+    @showOrHideView(album)
+    view
+
+  filter: (state) ->
+    @filterState = state
+
+    @collection.forEach (album) =>
+      @showOrHideView(album)
+
+  showOrHideView: (album) ->
+    return unless @filterState?
+
+    if album.get("state") == @filterState
+      album.view.show()
+    else
+      album.view.hide()
+
+  modelSaved: (album) ->
+    album.view.render()
+    @showOrHideView(album)
+
+    albumEl      = album.view.el
+    correctIndex = @collection.indexOf(album)
+    currentIndex = $(@el).children().get().indexOf(albumEl)
+
+    if currentIndex != correctIndex
+      @el.removeChild(albumEl) if currentIndex != -1
+
+      childToInsertBefore = $(@el).children()[correctIndex]
+
+      if childToInsertBefore?
+        $(albumEl).insertBefore(childToInsertBefore)
+      else
+        $(albumEl).appendTo(@el)
 
 class AlbumSearchList extends AlbumList
   itemViewClass: SearchAlbumView

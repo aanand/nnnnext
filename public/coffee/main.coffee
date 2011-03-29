@@ -1,7 +1,7 @@
 SavedAlbums = new AlbumCollection {
   localStorage: new Store("albums")
   sync:         Backbone.localSync
-  comparator:   (a) -> -a.get("updated")
+  comparator:   (a) -> -a.get("stateChanged")
 }
 
 AlbumSearchResults = new AlbumCollection
@@ -23,26 +23,38 @@ class AppView extends Backbone.View
     @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
     @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
+    @syncingMessage     = new SyncingMessage
 
     @lists = [@searchResultsList, @savedAlbumsList]
 
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "handleKeypress")
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "startSync", "finishSync", "handleKeypress")
 
     @header.bind            "navigate", @navigate
     @searchBar.bind         "submit",  @startSearch
     @searchResultsList.bind "select",  @addAlbum
     AlbumSearchResults.bind "refresh", @finishSearch
+    Sync.bind               "finish",  @finishSync
     $(window).bind          "keydown", @handleKeypress
 
     @el.append(@header.render().el)
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
     @el.append(@savedAlbumsList.render().el)
+    @el.append(@syncingMessage.render().el)
 
     @savedAlbumsList.populate()
     @savedAlbumsList.filter("current")
     @switchList("savedAlbumsList")
     @searchBar.focus()
+
+    @startSync() if UserInfo?
+
+  startSync: ->
+    @syncingMessage.show()
+    Sync.start(SavedAlbums, "/albums/sync")
+
+  finishSync: ->
+    @syncingMessage.hide()
 
   navigate: (href) ->
     switch href
@@ -77,6 +89,7 @@ class AppView extends Backbone.View
 
   finishSearch: ->
     @searchBar.hideSpinner()
+    @searchResultsList.populate()
     @switchList("searchResultsList")
 
   addAlbum: (album) ->

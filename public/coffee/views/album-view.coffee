@@ -6,7 +6,6 @@ class AlbumView extends Backbone.View
 
   initialize: (options) ->
     @list = options.list
-    @model.view = this
 
   render: ->
     $(@el).html(@template(@model.toJSON()))
@@ -22,12 +21,6 @@ class AlbumView extends Backbone.View
 
   select: ->
     @list.trigger("select", @model) if @list?
-
-  remove: ->
-    $(@el).remove()
-
-  clear: ->
-    @model.clear()
 
 _.extend AlbumView.prototype, Tabbable
 
