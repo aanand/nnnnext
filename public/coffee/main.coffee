@@ -33,6 +33,7 @@ class AppView extends Backbone.View
     @searchBar.bind         "submit",  @startSearch
     @searchResultsList.bind "select",  @addAlbum
     AlbumSearchResults.bind "refresh", @finishSearch
+    SavedAlbums.bind        "modelSaved", @startSync
     Sync.bind               "finish",  @finishSync
     $(window).bind          "keydown", @handleKeypress
 
@@ -47,9 +48,10 @@ class AppView extends Backbone.View
     @switchList("savedAlbumsList")
     @searchBar.focus()
 
-    @startSync() if UserInfo?
+    @startSync()
 
   startSync: ->
+    return unless UserInfo?
     @syncingMessage.show()
     Sync.start(SavedAlbums, "/albums/sync")
 

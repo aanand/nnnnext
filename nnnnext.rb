@@ -114,6 +114,11 @@ module Nnnnext::Controllers
 
   class AlbumsSync
     def post
+      if user.nil?
+        @status = 401
+        return "Unauthorized"
+      end
+
       client_albums  = JSON.parse(@request.body.read)
       updated_albums = Set.new(user.albums)
 
