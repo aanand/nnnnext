@@ -57,6 +57,7 @@ module Nnnnext
 
   Mongoid.configure do |config|
     config.from_hash(mongoid)
+    config.logger = Logger.new(mongoid["log_file"]) if mongoid.has_key?("log_file")
   end
 
   set :views, root + "views"
