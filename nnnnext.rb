@@ -57,7 +57,9 @@ module Nnnnext
 
     if ENV.has_key?("MONGOHQ_URL")
       uri = URI.parse(ENV["MONGOHQ_URL"])
-      config.master = Mongo::Connection.new(uri.host, uri.port).db(uri.path[1..-1])
+      conn = Mongo::Connection.new(uri.host, uri.port).db(uri.path[1..-1])
+      conn.authenticate(uri.user, uri.password)
+      config.master = conn
     end
   end
 
