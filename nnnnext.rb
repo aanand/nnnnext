@@ -70,17 +70,28 @@ module Nnnnext
   use Rack::Session::Cookie,
     secret: session_secret
 
-  use Rack::Coffee,
-    root:   root + "public",
-    urls:   ["/coffee"],
-    nowrap: true
+  unless ENV["RACK_ENV"] == "production"
+    Sass::Plugin.options[:css_location] = root + "public/css"
+    use Sass::Plugin::Rack
 
-  Sass::Plugin.options[:css_location] = root + "public/css"
-  use Sass::Plugin::Rack
+    def self.spawn_coffee_watcher(input, output)
+      cmd = "coffee --bare --watch --output #{output.to_s.inspect} #{input.to_s.inspect}"
+
+      puts "*** spawning: #{cmd}"
+      pid = Process.spawn(cmd, :out => $stdout, :err => $stderr)
+      Process.detach(pid)
+
+      puts "*** coffee pid: #{pid}"
+
+      pid
+    end
+
+    @coffee_watcher ||= spawn_coffee_watcher(root + "coffee", root + "public/coffee")
+  end
 
   use Rack::Static,
     root: root + "public",
-    urls: ["/js", "/css", "/img", "/favicon.ico"]
+    urls: ["/js", "/coffee", "/css", "/img", "/favicon.ico"]
 end
 
 module Nnnnext::Controllers
