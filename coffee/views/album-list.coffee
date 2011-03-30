@@ -69,3 +69,8 @@ class AlbumSearchList extends AlbumList
   itemViewClass: SearchAlbumView
   className: "#{AlbumList.prototype.className} album-search-list"
 
+  populate: ->
+    super()
+
+    if @collection.length == 0
+      $(@el).html('<li class="nothing-found">Nothing found.</li>')

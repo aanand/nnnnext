@@ -103,5 +103,11 @@ AlbumSearchList = (function() {
   __extends(AlbumSearchList, AlbumList);
   AlbumSearchList.prototype.itemViewClass = SearchAlbumView;
   AlbumSearchList.prototype.className = "" + AlbumList.prototype.className + " album-search-list";
+  AlbumSearchList.prototype.populate = function() {
+    AlbumSearchList.__super__.populate.call(this);
+    if (this.collection.length === 0) {
+      return $(this.el).html('<li class="nothing-found">Nothing found.</li>');
+    }
+  };
   return AlbumSearchList;
 })();

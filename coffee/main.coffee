@@ -92,6 +92,7 @@ class AppView extends Backbone.View
       $("[tabindex=#{nextIndex}]").focus()
 
   startSearch: (query) ->
+    return unless query
     @searchBar.showSpinner()
     AlbumSearchResults.url = "/albums/search?" + $.param({q: query})
     AlbumSearchResults.fetch()

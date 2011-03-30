@@ -14,7 +14,11 @@ module AlbumSearch
 
     albums = []
 
-    releases = response["metadata"]["release_list"]["release"]
+    return [] unless response and
+      metadata     = response["metadata"] and
+      release_list = metadata["release_list"] and
+      releases     = release_list["release"]
+
     releases = [releases].flatten
 
     releases.each do |release|

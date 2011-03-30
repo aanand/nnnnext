@@ -118,3 +118,7 @@ body, input {
 
 .album-search-list li {
   cursor: pointer; }
+  .album-search-list li.nothing-found {
+    color: #aaaaaa;
+    border: none;
+    font-size: 20px; }

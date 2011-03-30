@@ -114,6 +114,9 @@ AppView = (function() {
     }
   };
   AppView.prototype.startSearch = function(query) {
+    if (!query) {
+      return;
+    }
     this.searchBar.showSpinner();
     AlbumSearchResults.url = "/albums/search?" + $.param({
       q: query
