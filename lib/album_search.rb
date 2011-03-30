@@ -7,7 +7,8 @@ module AlbumSearch
   default_params type: "xml"
 
   def self.search(q)
-    words = q.gsub('"', '').split
+    q = q.gsub('"', '')
+    words = q.split + ["\"#{q}\""]
     query = (words + words.map { |w| "artist:#{w}" }).join(" ")
 
     response = get("/ws/1/release/", query: {query: query})
