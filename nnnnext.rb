@@ -173,8 +173,8 @@ module Nnnnext::Helpers
     js = %w(jquery
             json2
             underscore
-            backbone/backbone
-            Backbone.localStorage/Backbone.localStorage
+            backbone
+            backbone.localStorage
            ).map { |n| "/js/#{n}.js" }
 
     js += %w(models/album
