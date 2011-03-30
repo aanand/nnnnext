@@ -5,6 +5,7 @@ Bugs
 ----
 
 - Handle multiple accounts
+- Keyboard navigation of saved albums is janky
 
 Features
 --------
