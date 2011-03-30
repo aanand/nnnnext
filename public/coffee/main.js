@@ -40,10 +40,11 @@ AppView = (function() {
       collection: SavedAlbums
     });
     this.lists = [this.searchResultsList, this.savedAlbumsList];
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress");
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress");
     this.header.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSyncOrSignIn);
     this.searchBar.bind("submit", this.startSearch);
+    this.searchBar.bind("clear", this.cancelSearch);
     this.searchResultsList.bind("select", this.addAlbum);
     AlbumSearchResults.bind("refresh", this.finishSearch);
     SavedAlbums.bind("modelSaved", this.startSync);
@@ -99,6 +100,8 @@ AppView = (function() {
       case 40:
         e.preventDefault();
         return this.tab(+1);
+      default:
+        return this.searchBar.handleKeypress(e);
     }
   };
   AppView.prototype.tab = function(offset) {
@@ -127,6 +130,9 @@ AppView = (function() {
     this.searchBar.hideSpinner();
     this.searchResultsList.populate();
     return this.switchList("searchResultsList");
+  };
+  AppView.prototype.cancelSearch = function() {
+    return this.switchList("savedAlbumsList");
   };
   AppView.prototype.addAlbum = function(album) {
     album.addTo(SavedAlbums);

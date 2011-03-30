@@ -4,6 +4,9 @@ class AlbumSearchBar extends Backbone.View
     <div class="spinner" style="display:none"/>
   ')
 
+  events:
+    "change input": "handleChange"
+
   className: 'album-search-bar'
 
   initialize: ->
@@ -11,13 +14,31 @@ class AlbumSearchBar extends Backbone.View
 
   render: ->
     $(@el).html(@template())
-    @$('input').keypress(@handleKeypress)
     this
 
   handleKeypress: (e) ->
-    return unless e.keyCode == 13
-    e.preventDefault()
-    @trigger("submit", @$("input").val())
+    return unless @$("input").is(":focus")
+
+    switch e.keyCode
+      when 13
+        e.preventDefault()
+
+        val = @$("input").val()
+
+        if val == ""
+          @clear()
+          @trigger("clear")
+        else
+          @trigger("submit", val)
+
+      when 27
+        e.preventDefault()
+
+        @clear()
+        @trigger("clear")
+
+  handleChange: (e) ->
+    @trigger("clear") if @$("input").val() == ""
 
   clear: -> @$('input').val(''); this
   focus: -> @$('input').focus(); this

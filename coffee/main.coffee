@@ -26,11 +26,12 @@ class AppView extends Backbone.View
 
     @lists = [@searchResultsList, @savedAlbumsList]
 
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress")
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress")
 
     @header.bind            "navigate", @navigate
     @header.bind            "syncButtonClick", @startSyncOrSignIn
     @searchBar.bind         "submit",  @startSearch
+    @searchBar.bind         "clear", @cancelSearch
     @searchResultsList.bind "select",  @addAlbum
     AlbumSearchResults.bind "refresh", @finishSearch
     SavedAlbums.bind        "modelSaved", @startSync
@@ -80,6 +81,8 @@ class AppView extends Backbone.View
       when 40
         e.preventDefault()
         @tab(+1)
+      else
+        @searchBar.handleKeypress(e)
 
   tab: (offset) ->
     focus = $(':focus')[0]
@@ -101,6 +104,9 @@ class AppView extends Backbone.View
     @searchBar.hideSpinner()
     @searchResultsList.populate()
     @switchList("searchResultsList")
+
+  cancelSearch: ->
+    @switchList("savedAlbumsList")
 
   addAlbum: (album) ->
     album.addTo(SavedAlbums)
