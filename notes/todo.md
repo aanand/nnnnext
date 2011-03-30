@@ -4,7 +4,6 @@ TODO
 Bugs
 ----
 
-- "Restore album from archive" button
 - Handle multiple accounts
 
 Features
