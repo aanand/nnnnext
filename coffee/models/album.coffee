@@ -8,10 +8,11 @@ class Album extends Backbone.Model
     @update { state: "current" }
 
   rate: (rating) ->
-    @update { rating: rating, state: "archived" }
+    @update { rating: rating }
 
-  delete: ->
-    @update { state: "deleted" }
+  archive: -> @update { state: "archived" }
+  restore: -> @update { state: "current"  }
+  delete:  -> @update { state: "deleted"  }
 
   update: (attrs) ->
     attrs.updated = new Date().getTime()

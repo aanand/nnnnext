@@ -84,25 +84,49 @@ body, input {
     .album-list li .artist {
       font-size: 14px;
       color: #888888; }
-    .album-list li .rate, .album-list li .delete {
+    .album-list li .rate, .album-list li .archive, .album-list li .restore, .album-list li .delete {
       display: none;
       position: absolute;
       cursor: pointer;
       color: #dddddd; }
+    .album-list li:hover .rate, .album-list li:hover .delete, .album-list li:focus .rate, .album-list li:focus .delete {
+      display: block; }
+    .album-list li:hover[data-state="current"] .archive, .album-list li:focus[data-state="current"] .archive {
+      display: block; }
+    .album-list li:hover[data-state="archived"] .restore, .album-list li:focus[data-state="archived"] .restore {
+      display: block; }
+    .album-list li.has-rating .rate {
+      display: block; }
     .album-list li .rate {
       top: 8px;
-      right: 48px; }
+      right: 88px; }
       .album-list li .rate span:after {
         font-size: 20px;
         content: "★"; }
       .album-list li .rate span.selected:after {
-        color: #aa4444; }
+        color: #ddaa44; }
       .album-list li .rate span.rated:after {
         color: #aaaaaa; }
       .album-list li .rate:hover span.rated:after {
         color: #dddddd; }
       .album-list li .rate:hover span.selected.rated:after {
-        color: #aa4444; }
+        color: #ddaa44; }
+    .album-list li .archive {
+      top: 8px;
+      right: 48px; }
+      .album-list li .archive:after {
+        font-size: 26px;
+        content: "✔"; }
+      .album-list li .archive:hover:after {
+        color: #44aa44; }
+    .album-list li .restore {
+      top: 0px;
+      right: 48px; }
+      .album-list li .restore:after {
+        font-size: 36px;
+        content: "⤾"; }
+      .album-list li .restore:hover:after {
+        color: #44aa44; }
     .album-list li .delete {
       top: 8px;
       right: 8px; }
@@ -110,11 +134,7 @@ body, input {
         font-size: 26px;
         content: "✕"; }
       .album-list li .delete:hover:after {
-        color: #aaaaaa; }
-    .album-list li:hover .rate, .album-list li:hover .delete, .album-list li:focus .rate, .album-list li:focus .delete {
-      display: block; }
-    .album-list li.has-rating .rate {
-      display: block; }
+        color: #aa4444; }
 
 .album-search-list li {
   cursor: pointer; }

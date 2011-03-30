@@ -22,8 +22,17 @@ Album = (function() {
   };
   Album.prototype.rate = function(rating) {
     return this.update({
-      rating: rating,
+      rating: rating
+    });
+  };
+  Album.prototype.archive = function() {
+    return this.update({
       state: "archived"
+    });
+  };
+  Album.prototype.restore = function() {
+    return this.update({
+      state: "current"
     });
   };
   Album.prototype["delete"] = function() {

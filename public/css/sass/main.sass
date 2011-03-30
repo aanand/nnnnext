@@ -91,10 +91,6 @@ body, input
     border-width: 0 0 1px 0
     position:     relative
 
-    $control-normal: #ddd
-    $rating-normal:  #aaa
-    $control-hover:  #a44
-
     &:focus
       background: #def
       outline:    none
@@ -107,31 +103,72 @@ body, input
       font-size: 14px
       color:     #888
 
-    .rate, .delete
+    $control-normal: #ddd
+    $control-rated:  #aaa
+    $control-red:    #a44
+    $control-green:  #4a4
+    $control-yellow: #da4
+
+    .rate, .archive, .restore, .delete
       display:  none
       position: absolute
       cursor:   pointer
       color:    $control-normal
 
+    &:hover, &:focus
+      .rate, .delete
+        display: block
+
+      &[data-state="current"] .archive
+        display: block
+
+      &[data-state="archived"] .restore
+        display: block
+
+    &.has-rating .rate
+      display: block
+
     .rate
       top:   8px
-      right: 48px
+      right: 88px
 
       span:after
         font-size: 20px
         content:   "★"
 
       span.selected:after
-        color: $control-hover
+        color: $control-yellow
 
       span.rated:after
-        color: $rating-normal
+        color: $control-rated
 
       &:hover span.rated:after
         color: $control-normal
 
       &:hover span.selected.rated:after
-        color: $control-hover
+        color: $control-yellow
+
+    .archive
+      top: 8px
+      right: 48px
+
+      &:after
+        font-size: 26px
+        content: "✔"
+
+      &:hover:after
+        color: $control-green
+
+    .restore
+      top: 0px
+      right: 48px
+
+      &:after
+        font-size: 36px
+        content: "⤾"
+
+      &:hover:after
+        color: $control-green
 
     .delete
       top:   8px
@@ -142,14 +179,7 @@ body, input
         content:   "✕"
 
       &:hover:after
-        color: #aaa
-
-    &:hover, &:focus
-      .rate, .delete
-        display: block
-
-    &.has-rating .rate
-      display: block
+        color: $control-red
 
 .album-search-list li
   cursor: pointer

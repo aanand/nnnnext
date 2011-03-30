@@ -50,6 +50,8 @@ SavedAlbumView = (function() {
     <div class="rate">\
       <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
     </div>\
+    <div class="archive"></div>\
+    <div class="restore"></div>\
     <div class="delete"></div>\
     <div class="title"><%= title %></div>\
     <div class="artist"><%= artist %></div>\
@@ -58,11 +60,16 @@ SavedAlbumView = (function() {
     "mouseover .rate span": "highlightStars",
     "mouseout .rate": "clearStars",
     "click .rate span": "rate",
+    "click .archive": "archive",
+    "click .restore": "restore",
     "click .delete": "delete"
   });
   SavedAlbumView.prototype.render = function() {
-    var rating, stars;
+    var rating, stars, state;
     SavedAlbumView.__super__.render.call(this);
+    if (state = this.model.get("state")) {
+      $(this.el).attr("data-state", state);
+    }
     rating = this.model.get("rating");
     if (rating != null) {
       stars = this.$(".rate span").get();
@@ -80,6 +87,12 @@ SavedAlbumView = (function() {
   };
   SavedAlbumView.prototype.rate = function(e) {
     return this.model.rate(parseInt($(e.target).attr('data-rating')));
+  };
+  SavedAlbumView.prototype.archive = function() {
+    return this.model.archive();
+  };
+  SavedAlbumView.prototype.restore = function() {
+    return this.model.restore();
   };
   SavedAlbumView.prototype["delete"] = function() {
     return this.model["delete"]();

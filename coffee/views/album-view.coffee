@@ -29,6 +29,8 @@ class SavedAlbumView extends AlbumView
     <div class="rate">
       <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
     </div>
+    <div class="archive"></div>
+    <div class="restore"></div>
     <div class="delete"></div>
     <div class="title"><%= title %></div>
     <div class="artist"><%= artist %></div>
@@ -39,10 +41,14 @@ class SavedAlbumView extends AlbumView
       "mouseover .rate span": "highlightStars"
       "mouseout .rate":       "clearStars"
       "click .rate span":     "rate"
+      "click .archive":       "archive"
+      "click .restore":       "restore"
       "click .delete":        "delete"
 
   render: ->
     super()
+
+    $(@el).attr("data-state", state) if state = @model.get("state")
 
     rating = @model.get("rating")
 
@@ -64,8 +70,9 @@ class SavedAlbumView extends AlbumView
   rate: (e) ->
     @model.rate(parseInt($(e.target).attr('data-rating')))
 
-  delete: ->
-    @model.delete()
+  archive: -> @model.archive()
+  restore: -> @model.restore()
+  delete:  -> @model.delete()
 
   show: -> $(@el).show()
   hide: -> $(@el).hide()
