@@ -1,6 +1,0 @@
-[submodule "public/js/Backbone.localStorage"]
-	path = public/js/Backbone.localStorage
-	url = https://github.com/stefl/Backbone.localStorage.git
-[submodule "public/js/backbone"]
-	path = public/js/backbone
-	url = https://github.com/documentcloud/backbone.git
