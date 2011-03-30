@@ -17,3 +17,5 @@ Ops
 ---
 
 - Redirect www.nnnnext.com to nnnnext.com
+- Optimise page speed
+
