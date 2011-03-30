@@ -5,6 +5,7 @@ $:.unshift("lib")
 
 # stdlib
 require "json"
+require "uri"
 
 # gems
 require "camping"
@@ -45,19 +46,19 @@ module Nnnnext
     end
   end
 
-  def self.mongoid
-    @mongoid ||= Hash.new { |hsh, key| ENV["MONGOID_#{key.upcase}"] }.tap do |mongoid|
-      mongoid_file = root + "config/mongoid.yml"
-
-      if File.exist?(mongoid_file)
-        mongoid.merge!(YAML.load_file(mongoid_file))
-      end
-    end
-  end
-
   Mongoid.configure do |config|
-    config.from_hash(mongoid)
-    config.logger = Logger.new(mongoid["log_file"]) if mongoid.has_key?("log_file")
+    mongoid_file = root + "config/mongoid.yml"
+
+    if File.exist?(mongoid_file)
+      c = YAML.load_file(mongoid_file)
+      config.from_hash(c)
+      config.logger = Logger.new(c["log_file"]) if c.has_key?("log_file")
+    end
+
+    if ENV.has_key?("MONGOHQ_URL")
+      uri = URI.parse(ENV["MONGOHQ_URL"])
+      config.master = Mongo::Connection.new(uri.host, uri.port).db(uri.path[1..-1])
+    end
   end
 
   set :views, root + "views"
