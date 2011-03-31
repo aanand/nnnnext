@@ -103,6 +103,16 @@ module Nnnnext::Controllers
     end
   end
 
+  class ConcatenatedJavascript < R("/all.js")
+    def get
+      puts "concatenating javascript..."
+      paths = js_files.map { |p| "#{Nnnnext.root}/public#{p}" }
+      @headers["Content-Type"] = "text/javascript; charset=utf-8"
+      @headers["Cache-Control"] = "public; max-age=3600"
+      paths.map { |p| File.read(p) }.join
+    end
+  end
+
   class AuthTwitterCallback
     def get
       auth = @env['omniauth.auth']
@@ -182,6 +192,14 @@ module Nnnnext::Helpers
   end
 
   def js_includes
+    if ENV["CONCATENATE_JS"] == "true"
+      ["/all.js?#{File.mtime(__FILE__).to_i}"]
+    else
+      js_files
+    end
+  end
+
+  def js_files
     js = %w(jquery
             json2
             underscore
