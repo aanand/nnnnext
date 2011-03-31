@@ -97,12 +97,6 @@ SavedAlbumView = (function() {
   SavedAlbumView.prototype["delete"] = function() {
     return this.model["delete"]();
   };
-  SavedAlbumView.prototype.show = function() {
-    return $(this.el).show();
-  };
-  SavedAlbumView.prototype.hide = function() {
-    return $(this.el).hide();
-  };
   return SavedAlbumView;
 })();
 SearchAlbumView = (function() {

@@ -150,3 +150,8 @@ body, input {
     color: #aaaaaa;
     border: none;
     font-size: 20px; }
+
+.friend-list {
+  color: #888888; }
+  .friend-list a {
+    color: #5f9410; }

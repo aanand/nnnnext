@@ -10,9 +10,6 @@ class AlbumList extends Backbone.View
   makeView: (album) ->
     album.view = new @itemViewClass({model: album, list: this}).render()
 
-  show: -> $(@el).show()
-  hide: -> $(@el).hide()
-
 _.extend AlbumList.prototype, Tabbable, {
   getTabbableElements: ->
     @collection.map (album) -> album.view.el

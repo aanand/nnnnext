@@ -4,6 +4,8 @@
 
 $vertical-margin: 40px
 
+$primary: #5f9410
+
 body, input
   font-family: helvetica
   color:       #444
@@ -37,7 +39,7 @@ body, input
     text-decoration: none
 
     &.current
-      color: #5f9410
+      color: $primary
 
   .nav
     list-style: none
@@ -202,3 +204,9 @@ body, input
     color: #aaa
     border: none
     font-size: 20px
+
+.friend-list
+  color: #888
+
+  a
+    color: $primary

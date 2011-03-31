@@ -40,10 +40,11 @@ AppView = (function() {
     this.savedAlbumsList = new SavedAlbumsList({
       collection: SavedAlbums
     });
-    this.lists = [this.searchResultsList, this.savedAlbumsList];
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress");
+    this.friendList = new FriendList;
+    this.views = [this.searchResultsList, this.savedAlbumsList, this.friendList];
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress");
     this.header.bind("navigate", this.navigate);
-    this.header.bind("syncButtonClick", this.startSyncOrSignIn);
+    this.header.bind("syncButtonClick", this.startSync);
     this.searchBar.bind("submit", this.startSearch);
     this.searchBar.bind("clear", this.cancelSearch);
     this.searchResultsList.bind("select", this.addAlbum);
@@ -56,9 +57,10 @@ AppView = (function() {
     this.el.append(this.searchBar.render().el);
     this.el.append(this.searchResultsList.render().el);
     this.el.append(this.savedAlbumsList.render().el);
+    this.el.append(this.friendList.render().el);
     this.savedAlbumsList.populate();
     this.savedAlbumsList.filter("current");
-    this.switchList("savedAlbumsList");
+    this.switchView("savedAlbumsList");
     this.searchBar.focus();
     return this.startSync();
   };
@@ -68,15 +70,6 @@ AppView = (function() {
     }
     this.header.syncing(true);
     return Sync.start(SavedAlbums, "/albums/sync");
-  };
-  AppView.prototype.startSyncOrSignIn = function() {
-    if (typeof UserInfo != "undefined" && UserInfo !== null) {
-      return this.startSync();
-    } else {
-      if (window.confirm("Sign in with Twitter to start saving your list?")) {
-        return window.location.href = "/auth/twitter";
-      }
-    }
   };
   AppView.prototype.finishSync = function() {
     window.setTimeout((__bind(function() {
@@ -89,9 +82,13 @@ AppView = (function() {
   AppView.prototype.navigate = function(href) {
     switch (href) {
       case "/current":
+        this.switchView("savedAlbumsList");
         return this.savedAlbumsList.filter("current");
       case "/archived":
+        this.switchView("savedAlbumsList");
         return this.savedAlbumsList.filter("archived");
+      case "/friends":
+        return this.switchView("friendList");
     }
   };
   AppView.prototype.handleKeypress = function(e) {
@@ -131,30 +128,30 @@ AppView = (function() {
   AppView.prototype.finishSearch = function() {
     this.searchBar.hideSpinner();
     this.searchResultsList.populate();
-    return this.switchList("searchResultsList");
+    return this.switchView("searchResultsList");
   };
   AppView.prototype.cancelSearch = function() {
-    return this.switchList("savedAlbumsList");
+    return this.switchView("savedAlbumsList");
   };
   AppView.prototype.addAlbum = function(album) {
     album.addTo(SavedAlbums);
-    this.switchList("savedAlbumsList");
+    this.switchView("savedAlbumsList");
     this.searchBar.clear().focus();
     return this.header.switchTo("nav");
   };
-  AppView.prototype.switchList = function(listName) {
-    this.lists.forEach(function(l) {
+  AppView.prototype.switchView = function(listName) {
+    this.views.forEach(function(l) {
       return l.hide();
     });
-    this.currentList = this[listName];
-    this.currentList.show();
+    this.currentView = this[listName];
+    this.currentView.show();
     return this.setTabIndex(0);
   };
   return AppView;
 })();
 _.extend(AppView.prototype, Tabbable, {
   getTabbableElements: function() {
-    return this.searchBar.getTabbableElements().concat(this.currentList.getTabbableElements());
+    return this.searchBar.getTabbableElements().concat(this.currentView.getTabbableElements());
   }
 });
 App = new AppView;

@@ -7,10 +7,11 @@ class Header extends Backbone.View
       <ul class="nav">
         <li class="current"><a href="/current">Current</a></li>
         <li class="archived"><a href="/archived">Archived</a></li>
+        <li class="friends"><a href="/friends">Friends</a></li>
       </ul>
     </div>
 
-    <div class="sync-controls">
+    <div class="sync-controls" style="display:none">
       <div class="button"/>
       <div class="spinner" style="display: none"/>
     </div>
@@ -66,6 +67,8 @@ class Header extends Backbone.View
     @section = newSection
 
   syncing: (inProgress) ->
+    @$(".sync-controls").show()
+
     if inProgress
       @$(".sync-controls .button").hide()
       @$(".sync-controls .spinner").show()

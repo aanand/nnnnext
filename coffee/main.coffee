@@ -25,13 +25,14 @@ class AppView extends Backbone.View
     @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
     @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
+    @friendList         = new FriendList
 
-    @lists = [@searchResultsList, @savedAlbumsList]
+    @views = [@searchResultsList, @savedAlbumsList, @friendList]
 
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "startSyncOrSignIn", "finishSync", "handleKeypress")
+    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress")
 
     @header.bind            "navigate", @navigate
-    @header.bind            "syncButtonClick", @startSyncOrSignIn
+    @header.bind            "syncButtonClick", @startSync
     @searchBar.bind         "submit",  @startSearch
     @searchBar.bind         "clear", @cancelSearch
     @searchResultsList.bind "select",  @addAlbum
@@ -45,10 +46,11 @@ class AppView extends Backbone.View
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
     @el.append(@savedAlbumsList.render().el)
+    @el.append(@friendList.render().el)
 
     @savedAlbumsList.populate()
     @savedAlbumsList.filter("current")
-    @switchList("savedAlbumsList")
+    @switchView("savedAlbumsList")
     @searchBar.focus()
 
     @startSync()
@@ -58,13 +60,6 @@ class AppView extends Backbone.View
     @header.syncing(true)
     Sync.start(SavedAlbums, "/albums/sync")
 
-  startSyncOrSignIn: ->
-    if UserInfo?
-      @startSync()
-    else
-      if window.confirm("Sign in with Twitter to start saving your list?")
-        window.location.href = "/auth/twitter"
-
   finishSync: ->
     window.setTimeout((=> @header.syncing(false)), 500)
     @header.switchTo("nav") if SavedAlbums.length > 0
@@ -72,9 +67,13 @@ class AppView extends Backbone.View
   navigate: (href) ->
     switch href
       when "/current"
+        @switchView("savedAlbumsList")
         @savedAlbumsList.filter("current")
       when "/archived"
+        @switchView("savedAlbumsList")
         @savedAlbumsList.filter("archived")
+      when "/friends"
+        @switchView("friendList")
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -106,28 +105,28 @@ class AppView extends Backbone.View
   finishSearch: ->
     @searchBar.hideSpinner()
     @searchResultsList.populate()
-    @switchList("searchResultsList")
+    @switchView("searchResultsList")
 
   cancelSearch: ->
-    @switchList("savedAlbumsList")
+    @switchView("savedAlbumsList")
 
   addAlbum: (album) ->
     album.addTo(SavedAlbums)
 
-    @switchList("savedAlbumsList")
+    @switchView("savedAlbumsList")
     @searchBar.clear().focus()
     @header.switchTo("nav")
 
-  switchList: (listName) ->
-    @lists.forEach (l) -> l.hide()
-    @currentList = this[listName]
-    @currentList.show()
+  switchView: (listName) ->
+    @views.forEach (l) -> l.hide()
+    @currentView = this[listName]
+    @currentView.show()
     @setTabIndex(0)
 
 _.extend AppView.prototype, Tabbable, {
   getTabbableElements: ->
     @searchBar.getTabbableElements()
-      .concat(@currentList.getTabbableElements())
+      .concat(@currentView.getTabbableElements())
 }
 
 App = new AppView

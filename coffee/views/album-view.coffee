@@ -74,9 +74,6 @@ class SavedAlbumView extends AlbumView
   restore: -> @model.restore()
   delete:  -> @model.delete()
 
-  show: -> $(@el).show()
-  hide: -> $(@el).hide()
-
 class SearchAlbumView extends AlbumView
   template: _.template('
     <div class="title"><%= title %></div>

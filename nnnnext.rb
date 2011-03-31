@@ -191,11 +191,13 @@ module Nnnnext::Helpers
 
     js += %w(models/album
              views/tabbable
+             views/showable
              views/banner
              views/header
              views/album-view
              views/album-list
              views/album-search-bar
+             views/friend-list
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }

@@ -26,12 +26,6 @@ AlbumList = (function() {
       list: this
     }).render();
   };
-  AlbumList.prototype.show = function() {
-    return $(this.el).show();
-  };
-  AlbumList.prototype.hide = function() {
-    return $(this.el).hide();
-  };
   return AlbumList;
 })();
 _.extend(AlbumList.prototype, Tabbable, {
