@@ -191,6 +191,7 @@ module Nnnnext::Helpers
 
     js += %w(models/album
              views/tabbable
+             views/banner
              views/header
              views/album-view
              views/album-list

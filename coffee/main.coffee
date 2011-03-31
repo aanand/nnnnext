@@ -12,6 +12,8 @@ class AppView extends Backbone.View
   initialize: ->
     SavedAlbums.fetch()
 
+    @banner = new Banner
+
     @header = new Header
     @header.href = "/current"
 
@@ -38,6 +40,7 @@ class AppView extends Backbone.View
     Sync.bind               "finish",  @finishSync
     $(window).bind          "keydown", @handleKeypress
 
+    @el.append(@banner.render().el)
     @el.append(@header.render().el)
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)

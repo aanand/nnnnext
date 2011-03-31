@@ -23,6 +23,7 @@ AppView = (function() {
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
     SavedAlbums.fetch();
+    this.banner = new Banner;
     this.header = new Header;
     this.header.href = "/current";
     if (SavedAlbums.length > 0) {
@@ -50,6 +51,7 @@ AppView = (function() {
     SavedAlbums.bind("modelSaved", this.startSync);
     Sync.bind("finish", this.finishSync);
     $(window).bind("keydown", this.handleKeypress);
+    this.el.append(this.banner.render().el);
     this.el.append(this.header.render().el);
     this.el.append(this.searchBar.render().el);
     this.el.append(this.searchResultsList.render().el);

@@ -2,14 +2,28 @@
   -webkit-box-shadow: $args
   -moz-box-shadow:    $args
 
+$vertical-margin: 40px
+
 body, input
   font-family: helvetica
   color:       #444
 
 #app
   width:  520px
-  margin: 40px auto
+  margin: $vertical-margin auto
   position: relative
+
+.banner
+  $width: 200px
+  $height: 400px
+  $vertical-offset: 18px
+
+  position: absolute
+  left: -$width
+  top: -$vertical-margin
+  width: $width
+  height: $height - $vertical-offset
+  background: url(/img/banner.png) 0 (-$vertical-offset)
 
 .header
   font-size:     20px

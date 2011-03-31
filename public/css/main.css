@@ -8,6 +8,14 @@ body, input {
   margin: 40px auto;
   position: relative; }
 
+.banner {
+  position: absolute;
+  left: -200px;
+  top: -40px;
+  width: 200px;
+  height: 382px;
+  background: url(/img/banner.png) 0 -18px; }
+
 .header {
   font-size: 20px;
   height: 30px;
