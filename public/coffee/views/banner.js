@@ -13,5 +13,14 @@ Banner = (function() {
   }
   __extends(Banner, Backbone.View);
   Banner.prototype.className = 'banner';
+  Banner.prototype.template = _.template('\
+    <div class="title"/>\
+    <div class="slogan"/>\
+    <a class="login" href="/auth/twitter"/>\
+  ');
+  Banner.prototype.render = function() {
+    $(this.el).html(this.template());
+    return this;
+  };
   return Banner;
 })();
