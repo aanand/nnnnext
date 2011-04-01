@@ -4,7 +4,9 @@ class Banner extends Backbone.View
   template: _.template('
     <div class="title"/>
     <div class="slogan"/>
-    <a class="login" href="/auth/twitter"/>
+    <div class="login">
+      <a href="/auth/twitter"/>
+    </div>
   ')
 
   render: ->

@@ -2,6 +2,10 @@
   -webkit-box-shadow: $args
   -moz-box-shadow:    $args
 
+=border-radius($x)
+  -webkit-border-radius: $x
+  -moz-border-radius:    $x
+
 $vertical-margin: 40px
 
 $primary: #5f9410
@@ -40,6 +44,22 @@ body, input
     height:     37px
     margin-top: 30px
     background: url(/img/slogan.png)
+
+  .login
+    background: rgba(0,0,0,0.35)
+    padding: 5px
+    margin: 30px -5px 0
+    +border-radius(5px)
+
+    a
+      display:    block
+      width:      115px
+      height:     43px
+      background: url(/img/login.png)
+      opacity:    0.9
+
+      &:hover
+        opacity: 1
 
 .header
   font-size:     20px

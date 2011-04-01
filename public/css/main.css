@@ -27,6 +27,20 @@ body, input {
     height: 37px;
     margin-top: 30px;
     background: url(/img/slogan.png); }
+  .banner .login {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 5px;
+    margin: 30px -5px 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px; }
+    .banner .login a {
+      display: block;
+      width: 115px;
+      height: 43px;
+      background: url(/img/login.png);
+      opacity: 0.9; }
+      .banner .login a:hover {
+        opacity: 1; }
 
 .header {
   font-size: 20px;

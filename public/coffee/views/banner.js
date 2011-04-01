@@ -16,7 +16,9 @@ Banner = (function() {
   Banner.prototype.template = _.template('\
     <div class="title"/>\
     <div class="slogan"/>\
-    <a class="login" href="/auth/twitter"/>\
+    <div class="login">\
+      <a href="/auth/twitter"/>\
+    </div>\
   ');
   Banner.prototype.render = function() {
     $(this.el).html(this.template());
