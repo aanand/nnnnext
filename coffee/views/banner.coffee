@@ -11,5 +11,6 @@ class Banner extends Backbone.View
 
   render: ->
     $(@el).html(@template())
+    @$(".slogan, .login").hide() if UserInfo?
     this
 

@@ -22,6 +22,9 @@ Banner = (function() {
   ');
   Banner.prototype.render = function() {
     $(this.el).html(this.template());
+    if (typeof UserInfo != "undefined" && UserInfo !== null) {
+      this.$(".slogan, .login").hide();
+    }
     return this;
   };
   return Banner;
