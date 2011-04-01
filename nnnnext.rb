@@ -93,6 +93,25 @@ module Nnnnext
   use Rack::Static,
     root: root + "public",
     urls: ["/js", "/coffee", "/css", "/img", "/favicon.ico"]
+
+  class WwwRedirect
+    def initialize(app); @app = app; end
+
+    def call(env)
+      domain = env["HTTP_HOST"]
+      path   = env["PATH_INFO"]
+      www    = /^www\./
+
+      if domain =~ www
+        domain = domain.sub(www, '')
+        [301, {"Location" => "http://#{domain}#{path}"}, []]
+      else
+        @app.call(env)
+      end
+    end
+  end
+
+  use WwwRedirect
 end
 
 module Nnnnext::Controllers
