@@ -17,6 +17,7 @@ require "mongoid"
 
 # lib
 require "album_search"
+require "daemon"
 
 Camping.goes :Nnnnext
 
@@ -76,18 +77,10 @@ module Nnnnext
     use Sass::Plugin::Rack
 
     def self.spawn_coffee_watcher(input, output)
-      cmd = "coffee --bare --watch --output #{output.to_s.inspect} #{input.to_s.inspect}"
-
-      puts "*** spawning: #{cmd}"
-      pid = Process.spawn(cmd, :out => $stdout, :err => $stderr)
-      Process.detach(pid)
-
-      puts "*** coffee pid: #{pid}"
-
-      pid
+      Daemon.spawn("coffee", "coffee --bare --watch --output #{output.to_s.inspect} #{input.to_s.inspect}")
     end
 
-    @coffee_watcher ||= spawn_coffee_watcher(root + "coffee", root + "public/coffee")
+    spawn_coffee_watcher(root + "coffee", root + "public/coffee")
   end
 
   use Rack::Static,
