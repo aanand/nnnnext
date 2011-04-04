@@ -1,5 +1,13 @@
 ENV["PATH"] = "/usr/local/bin:#{ENV['PATH']}"
 
+if defined?(PhusionPassenger)
+  PhusionPassenger.on_event(:starting_worker_process) do |forked|
+    if forked
+      Mongoid.database.connection.reconnect
+    end
+  end
+end
+
 if ENV["RACK_ENV"] == "production"
   $:.unshift "."
   require "nnnnext"
