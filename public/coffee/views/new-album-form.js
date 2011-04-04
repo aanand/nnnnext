@@ -18,11 +18,15 @@ NewAlbumForm = (function() {
     "submit form": "triggerSubmit"
   };
   NewAlbumForm.prototype.template = _.template('\
-    <% if (nothingFound) { %>\
-      <div class="nothing-found">Nothing found in the library. Enter it manually:</div>\
-    <% } %>\
-\
     <form action="javascript:void(0);">\
+      <label for="artist">\
+        <% if (nothingFound) { %>\
+          Nothing found in the library. Enter it manually:\
+        <% } else { %>\
+          Didn’t find what you wanted? Enter it manually:\
+        <% } %>\
+      </label>\
+\
       <input type="text" name="artist" placeholder="Artist"/>\
       <input type="text" name="title"  placeholder="Album Title"/>\
       <button type="submit">Add</button>\

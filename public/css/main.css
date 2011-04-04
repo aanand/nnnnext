@@ -3,11 +3,47 @@ body, input {
   font-family: helvetica;
   color: #444444; }
 
+input,
+button,
+select,
+textarea {
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding;
+  background-clip: padding-box;
+  margin: 0;
+  vertical-align: middle; }
+
 input[type='text'] {
-  font-size: 24px;
-  padding: 0.33em;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  height: 1.8em;
+  padding: 5px 4px 3px;
   border: 1px solid #cccccc;
   outline: none; }
+
+button {
+  padding: 4px 8px;
+  border: 1px solid #cccccc;
+  border-bottom-color: #888888;
+  border-right-color: #888888;
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#bbbbbb));
+  background-image: -moz-linear-gradient(center top, #eeeeee 0%, #bbbbbb 100%);
+  background-image: linear-gradient(center top, #eeeeee 0%, #bbbbbb 100%);
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  color: #444444;
+  text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.75);
+  height: 1.8em; }
+
+input.placeholder_text,
+textarea.placeholder_text,
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #cccccc; }
+
+::-webkit-input-placeholder {
+  color: #cccccc; }
 
 #app {
   width: 520px;
@@ -100,6 +136,8 @@ input[type='text'] {
   .album-search-bar input {
     float: left;
     width: 500px;
+    font-size: 24px;
+    padding: 8px;
     -webkit-box-shadow: 1px 1px 2px #aaaaaa;
     -moz-box-shadow: 1px 1px 2px #aaaaaa; }
   .album-search-bar .spinner {
@@ -187,14 +225,17 @@ input[type='text'] {
   cursor: pointer; }
   .album-search-list li.new-album {
     border: none; }
-    .album-search-list li.new-album .nothing-found {
+    .album-search-list li.new-album label {
+      display: block;
       color: #888888;
-      font-size: 20px;
-      margin-bottom: 8px; }
+      font-size: 14px;
+      margin: 8px 0; }
     .album-search-list li.new-album input, .album-search-list li.new-album button {
       font-size: 18px; }
     .album-search-list li.new-album input {
       width: 200px; }
+    .album-search-list li.new-album button {
+      margin: 0; }
 
 .friend-list {
   color: #888888; }
