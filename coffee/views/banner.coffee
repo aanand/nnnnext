@@ -23,7 +23,7 @@ class Banner extends Backbone.View
       e.preventDefault()
 
       $.get this.href, ->
-        if confirm("You've signed out of nnnnext. Sign out of Twitter too?")
+        if confirm("OK, you're signed out of nnnnext. Sign out of Twitter too?")
           window.location.href = "http://twitter.com/logout"
         else
           window.location.reload()

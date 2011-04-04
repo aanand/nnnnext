@@ -34,7 +34,7 @@ Banner = (function() {
     this.$('.signout a').click(function(e) {
       e.preventDefault();
       return $.get(this.href, function() {
-        if (confirm("You've signed out of nnnnext. Sign out of Twitter too?")) {
+        if (confirm("OK, you're signed out of nnnnext. Sign out of Twitter too?")) {
           return window.location.href = "http://twitter.com/logout";
         } else {
           return window.location.reload();
