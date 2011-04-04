@@ -124,7 +124,7 @@ AppView = (function() {
     var focus, indices, nextIndex, nextIndexIndex;
     focus = $(':focus')[0];
     if (focus != null) {
-      indices = $("[tabindex]").get().map(function(e) {
+      indices = $(":visible[tabindex]").get().map(function(e) {
         return e.tabIndex;
       });
       nextIndexIndex = (_.indexOf(indices, focus.tabIndex) + offset + indices.length) % indices.length;

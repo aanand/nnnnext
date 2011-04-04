@@ -109,7 +109,7 @@ class AppView extends Backbone.View
     focus = $(':focus')[0]
 
     if focus?
-      indices        = $("[tabindex]").get().map (e) -> e.tabIndex
+      indices        = $(":visible[tabindex]").get().map (e) -> e.tabIndex
       nextIndexIndex = (_.indexOf(indices, focus.tabIndex) + offset + indices.length) % indices.length
       nextIndex      = indices[nextIndexIndex]
 
