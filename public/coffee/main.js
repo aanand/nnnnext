@@ -1,4 +1,4 @@
-var AlbumSearchResults, App, AppView, SavedAlbums;
+var AlbumSearchResults, App, AppView, SavedAlbums, storageNamespace, storageNamespacePrefix, unsyncedStorageNamespace;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,8 +7,25 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+storageNamespacePrefix = "nnnnext";
+unsyncedStorageNamespace = "" + storageNamespacePrefix + "/unsynced";
+storageNamespace = null;
+if (typeof UserInfo != "undefined" && UserInfo !== null) {
+  storageNamespace = "" + storageNamespacePrefix + "/" + UserInfo._id;
+  _.keys(localStorage).forEach(function(key) {
+    var newKey, value;
+    if (key.search("" + unsyncedStorageNamespace + "/") === 0) {
+      value = localStorage.getItem(key);
+      newKey = key.replace(unsyncedStorageNamespace, storageNamespace);
+      localStorage.setItem(newKey, value);
+      return localStorage.removeItem(key);
+    }
+  });
+} else {
+  storageNamespace = unsyncedStorageNamespace;
+}
 SavedAlbums = new AlbumCollection({
-  localStorage: new Store("albums"),
+  localStorage: new Store("" + storageNamespace + "/albums"),
   sync: Backbone.localSync,
   comparator: function(a) {
     return -a.get("stateChanged");

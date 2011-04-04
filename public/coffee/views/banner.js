@@ -15,16 +15,32 @@ Banner = (function() {
   Banner.prototype.className = 'banner';
   Banner.prototype.template = _.template('\
     <div class="title"/>\
-    <div class="slogan"/>\
-    <div class="login">\
-      <a href="/auth/twitter"/>\
-    </div>\
+\
+    <% if (signedIn) { %>\
+      <div class="signout">\
+        <a href="/signout"/>\
+      </div>\
+    <% } else { %>\
+      <div class="slogan"/>\
+      <div class="signin">\
+        <a href="/auth/twitter"/>\
+      </div>\
+    <% } %>\
   ');
   Banner.prototype.render = function() {
-    $(this.el).html(this.template());
-    if (typeof UserInfo != "undefined" && UserInfo !== null) {
-      this.$(".slogan, .login").hide();
-    }
+    $(this.el).html(this.template({
+      signedIn: typeof UserInfo != "undefined" && UserInfo !== null
+    }));
+    this.$('.signout a').click(function(e) {
+      e.preventDefault();
+      return $.get(this.href, function() {
+        if (confirm("You've signed out of nnnnext. Sign out of Twitter too?")) {
+          return window.location.href = "http://twitter.com/logout";
+        } else {
+          return window.location.reload();
+        }
+      });
+    });
     return this;
   };
   return Banner;

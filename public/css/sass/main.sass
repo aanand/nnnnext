@@ -51,7 +51,7 @@ input[type='text']
     margin-top: 30px
     background: url(/img/slogan.png)
 
-  .login
+  .signin
     background: rgba(0,0,0,0.35)
     padding: 5px
     margin: 30px -5px 0
@@ -61,8 +61,22 @@ input[type='text']
       display:    block
       width:      115px
       height:     43px
-      background: url(/img/login.png)
+      background: url(/img/signin.png)
       opacity:    0.9
+
+      &:hover
+        opacity: 1
+
+  .signout
+    margin-top: 30px
+    text-align: center
+
+    a
+      display:    inline-block
+      width:      50px
+      height:     10px
+      background: url(/img/signout.png)
+      opacity:    0.5
 
       &:hover
         opacity: 1

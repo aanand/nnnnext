@@ -3,14 +3,30 @@ class Banner extends Backbone.View
 
   template: _.template('
     <div class="title"/>
-    <div class="slogan"/>
-    <div class="login">
-      <a href="/auth/twitter"/>
-    </div>
+
+    <% if (signedIn) { %>
+      <div class="signout">
+        <a href="/signout"/>
+      </div>
+    <% } else { %>
+      <div class="slogan"/>
+      <div class="signin">
+        <a href="/auth/twitter"/>
+      </div>
+    <% } %>
   ')
 
   render: ->
-    $(@el).html(@template())
-    @$(".slogan, .login").hide() if UserInfo?
+    $(@el).html(@template({signedIn: UserInfo?}))
+
+    @$('.signout a').click (e) ->
+      e.preventDefault()
+
+      $.get this.href, ->
+        if confirm("You've signed out of nnnnext. Sign out of Twitter too?")
+          window.location.href = "http://twitter.com/logout"
+        else
+          window.location.reload()
+
     this
 

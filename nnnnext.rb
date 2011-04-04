@@ -141,6 +141,13 @@ module Nnnnext::Controllers
     end
   end
 
+  class Signout
+    def get
+      @state[:user_id] = nil
+      ""
+    end
+  end
+
   class AlbumsSearch
     def get
       AlbumSearch.search(@input.q).to_json
