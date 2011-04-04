@@ -270,7 +270,7 @@ module Nnnnext::Models
     end
 
     def as_json(options=nil)
-      attributes.except(:album_id).merge(
+      attributes.except(:_id, :user_id, :album_id).merge(
         id:      album.id,
         artist:  album.artist,
         title:   album.title,
