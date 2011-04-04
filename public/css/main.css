@@ -3,6 +3,12 @@ body, input {
   font-family: helvetica;
   color: #444444; }
 
+input[type='text'] {
+  font-size: 24px;
+  padding: 0.33em;
+  border: 1px solid #cccccc;
+  outline: none; }
+
 #app {
   width: 520px;
   margin: 40px auto;
@@ -82,11 +88,7 @@ body, input {
   margin-bottom: 16px; }
   .album-search-bar input {
     float: left;
-    font-size: 24px;
-    padding: 8px;
     width: 500px;
-    border: 1px solid #cccccc;
-    outline: none;
     -webkit-box-shadow: 1px 1px 2px #aaaaaa;
     -moz-box-shadow: 1px 1px 2px #aaaaaa; }
   .album-search-bar .spinner {
@@ -172,10 +174,16 @@ body, input {
 
 .album-search-list li {
   cursor: pointer; }
-  .album-search-list li.nothing-found {
-    color: #aaaaaa;
-    border: none;
-    font-size: 20px; }
+  .album-search-list li.new-album {
+    border: none; }
+    .album-search-list li.new-album .nothing-found {
+      color: #888888;
+      font-size: 20px;
+      margin-bottom: 8px; }
+    .album-search-list li.new-album input, .album-search-list li.new-album button {
+      font-size: 18px; }
+    .album-search-list li.new-album input {
+      width: 200px; }
 
 .friend-list {
   color: #888888; }

@@ -99,9 +99,16 @@ AlbumSearchList = (function() {
   AlbumSearchList.prototype.className = "" + AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
     AlbumSearchList.__super__.populate.call(this);
-    if (this.collection.length === 0) {
-      return $(this.el).html('<li class="nothing-found">Nothing found.</li>');
-    }
+    this.newAlbumForm = new NewAlbumForm({
+      nothingFound: this.collection.length === 0
+    });
+    this.newAlbumForm.bind("submit", __bind(function(model) {
+      return this.trigger("select", model);
+    }, this));
+    return $(this.el).append(this.newAlbumForm.render().el);
+  };
+  AlbumSearchList.prototype.getTabbableElements = function() {
+    return AlbumSearchList.__super__.getTabbableElements.call(this).concat(this.newAlbumForm.getTabbableElements());
   };
   return AlbumSearchList;
 })();

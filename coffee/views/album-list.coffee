@@ -69,5 +69,10 @@ class AlbumSearchList extends AlbumList
   populate: ->
     super()
 
-    if @collection.length == 0
-      $(@el).html('<li class="nothing-found">Nothing found.</li>')
+    @newAlbumForm = new NewAlbumForm({nothingFound: (@collection.length == 0)})
+    @newAlbumForm.bind "submit", (model) => @trigger("select", model)
+    $(@el).append(@newAlbumForm.render().el)
+
+  getTabbableElements: ->
+    super().concat(@newAlbumForm.getTabbableElements())
+

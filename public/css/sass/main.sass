@@ -14,6 +14,12 @@ body, input
   font-family: helvetica
   color:       #444
 
+input[type='text']
+  font-size: 24px
+  padding:   0.33em
+  border:    1px solid #ccc
+  outline:   none
+
 #app
   width:  520px
   margin: $vertical-margin auto
@@ -112,11 +118,7 @@ body, input
 
   input
     float:     left
-    font-size: 24px
-    padding:   8px
     width:     500px
-    border:    1px solid #ccc
-    outline:   none
     +box-shadow(1px 1px 2px #aaa)
 
   .spinner
@@ -234,10 +236,19 @@ body, input
 .album-search-list li
   cursor: pointer
 
-  &.nothing-found
-    color: #aaa
+  &.new-album
     border: none
-    font-size: 20px
+
+    .nothing-found
+      color:         #888
+      font-size:     20px
+      margin-bottom: 8px
+
+    input, button
+      font-size: 18px
+
+    input
+      width: 200px
 
 .friend-list
   color: #888

@@ -227,6 +227,7 @@ module Nnnnext::Helpers
              views/album-view
              views/album-list
              views/album-search-bar
+             views/new-album-form
              views/friend-list
              sync
              main
