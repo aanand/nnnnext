@@ -257,7 +257,7 @@ module Nnnnext::Helpers
   end
 
   def logger
-    ::LOGGER
+    defined?(LOGGER) ? LOGGER : STDOUT
   end
 
   def js_includes
