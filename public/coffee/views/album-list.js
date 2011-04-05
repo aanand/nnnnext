@@ -1,4 +1,4 @@
-var AlbumList, AlbumSearchList, SavedAlbumsList;
+var AlbumList, AlbumSearchList, FriendsAlbumsList, SavedAlbumsList;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -11,20 +11,23 @@ AlbumList = (function() {
   function AlbumList() {
     AlbumList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumList, Backbone.View);
+  __extends(AlbumList, View);
   AlbumList.prototype.tagName = 'ul';
   AlbumList.prototype.className = 'album-list';
+  AlbumList.prototype.initialize = function(options) {
+    return _.bindAll(this, "populate");
+  };
   AlbumList.prototype.populate = function() {
     $(this.el).empty();
     return this.collection.forEach(__bind(function(album) {
-      return $(this.el).append(this.makeView(album).el);
+      return $(this.el).append(this.makeView(album).render().el);
     }, this));
   };
   AlbumList.prototype.makeView = function(album) {
     return album.view = new this.itemViewClass({
       model: album,
       list: this
-    }).render();
+    });
   };
   return AlbumList;
 })();
@@ -43,15 +46,11 @@ SavedAlbumsList = (function() {
   SavedAlbumsList.prototype.itemViewClass = SavedAlbumView;
   SavedAlbumsList.prototype.className = "" + AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
+    SavedAlbumsList.__super__.initialize.call(this, options);
     _.bindAll(this, "makeView", "modelSaved");
     this.collection.bind("add", this.makeView);
-    return this.collection.bind("modelSaved", this.modelSaved);
-  };
-  SavedAlbumsList.prototype.makeView = function(album) {
-    var view;
-    view = SavedAlbumsList.__super__.makeView.call(this, album);
-    this.showOrHideView(album);
-    return view;
+    this.collection.bind("modelSaved", this.modelSaved);
+    return this.collection.bind("modelDestroyed", this.modelDestroyed);
   };
   SavedAlbumsList.prototype.filter = function(state) {
     this.filterState = state;
@@ -88,6 +87,11 @@ SavedAlbumsList = (function() {
       }
     }
   };
+  SavedAlbumsList.prototype.modelDestroyed = function(album) {
+    if (album.view != null) {
+      return album.view.remove();
+    }
+  };
   return SavedAlbumsList;
 })();
 AlbumSearchList = (function() {
@@ -111,4 +115,17 @@ AlbumSearchList = (function() {
     return AlbumSearchList.__super__.getTabbableElements.call(this).concat(this.newAlbumForm.getTabbableElements());
   };
   return AlbumSearchList;
+})();
+FriendsAlbumsList = (function() {
+  function FriendsAlbumsList() {
+    FriendsAlbumsList.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FriendsAlbumsList, AlbumList);
+  FriendsAlbumsList.prototype.itemViewClass = FriendsAlbumView;
+  FriendsAlbumsList.prototype.className = "" + AlbumList.prototype.className + " friends-albums-list";
+  FriendsAlbumsList.prototype.initialize = function(options) {
+    FriendsAlbumsList.__super__.initialize.call(this, options);
+    return this.collection.bind("refresh", this.populate);
+  };
+  return FriendsAlbumsList;
 })();

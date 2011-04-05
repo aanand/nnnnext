@@ -3,8 +3,9 @@ var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments)
 Sync = {
   start: function(collection, url) {
     var json;
+    collection.deDupe();
     json = JSON.stringify(collection.models.map(function(a) {
-      return a.attributes;
+      return a.toJSON();
     }));
     return $.ajax({
       type: "POST",
@@ -39,11 +40,7 @@ Sync = {
         return clientAlbum = collection.create(serverAlbum);
       }
     }, this));
-    if (resync) {
-      return this.start(collection, url);
-    } else {
-      return this.trigger("finish");
-    }
+    return this.trigger("finish");
   }
 };
 _.extend(Sync, Backbone.Events);

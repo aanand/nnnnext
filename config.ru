@@ -9,13 +9,16 @@ if defined?(PhusionPassenger)
 end
 
 if ENV["RACK_ENV"] == "production"
+  LOGGER = STDOUT
+
   $:.unshift "."
   require "nnnnext"
   run Camping::Apps.first
 else
-  log = File.open(File.expand_path("../log/development.log", __FILE__), "w")
-  STDOUT.reopen(log)
-  STDERR.reopen(log)
+  LOGGER = File.open(File.expand_path("../log/development.log", __FILE__), "a")
+  LOGGER.sync = true
+  STDOUT.reopen(LOGGER)
+  STDERR.reopen(LOGGER)
 
   require "bundler"
   Bundler.setup

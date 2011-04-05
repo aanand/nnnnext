@@ -1,4 +1,4 @@
-var AlbumView, SavedAlbumView, SearchAlbumView;
+var AlbumView, FriendsAlbumView, SavedAlbumView, SearchAlbumView;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -6,21 +6,45 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 AlbumView = (function() {
   function AlbumView() {
     AlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumView, Backbone.View);
+  __extends(AlbumView, View);
   AlbumView.prototype.tagName = 'li';
   AlbumView.prototype.events = {
-    "keypress": "handleKeypress"
+    "keypress": "handleKeypress",
+    "mouseover": "showOrHideRating",
+    "mouseout": "showOrHideRating"
   };
   AlbumView.prototype.initialize = function(options) {
     return this.list = options.list;
   };
+  AlbumView.prototype.showRating = false;
+  AlbumView.prototype.allowRate = false;
+  AlbumView.prototype.templateVars = function() {
+    return this.model.toJSON();
+  };
   AlbumView.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toJSON()));
+    var rating, stars;
+    $(this.el).html(this.template(this.templateVars()));
+    if (this.showRating) {
+      this.$('.controls').append('\
+        <div class="rate">\
+          <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
+        </div>\
+      ');
+      rating = this.model.get("rating");
+      if (rating != null) {
+        stars = this.$(".rate span").get();
+        $(stars.slice(0, rating)).addClass("rated");
+      }
+      this.showOrHideRating();
+    }
+    if (this.allowRate) {
+      $(this.el).addClass("allow-rate");
+    }
     return this;
   };
   AlbumView.prototype.handleKeypress = function(e) {
@@ -29,6 +53,13 @@ AlbumView = (function() {
     }
     e.preventDefault();
     return this.select();
+  };
+  AlbumView.prototype.showOrHideRating = function(e) {
+    if (this.showRating && (this.model.get("rating") || ($(this.el).is(":hover") && this.allowRate))) {
+      return this.$('.rate').addClass('visible');
+    } else {
+      return this.$('.rate').removeClass('visible');
+    }
   };
   AlbumView.prototype.focus = function(e) {
     return $(this.el).focus();
@@ -47,12 +78,12 @@ SavedAlbumView = (function() {
   }
   __extends(SavedAlbumView, AlbumView);
   SavedAlbumView.prototype.template = _.template('\
-    <div class="rate">\
-      <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
+    <div class="controls">\
+      <div class="delete"></div>\
+      <% if (state == "archived") { %><div class="restore"></div><% } %>\
+      <% if (state == "current")  { %><div class="archive"></div><% } %>\
     </div>\
-    <div class="archive"></div>\
-    <div class="restore"></div>\
-    <div class="delete"></div>\
+\
     <div class="title"><%= title %></div>\
     <div class="artist"><%= artist %></div>\
   ');
@@ -65,19 +96,15 @@ SavedAlbumView = (function() {
     "click .delete": "delete"
   });
   SavedAlbumView.prototype.render = function() {
-    var rating, stars, state;
+    var state;
     SavedAlbumView.__super__.render.call(this);
     if (state = this.model.get("state")) {
       $(this.el).attr("data-state", state);
     }
-    rating = this.model.get("rating");
-    if (rating != null) {
-      stars = this.$(".rate span").get();
-      $(this.el).addClass("has-rating");
-      $(stars.slice(0, rating)).addClass("rated");
-    }
     return this;
   };
+  SavedAlbumView.prototype.showRating = true;
+  SavedAlbumView.prototype.allowRate = true;
   SavedAlbumView.prototype.highlightStars = function(e) {
     this.clearStars();
     return $(e.target).prevAll().andSelf().addClass("selected");
@@ -112,4 +139,39 @@ SearchAlbumView = (function() {
     "click": "select"
   });
   return SearchAlbumView;
+})();
+FriendsAlbumView = (function() {
+  function FriendsAlbumView() {
+    FriendsAlbumView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FriendsAlbumView, AlbumView);
+  FriendsAlbumView.prototype.template = _.template('\
+    <div class="controls">\
+      <div class="add <% if (!inMyList) { %>visible<% } %>"></div>\
+    </div>\
+\
+    <div class="title"><%= title %></div>\
+    <div class="artist"><%= artist %></div>\
+  ');
+  FriendsAlbumView.prototype.templateVars = function() {
+    var vars;
+    vars = FriendsAlbumView.__super__.templateVars.call(this);
+    vars.inMyList = SavedAlbums.any(__bind(function(album) {
+      return album.id === this.model.id && album.get("state") === "current";
+    }, this));
+    return vars;
+  };
+  FriendsAlbumView.prototype.events = {
+    "click .add": "add"
+  };
+  FriendsAlbumView.prototype.showRating = true;
+  FriendsAlbumView.prototype.add = function(e) {
+    this.model.unset("state");
+    this.model.unset("rating");
+    this.model.addTo(SavedAlbums);
+    return this.$('.add').animate({
+      opacity: 0
+    });
+  };
+  return FriendsAlbumView;
 })();

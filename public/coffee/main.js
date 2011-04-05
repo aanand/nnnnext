@@ -36,7 +36,7 @@ AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, Backbone.View);
+  __extends(AppView, View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
     SavedAlbums.fetch();
@@ -57,8 +57,8 @@ AppView = (function() {
     this.savedAlbumsList = new SavedAlbumsList({
       collection: SavedAlbums
     });
-    this.friendList = new FriendList;
-    this.views = [this.searchResultsList, this.savedAlbumsList, this.friendList];
+    this.friendBrowser = new FriendBrowser;
+    this.views = [this.searchResultsList, this.savedAlbumsList, this.friendBrowser];
     _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress");
     this.header.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
@@ -74,7 +74,7 @@ AppView = (function() {
     this.el.append(this.searchBar.render().el);
     this.el.append(this.searchResultsList.render().el);
     this.el.append(this.savedAlbumsList.render().el);
-    this.el.append(this.friendList.render().el);
+    this.el.append(this.friendBrowser.render().el);
     this.savedAlbumsList.populate();
     this.savedAlbumsList.filter("current");
     this.switchView("savedAlbumsList");
@@ -105,7 +105,7 @@ AppView = (function() {
         this.switchView("savedAlbumsList");
         return this.savedAlbumsList.filter("archived");
       case "/friends":
-        return this.switchView("friendList");
+        return this.switchView("friendBrowser");
     }
   };
   AppView.prototype.handleKeypress = function(e) {
@@ -155,14 +155,6 @@ AppView = (function() {
     this.switchView("savedAlbumsList");
     this.searchBar.clear().focus();
     return this.header.switchTo("nav");
-  };
-  AppView.prototype.switchView = function(listName) {
-    this.views.forEach(function(l) {
-      return l.hide();
-    });
-    this.currentView = this[listName];
-    this.currentView.show();
-    return this.setTabIndex(0);
   };
   return AppView;
 })();

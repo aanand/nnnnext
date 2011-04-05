@@ -1,4 +1,4 @@
-class Header extends Backbone.View
+class Header extends View
   className: 'header'
 
   template: _.template('

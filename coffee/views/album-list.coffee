@@ -1,14 +1,17 @@
-class AlbumList extends Backbone.View
+class AlbumList extends View
   tagName: 'ul'
   className: 'album-list'
+
+  initialize: (options) ->
+    _.bindAll(this, "populate")
 
   populate: ->
     $(@el).empty()
     @collection.forEach (album) =>
-      $(@el).append(@makeView(album).el)
+      $(@el).append(@makeView(album).render().el)
 
   makeView: (album) ->
-    album.view = new @itemViewClass({model: album, list: this}).render()
+    album.view = new @itemViewClass({model: album, list: this})
 
 _.extend AlbumList.prototype, Tabbable, {
   getTabbableElements: ->
@@ -20,15 +23,13 @@ class SavedAlbumsList extends AlbumList
   className: "#{AlbumList.prototype.className} saved-albums-list"
 
   initialize: (options) ->
+    super(options)
+
     _.bindAll(this, "makeView", "modelSaved")
 
     @collection.bind "add",        @makeView
     @collection.bind "modelSaved", @modelSaved
-
-  makeView: (album) ->
-    view = super(album)
-    @showOrHideView(album)
-    view
+    @collection.bind "modelDestroyed", @modelDestroyed
 
   filter: (state) ->
     @filterState = state
@@ -62,6 +63,9 @@ class SavedAlbumsList extends AlbumList
       else
         $(albumEl).appendTo(@el)
 
+  modelDestroyed: (album) ->
+    album.view.remove() if album.view?
+
 class AlbumSearchList extends AlbumList
   itemViewClass: SearchAlbumView
   className: "#{AlbumList.prototype.className} album-search-list"
@@ -75,4 +79,12 @@ class AlbumSearchList extends AlbumList
 
   getTabbableElements: ->
     super().concat(@newAlbumForm.getTabbableElements())
+
+class FriendsAlbumsList extends AlbumList
+  itemViewClass: FriendsAlbumView
+  className: "#{AlbumList.prototype.className} friends-albums-list"
+
+  initialize: (options) ->
+    super(options)
+    @collection.bind "refresh", @populate
 

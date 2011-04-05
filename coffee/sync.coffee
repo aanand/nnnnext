@@ -1,6 +1,8 @@
 Sync =
   start: (collection, url) ->
-    json = JSON.stringify(collection.models.map (a) -> a.attributes)
+    collection.deDupe()
+
+    json = JSON.stringify(collection.models.map (a) -> a.toJSON())
 
     $.ajax
       type:        "POST"
@@ -31,10 +33,7 @@ Sync =
         console.log "Album #{serverAlbum.id} does not exist on client. Creating."
         clientAlbum = collection.create(serverAlbum)
 
-    if resync
-      @start(collection, url)
-    else
-      @trigger("finish")
+    @trigger("finish")
 
 _.extend(Sync, Backbone.Events)
 

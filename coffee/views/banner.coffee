@@ -1,4 +1,4 @@
-class Banner extends Backbone.View
+class Banner extends View
   className: 'banner'
 
   template: _.template('

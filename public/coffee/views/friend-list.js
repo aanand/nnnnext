@@ -6,30 +6,49 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 FriendList = (function() {
   function FriendList() {
     FriendList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendList, Backbone.View);
+  __extends(FriendList, View);
+  FriendList.prototype.tagName = 'ul';
   FriendList.prototype.className = 'friend-list';
-  FriendList.prototype.template = _.template('\
-    <div class="signed-in" style="display:none">\
-      Coming soon!\
-    </div>\
-\
-    <div class="not-signed-in">\
-      <a href="/auth/twitter">Connect with Twitter</a>\
-      to share your list with your friends.\
-    </div>\
-  ');
-  FriendList.prototype.render = function() {
-    $(this.el).html(this.template());
+  FriendList.prototype.initialize = function() {
+    return this.collection.bind("refresh", __bind(function() {
+      return this.populate();
+    }, this));
+  };
+  FriendList.prototype.fetch = function() {
     if (typeof UserInfo != "undefined" && UserInfo !== null) {
-      this.$(".signed-in").show();
-      this.$(".not-signed-in").hide();
+      if (!(this.collection.length > 0)) {
+        return this.collection.fetch();
+      }
+    } else {
+      return $(this.el).html('\
+        <li class="not-signed-in">\
+          <a href="/auth/twitter">Connect with Twitter</a>\
+          to share your list with your friends.\
+        </li>\
+      ');
     }
-    return this;
+  };
+  FriendList.prototype.populate = function() {
+    $(this.el).empty();
+    return this.collection.models.forEach(__bind(function(user) {
+      var view;
+      view = new FriendView({
+        model: user,
+        list: this
+      });
+      user.view = view;
+      return $(this.el).append(view.render().el);
+    }, this));
   };
   return FriendList;
 })();
+_.extend(FriendList.prototype, {
+  getTabbableElements: function() {
+    return [];
+  }
+});

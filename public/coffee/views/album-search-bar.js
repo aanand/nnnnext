@@ -11,7 +11,7 @@ AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchBar, Backbone.View);
+  __extends(AlbumSearchBar, View);
   AlbumSearchBar.prototype.template = _.template('\
     <input type="text"/>\
     <div class="spinner" style="display:none"/>\

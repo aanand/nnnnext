@@ -1,23 +1,28 @@
-class FriendList extends Backbone.View
+class FriendList extends View
+  tagName: 'ul'
   className: 'friend-list'
 
-  template: _.template('
-    <div class="signed-in" style="display:none">
-      Coming soon!
-    </div>
+  initialize: ->
+    @collection.bind "refresh", => @populate()
 
-    <div class="not-signed-in">
-      <a href="/auth/twitter">Connect with Twitter</a>
-      to share your list with your friends.
-    </div>
-  ')
-
-  render: ->
-    $(@el).html(@template())
-    
+  fetch: ->
     if UserInfo?
-      @$(".signed-in").show()
-      @$(".not-signed-in").hide()
+      @collection.fetch() unless @collection.length > 0
+    else
+      $(@el).html('
+        <li class="not-signed-in">
+          <a href="/auth/twitter">Connect with Twitter</a>
+          to share your list with your friends.
+        </li>
+      ')
 
-    this
+  populate: ->
+    $(@el).empty()
 
+    @collection.models.forEach (user) =>
+      view = new FriendView({model: user, list: this})
+      user.view = view
+      $(@el).append(view.render().el)
+
+_.extend FriendList.prototype,
+  getTabbableElements: -> []

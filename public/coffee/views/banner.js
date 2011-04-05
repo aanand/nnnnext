@@ -11,7 +11,7 @@ Banner = (function() {
   function Banner() {
     Banner.__super__.constructor.apply(this, arguments);
   }
-  __extends(Banner, Backbone.View);
+  __extends(Banner, View);
   Banner.prototype.className = 'banner';
   Banner.prototype.template = _.template('\
     <div class="title"/>\

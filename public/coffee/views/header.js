@@ -11,7 +11,7 @@ Header = (function() {
   function Header() {
     Header.__super__.constructor.apply(this, arguments);
   }
-  __extends(Header, Backbone.View);
+  __extends(Header, View);
   Header.prototype.className = 'header';
   Header.prototype.template = _.template('\
     <div class="sections">\

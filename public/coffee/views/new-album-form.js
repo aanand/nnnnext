@@ -11,7 +11,7 @@ NewAlbumForm = (function() {
   function NewAlbumForm() {
     NewAlbumForm.__super__.constructor.apply(this, arguments);
   }
-  __extends(NewAlbumForm, Backbone.View);
+  __extends(NewAlbumForm, View);
   NewAlbumForm.prototype.tagName = 'li';
   NewAlbumForm.prototype.className = 'new-album';
   NewAlbumForm.prototype.events = {

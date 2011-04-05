@@ -1,4 +1,4 @@
-class AlbumSearchBar extends Backbone.View
+class AlbumSearchBar extends View
   template: _.template('
     <input type="text"/>
     <div class="spinner" style="display:none"/>

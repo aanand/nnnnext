@@ -14,6 +14,7 @@
 $vertical-margin: 40px
 
 $primary: #5f9410
+$highlight: transparentize($primary, 0.8)
 
 body, input
   font-family: helvetica
@@ -172,7 +173,7 @@ textarea:-moz-placeholder
 
   input
     float:     left
-    width:     500px
+    width:     510px
     font-size: 24px
     padding:   8px
     +box-shadow(1px 1px 2px #aaa)
@@ -186,7 +187,7 @@ textarea:-moz-placeholder
     height:      32px
     background:  url(/img/spinner.gif)
 
-.album-list
+.ui-list
   list-style: none
   margin:     0
   padding:    0
@@ -198,18 +199,36 @@ textarea:-moz-placeholder
     border:       1px solid #ccc
     border-width: 0 0 1px 0
     position:     relative
+    overflow:     hidden
 
     &:focus
-      background: #def
+      background: $highlight
       outline:    none
 
-    .title
+    .primary
       font-size:     18px
       margin-bottom: 2px
 
-    .artist
+      a
+        color: inherit
+        text-decoration: none
+
+        &:hover
+          color: $primary
+
+    .secondary
       font-size: 14px
       color:     #888
+
+.album-list
+  @extend .ui-list
+
+  li
+    .title
+      @extend .primary
+
+    .artist
+      @extend .secondary
 
     $control-normal: #ddd
     $control-rated:  #aaa
@@ -217,38 +236,47 @@ textarea:-moz-placeholder
     $control-green:  #4a4
     $control-yellow: #da4
 
-    .rate, .archive, .restore, .delete
-      display:  none
+    .controls
       position: absolute
-      cursor:   pointer
-      color:    $control-normal
+      top:      10px
+      right:    8px
+
+    .control
+      display:     block
+      float:       right
+      width:       22px
+      height:      36px
+      margin-left: 10px
+      visibility:  hidden
+      color:       $control-normal
+
+      &.visible
+        visibility: visible
+
+    .hover-control
+      @extend .control
 
     &:hover, &:focus
-      .rate, .delete
-        display: block
-
-      &[data-state="current"] .archive
-        display: block
-
-      &[data-state="archived"] .restore
-        display: block
-
-    &.has-rating .rate
-      display: block
+      .hover-control
+        visibility: visible
 
     .rate
-      top:   8px
-      right: 88px
+      @extend .control
+      width: auto
 
       span:after
-        font-size: 20px
-        content:   "★"
-
-      span.selected:after
-        color: $control-yellow
+        font-size:      20px
+        content:        "★"
+        vertical-align: 2px
 
       span.rated:after
         color: $control-rated
+
+    &.allow-rate .rate
+      cursor: pointer
+
+      span.selected:after
+        color: $control-yellow
 
       &:hover span.rated:after
         color: $control-normal
@@ -257,30 +285,33 @@ textarea:-moz-placeholder
         color: $control-yellow
 
     .archive
-      top: 8px
-      right: 48px
+      @extend .hover-control
+      cursor: pointer
 
       &:after
         font-size: 26px
-        content: "✔"
+        content:   "✔"
 
       &:hover:after
         color: $control-green
 
     .restore
-      top: 0px
-      right: 48px
+      @extend .hover-control
+      cursor: pointer
 
       &:after
         font-size: 36px
-        content: "⤾"
+        content:   "⤾"
+        position:  relative
+        top:       -8px
 
       &:hover:after
         color: $control-green
 
     .delete
-      top:   8px
-      right: 8px
+      @extend .hover-control
+      cursor: pointer
+      width:  30px
 
       &:after
         font-size: 26px
@@ -288,6 +319,19 @@ textarea:-moz-placeholder
 
       &:hover:after
         color: $control-red
+
+    .add
+      @extend .control
+      cursor: pointer
+
+      &:after
+        font-size: 26px
+        content:   "+"
+        position:  relative
+        top:       -2px
+
+      &:hover:after
+        color: $control-green
 
 .album-search-list li
   cursor: pointer
@@ -311,7 +355,32 @@ textarea:-moz-placeholder
       margin: 0
 
 .friend-list
-  color: #888
+  @extend .ui-list
 
-  a
-    color: $primary
+  li
+    padding: 8px 4px
+    cursor: pointer
+
+    &.not-signed-in
+      color: #888
+
+      a
+        color: $primary
+
+    &:hover
+      background: $highlight
+
+    img
+      float: left
+      margin-right: 8px
+
+    .info
+      overflow: hidden
+
+      .name
+        @extend .primary
+        margin-bottom: 4px
+      
+      .nickname
+        @extend .secondary
+

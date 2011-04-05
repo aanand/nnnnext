@@ -17,6 +17,7 @@ require "mongoid"
 
 # lib
 require "album_search"
+require "twitter"
 require "daemon"
 
 Mongoid.configure do |config|
@@ -117,7 +118,7 @@ module Nnnnext::Controllers
 
   class ConcatenatedJavascript < R("/all.js")
     def get
-      puts "concatenating javascript..."
+      logger.puts "concatenating javascript..."
       paths = js_files.map { |p| "#{Nnnnext.root}/public#{p}" }
       @headers["Content-Type"] = "text/javascript; charset=utf-8"
       @headers["Cache-Control"] = "public; max-age=3600"
@@ -150,7 +151,7 @@ module Nnnnext::Controllers
 
   class AlbumsSearch
     def get
-      AlbumSearch.search(@input.q).to_json
+      json AlbumSearch.search(@input.q)
     end
   end
 
@@ -162,7 +163,8 @@ module Nnnnext::Controllers
       end
 
       client_albums  = JSON.parse(@request.body.read)
-      updated_albums = Set.new(user.albums)
+      user_albums    = user.albums
+      updated_albums = Set.new(user_albums)
 
       client_albums.each do |client_album|
         album_attrs      = client_album.slice("id", "artist", "title")
@@ -171,36 +173,72 @@ module Nnnnext::Controllers
         album            = Models::Album.where(_id: id).first
 
         if album.nil?
-          puts "Album #{id} does not exist on server, creating."
+          logger.puts "Album #{id} does not exist on server, creating."
           album = Models::Album.create(album_attrs)
         end
 
-        user_album = updated_albums.find { |ua| ua.album_id == id }
+        all_user_albums = user_albums.select { |ua| ua.album_id == id }.sort_by(&:updated).reverse
 
-        if user_album
+        if all_user_albums.length > 1
+          logger.puts "Found #{all_user_albums.length} copies of album #{id}."
+
+          all_user_albums[1..-1].each do |ua|
+            logger.puts " -> Deleting old duplicate (#{ua.updated} < #{all_user_albums.first.updated})"
+            ua.destroy
+            updated_albums.delete(ua)
+          end
+        end
+
+        if user_album = all_user_albums.first
           if user_album.updated < client_album["updated"]
             user_album.update_attributes(user_album_attrs)
             updated_albums.delete(user_album)
 
-            puts "Album #{id} is behind on server (#{user_album.updated} < #{client_album["updated"]})."
-            puts "Updated server copy: #{user_album.to_json}"
+            logger.puts "Album #{id} is behind on server (#{user_album.updated} < #{client_album["updated"]})."
+            logger.puts "Updated server copy: #{user_album.to_json}"
           elsif user_album.updated > client_album["updated"]
-            puts "Album #{id} is behind on client. (#{user_album.updated} > #{client_album["updated"]})"
-            puts "Sending updated album: #{user_album.to_json}"
+            logger.puts "Album #{id} is behind on client. (#{user_album.updated} > #{client_album["updated"]})"
+            logger.puts "Sending updated album: #{user_album.to_json}"
           else
-            puts "Album #{id} is in sync. (#{user_album.updated})"
+            logger.puts "Album #{id} is in sync. (#{user_album.updated})"
             updated_albums.delete(user_album)
           end
         else
-          user_album = user.albums.create(user_album_attrs.merge(album: album))
+          user.albums.create(user_album_attrs.merge(album: album))
 
-          puts "Album #{id} is not in user's list on server."
-          puts "Created server copy: #{user_album.to_json}"
+          logger.puts "Album #{id} is not in user's list on server."
+          logger.puts "Created server copy: #{user_album.to_json}"
         end
       end
 
-      @headers["content-type"] = "application/json; charset=utf-8"
-      updated_albums.to_a.to_json
+      json(updated_albums.to_a)
+    end
+  end
+
+  class Friends
+    def get
+      if user.nil?
+        @status = 401
+        return "Unauthorized"
+      end
+
+      ids     = Twitter.friends(user_id: user.twitter_uid)
+      friends = Models::User.where(twitter_uid: {:$in => ids})
+
+      json(friends)
+    end
+  end
+
+  class UserAlbums < R('/u/(\w+)/albums')
+    def get(nickname)
+      u = Models::User.where(nickname: nickname).first
+
+      if u.nil?
+        @status = 404
+        return "Not Found"
+      end
+
+      json u.albums.where(state: "current")
     end
   end
 end
@@ -208,6 +246,15 @@ end
 module Nnnnext::Helpers
   def user
     @user ||= (@state[:user_id] && Nnnnext::Models::User.find(@state[:user_id]))
+  end
+
+  def json(obj)
+    @headers["content-type"] = "application/json; charset=utf-8"
+    obj.to_json
+  end
+
+  def logger
+    ::LOGGER
   end
 
   def js_includes
@@ -227,15 +274,18 @@ module Nnnnext::Helpers
            ).map { |n| "/js/#{n}.js" }
 
     js += %w(models/album
+             models/user
+             views/view
              views/tabbable
-             views/showable
              views/banner
              views/header
              views/album-view
              views/album-list
              views/album-search-bar
              views/new-album-form
+             views/friend-view
              views/friend-list
+             views/friend-browser
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }

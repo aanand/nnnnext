@@ -25,7 +25,7 @@ SavedAlbums = new AlbumCollection {
 
 AlbumSearchResults = new AlbumCollection
 
-class AppView extends Backbone.View
+class AppView extends View
   el: $('#app')
 
   initialize: ->
@@ -44,9 +44,9 @@ class AppView extends Backbone.View
     @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
     @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
-    @friendList         = new FriendList
+    @friendBrowser      = new FriendBrowser
 
-    @views = [@searchResultsList, @savedAlbumsList, @friendList]
+    @views = [@searchResultsList, @savedAlbumsList, @friendBrowser]
 
     _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress")
 
@@ -65,7 +65,7 @@ class AppView extends Backbone.View
     @el.append(@searchBar.render().el)
     @el.append(@searchResultsList.render().el)
     @el.append(@savedAlbumsList.render().el)
-    @el.append(@friendList.render().el)
+    @el.append(@friendBrowser.render().el)
 
     @savedAlbumsList.populate()
     @savedAlbumsList.filter("current")
@@ -92,7 +92,7 @@ class AppView extends Backbone.View
         @switchView("savedAlbumsList")
         @savedAlbumsList.filter("archived")
       when "/friends"
-        @switchView("friendList")
+        @switchView("friendBrowser")
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -135,12 +135,6 @@ class AppView extends Backbone.View
     @switchView("savedAlbumsList")
     @searchBar.clear().focus()
     @header.switchTo("nav")
-
-  switchView: (listName) ->
-    @views.forEach (l) -> l.hide()
-    @currentView = this[listName]
-    @currentView.show()
-    @setTabIndex(0)
 
 _.extend AppView.prototype, Tabbable, {
   getTabbableElements: ->

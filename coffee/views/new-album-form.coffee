@@ -1,4 +1,4 @@
-class NewAlbumForm extends Backbone.View
+class NewAlbumForm extends View
   tagName: 'li'
   className: 'new-album'
 

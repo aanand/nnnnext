@@ -63,6 +63,21 @@ Album = (function() {
     }
     return Album.__super__.save.call(this, attrs, options);
   };
+  Album.prototype.destroy = function(options) {
+    var coll, originalSuccess;
+    coll = this.collection;
+    if (coll != null) {
+      options || (options = {});
+      originalSuccess = options.success;
+      options.success = __bind(function(model, resp) {
+        if (originalSuccess != null) {
+          originalSuccess(model, resp);
+        }
+        return coll.trigger("modelDestroyed", this);
+      }, this);
+    }
+    return Album.__super__.destroy.call(this, options);
+  };
   return Album;
 })();
 AlbumCollection = (function() {
@@ -77,6 +92,26 @@ AlbumCollection = (function() {
       this.sync = options.sync;
       return this.comparator = options.comparator;
     }
+  };
+  AlbumCollection.prototype.deDupe = function() {
+    var map;
+    map = {};
+    return this.models.forEach(function(album) {
+      var dupe;
+      dupe = map[album.id];
+      if (dupe != null) {
+        if (album.get("updated") < dupe.get("updated")) {
+          console.log("Destroying old duplicate of album " + album.id + " (" + (album.get("updated")) + " < " + (dupe.get("updated")) + ")");
+          return album.destroy();
+        } else {
+          console.log("Destroying old duplicate of album " + album.id + " (" + (dupe.get("updated")) + " < " + (album.get("updated")) + ")");
+          dupe.destroy();
+          return map[album.id] = album;
+        }
+      } else {
+        return map[album.id] = album;
+      }
+    });
   };
   return AlbumCollection;
 })();
