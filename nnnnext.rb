@@ -276,7 +276,6 @@ module Nnnnext::Helpers
     js += %w(models/album
              models/user
              views/view
-             views/tabbable
              views/banner
              views/header
              views/list-manager

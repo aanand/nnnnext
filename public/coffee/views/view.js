@@ -1,4 +1,4 @@
-var View;
+var Tabbable, View;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -43,3 +43,25 @@ View = (function() {
   };
   return View;
 })();
+Tabbable = {
+  setTabIndex: function(n) {
+    this.tabIndex = n;
+    this.getTabbableElements().forEach(function(e) {
+      if (typeof e.setTabIndex === 'function') {
+        return n = e.setTabIndex(n);
+      } else {
+        e.tabIndex = n;
+        return n++;
+      }
+    });
+    return n;
+  },
+  reTab: function() {
+    if (this.tabIndex != null) {
+      return this.setTabIndex(this.tabIndex);
+    }
+  },
+  getTabbableElements: function() {
+    return [this.el];
+  }
+};
