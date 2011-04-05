@@ -91,6 +91,9 @@ class FriendsAlbumsList extends AlbumList
   populate: ->
     super()
 
+    if @collection.length == 0
+      $(@el).append("<li class='nothing-found'>#{@user.get("nickname")} doesn’t have any albums queued.</li>")
+
     if @user?
       userView = new FriendView({model: @user, highlightable: false, backButton: true})
       userView.bind "back", => @trigger("back")

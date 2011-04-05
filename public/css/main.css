@@ -182,6 +182,11 @@ textarea:-moz-placeholder {
     font-size: 14px;
     color: #888888; }
 
+.nothing-found {
+  text-align: center;
+  padding-top: 16px;
+  color: #888888; }
+
 .album .controls {
   position: absolute;
   top: 10px;
