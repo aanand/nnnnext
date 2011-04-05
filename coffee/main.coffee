@@ -71,7 +71,7 @@ class AppView extends View
 
   tab: (offset) ->
     elements  = _.sortBy $(":visible[tabindex]").get(), (e) -> e.tabIndex
-    focus     = $(':focus')[0]
+    focus     = $(':focus').filter(":visible")[0]
     nextIndex = null
 
     if focus?

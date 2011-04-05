@@ -87,7 +87,7 @@ AppView = (function() {
     elements = _.sortBy($(":visible[tabindex]").get(), function(e) {
       return e.tabIndex;
     });
-    focus = $(':focus')[0];
+    focus = $(':focus').filter(":visible")[0];
     nextIndex = null;
     if (focus != null) {
       currentIndex = _.indexOf(elements.map(function(e) {
