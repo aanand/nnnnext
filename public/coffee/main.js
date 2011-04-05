@@ -1,4 +1,4 @@
-var AlbumSearchResults, App, AppView, SavedAlbums, storageNamespace, storageNamespacePrefix, unsyncedStorageNamespace;
+var App, AppView;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,31 +7,6 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-storageNamespacePrefix = "nnnnext";
-unsyncedStorageNamespace = "" + storageNamespacePrefix + "/unsynced";
-storageNamespace = null;
-if (typeof UserInfo != "undefined" && UserInfo !== null) {
-  storageNamespace = "" + storageNamespacePrefix + "/" + UserInfo._id;
-  _.keys(localStorage).forEach(function(key) {
-    var newKey, value;
-    if (key.search("" + unsyncedStorageNamespace + "/") === 0) {
-      value = localStorage.getItem(key);
-      newKey = key.replace(unsyncedStorageNamespace, storageNamespace);
-      localStorage.setItem(newKey, value);
-      return localStorage.removeItem(key);
-    }
-  });
-} else {
-  storageNamespace = unsyncedStorageNamespace;
-}
-SavedAlbums = new AlbumCollection({
-  localStorage: new Store("" + storageNamespace + "/albums"),
-  sync: Backbone.localSync,
-  comparator: function(a) {
-    return -a.get("stateChanged");
-  }
-});
-AlbumSearchResults = new AlbumCollection;
 AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
@@ -48,37 +23,21 @@ AppView = (function() {
     } else {
       this.header.section = "intro";
     }
-    this.searchBar = new AlbumSearchBar({
-      collection: AlbumSearchResults
-    });
-    this.searchResultsList = new AlbumSearchList({
-      collection: AlbumSearchResults
-    });
-    this.savedAlbumsList = new SavedAlbumsList({
-      collection: SavedAlbums
-    });
+    this.listManager = new ListManager;
     this.friendBrowser = new FriendBrowser;
-    this.views = [this.searchResultsList, this.savedAlbumsList, this.friendBrowser];
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress");
+    this.views = [this.listManager, this.friendBrowser];
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
     this.header.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
-    this.searchBar.bind("submit", this.startSearch);
-    this.searchBar.bind("clear", this.cancelSearch);
-    this.searchResultsList.bind("select", this.addAlbum);
-    AlbumSearchResults.bind("refresh", this.finishSearch);
     SavedAlbums.bind("modelSaved", this.startSync);
     Sync.bind("finish", this.finishSync);
     $(window).bind("keydown", this.handleKeypress);
     this.el.append(this.banner.render().el);
     this.el.append(this.header.render().el);
-    this.el.append(this.searchBar.render().el);
-    this.el.append(this.searchResultsList.render().el);
-    this.el.append(this.savedAlbumsList.render().el);
+    this.el.append(this.listManager.render().el);
     this.el.append(this.friendBrowser.render().el);
-    this.savedAlbumsList.populate();
-    this.savedAlbumsList.filter("current");
-    this.switchView("savedAlbumsList");
-    this.searchBar.focus();
+    this.tabIndex = 0;
+    this.navigate("/current");
     return this.startSync();
   };
   AppView.prototype.startSync = function() {
@@ -99,11 +58,11 @@ AppView = (function() {
   AppView.prototype.navigate = function(href) {
     switch (href) {
       case "/current":
-        this.switchView("savedAlbumsList");
-        return this.savedAlbumsList.filter("current");
+        this.listManager.switchView("current");
+        return this.switchView("listManager");
       case "/archived":
-        this.switchView("savedAlbumsList");
-        return this.savedAlbumsList.filter("archived");
+        this.listManager.switchView("archived");
+        return this.switchView("listManager");
       case "/friends":
         return this.switchView("friendBrowser");
     }
@@ -117,50 +76,31 @@ AppView = (function() {
         e.preventDefault();
         return this.tab(+1);
       default:
-        return this.searchBar.handleKeypress(e);
+        return this.currentView.handleKeypress(e);
     }
   };
   AppView.prototype.tab = function(offset) {
-    var focus, indices, nextIndex, nextIndexIndex;
-    focus = $(':focus')[0];
-    if (focus != null) {
-      indices = $(":visible[tabindex]").get().map(function(e) {
-        return e.tabIndex;
-      });
-      nextIndexIndex = (_.indexOf(indices, focus.tabIndex) + offset + indices.length) % indices.length;
-      nextIndex = indices[nextIndexIndex];
-      return $("[tabindex=" + nextIndex + "]").focus();
-    }
-  };
-  AppView.prototype.startSearch = function(query) {
-    if (!query) {
-      return;
-    }
-    this.searchBar.showSpinner();
-    AlbumSearchResults.url = "/albums/search?" + $.param({
-      q: query
+    var currentIndex, elements, focus, nextIndex;
+    elements = _.sortBy($(":visible[tabindex]").get(), function(e) {
+      return e.tabIndex;
     });
-    return AlbumSearchResults.fetch();
-  };
-  AppView.prototype.finishSearch = function() {
-    this.searchBar.hideSpinner();
-    this.searchResultsList.populate();
-    return this.switchView("searchResultsList");
-  };
-  AppView.prototype.cancelSearch = function() {
-    return this.switchView("savedAlbumsList");
-  };
-  AppView.prototype.addAlbum = function(album) {
-    album.addTo(SavedAlbums);
-    this.switchView("savedAlbumsList");
-    this.searchBar.clear().focus();
-    return this.header.switchTo("nav");
+    focus = $(':focus')[0];
+    nextIndex = null;
+    if (focus != null) {
+      currentIndex = _.indexOf(elements.map(function(e) {
+        return e.tabIndex;
+      }), focus.tabIndex);
+      nextIndex = (currentIndex + offset + elements.length) % elements.length;
+    } else {
+      nextIndex = 0;
+    }
+    return $(elements[nextIndex]).focus();
   };
   return AppView;
 })();
 _.extend(AppView.prototype, Tabbable, {
   getTabbableElements: function() {
-    return this.searchBar.getTabbableElements().concat(this.currentView.getTabbableElements());
+    return [this.currentView];
   }
 });
 App = new AppView;

@@ -11,5 +11,5 @@ class View extends Backbone.View
     @views.forEach (v) -> v.hide()
     @currentView = this[viewName]
     @currentView.show()
-    @setTabIndex(0) if typeof(@setTabIndex) == 'function'
+    @reTab() if typeof(@reTab) == 'function'
 

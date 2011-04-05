@@ -26,8 +26,8 @@ View = (function() {
     });
     this.currentView = this[viewName];
     this.currentView.show();
-    if (typeof this.setTabIndex === 'function') {
-      return this.setTabIndex(0);
+    if (typeof this.reTab === 'function') {
+      return this.reTab();
     }
   };
   return View;

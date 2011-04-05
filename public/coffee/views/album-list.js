@@ -112,7 +112,7 @@ AlbumSearchList = (function() {
     return $(this.el).append(this.newAlbumForm.render().el);
   };
   AlbumSearchList.prototype.getTabbableElements = function() {
-    return AlbumSearchList.__super__.getTabbableElements.call(this).concat(this.newAlbumForm.getTabbableElements());
+    return AlbumSearchList.__super__.getTabbableElements.call(this).concat(this.newAlbumForm);
   };
   return AlbumSearchList;
 })();

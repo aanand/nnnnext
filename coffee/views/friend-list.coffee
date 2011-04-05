@@ -24,5 +24,7 @@ class FriendList extends View
       user.view = view
       $(@el).append(view.render().el)
 
-_.extend FriendList.prototype,
-  getTabbableElements: -> []
+    @reTab()
+
+_.extend FriendList.prototype, Tabbable,
+  getTabbableElements: -> @collection.models.map (m) -> m.view.el

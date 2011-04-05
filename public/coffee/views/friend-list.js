@@ -35,7 +35,7 @@ FriendList = (function() {
   };
   FriendList.prototype.populate = function() {
     $(this.el).empty();
-    return this.collection.models.forEach(__bind(function(user) {
+    this.collection.models.forEach(__bind(function(user) {
       var view;
       view = new FriendView({
         model: user,
@@ -44,11 +44,14 @@ FriendList = (function() {
       user.view = view;
       return $(this.el).append(view.render().el);
     }, this));
+    return this.reTab();
   };
   return FriendList;
 })();
-_.extend(FriendList.prototype, {
+_.extend(FriendList.prototype, Tabbable, {
   getTabbableElements: function() {
-    return [];
+    return this.collection.models.map(function(m) {
+      return m.view.el;
+    });
   }
 });

@@ -78,7 +78,7 @@ class AlbumSearchList extends AlbumList
     $(@el).append(@newAlbumForm.render().el)
 
   getTabbableElements: ->
-    super().concat(@newAlbumForm.getTabbableElements())
+    super().concat(@newAlbumForm)
 
 class FriendsAlbumsList extends AlbumList
   itemViewClass: FriendsAlbumView

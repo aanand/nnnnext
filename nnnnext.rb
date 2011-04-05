@@ -279,6 +279,7 @@ module Nnnnext::Helpers
              views/tabbable
              views/banner
              views/header
+             views/list-manager
              views/album-view
              views/album-list
              views/album-search-bar
@@ -286,6 +287,7 @@ module Nnnnext::Helpers
              views/friend-view
              views/friend-list
              views/friend-browser
+             saved-albums
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }

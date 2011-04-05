@@ -38,14 +38,17 @@ FriendBrowser = (function() {
     $(this.el).append(this.albumList.render().el);
     return this;
   };
+  FriendBrowser.prototype.handleKeypress = function(e) {
+    return true;
+  };
   FriendBrowser.prototype.switchToFriend = function(user) {
     FriendsAlbums.url = user.albumsUrl();
     return FriendsAlbums.fetch();
   };
   return FriendBrowser;
 })();
-_.extend(FriendBrowser.prototype, {
+_.extend(FriendBrowser.prototype, Tabbable, {
   getTabbableElements: function() {
-    return [];
+    return [this.currentView];
   }
 });

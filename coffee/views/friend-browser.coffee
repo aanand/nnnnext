@@ -25,10 +25,12 @@ class FriendBrowser extends View
     $(@el).append(@albumList.render().el)
     this
 
+  handleKeypress: (e) -> true
+
   switchToFriend: (user) ->
     FriendsAlbums.url = user.albumsUrl()
     FriendsAlbums.fetch()
 
-_.extend FriendBrowser.prototype,
-  getTabbableElements: -> []
+_.extend FriendBrowser.prototype, Tabbable,
+  getTabbableElements: -> [@currentView]
 

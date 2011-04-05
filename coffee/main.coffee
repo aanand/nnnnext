@@ -1,30 +1,3 @@
-storageNamespacePrefix   = "nnnnext"
-unsyncedStorageNamespace = "#{storageNamespacePrefix}/unsynced"
-storageNamespace         = null
-
-if UserInfo?
-  storageNamespace = "#{storageNamespacePrefix}/#{UserInfo._id}"
-
-  # Copy unsynced albums into user namespace
-  _.keys(localStorage).forEach (key) ->
-    if key.search("#{unsyncedStorageNamespace}/") == 0
-      value  = localStorage.getItem(key)
-      newKey = key.replace(unsyncedStorageNamespace, storageNamespace)
-
-      localStorage.setItem(newKey, value)
-      localStorage.removeItem(key)
-
-else
-  storageNamespace = unsyncedStorageNamespace
-
-SavedAlbums = new AlbumCollection {
-  localStorage: new Store("#{storageNamespace}/albums")
-  sync:         Backbone.localSync
-  comparator:   (a) -> -a.get("stateChanged")
-}
-
-AlbumSearchResults = new AlbumCollection
-
 class AppView extends View
   el: $('#app')
 
@@ -41,36 +14,26 @@ class AppView extends View
     else
       @header.section = "intro"
 
-    @searchBar          = new AlbumSearchBar({collection: AlbumSearchResults})
-    @searchResultsList  = new AlbumSearchList({collection: AlbumSearchResults})
-    @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
-    @friendBrowser      = new FriendBrowser
+    @listManager   = new ListManager
+    @friendBrowser = new FriendBrowser
 
-    @views = [@searchResultsList, @savedAlbumsList, @friendBrowser]
+    @views = [@listManager, @friendBrowser]
 
-    _.bindAll(this, "navigate", "addAlbum", "startSearch", "finishSearch", "cancelSearch", "startSync", "finishSync", "handleKeypress")
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress")
 
     @header.bind            "navigate", @navigate
     @header.bind            "syncButtonClick", @startSync
-    @searchBar.bind         "submit",  @startSearch
-    @searchBar.bind         "clear", @cancelSearch
-    @searchResultsList.bind "select",  @addAlbum
-    AlbumSearchResults.bind "refresh", @finishSearch
     SavedAlbums.bind        "modelSaved", @startSync
     Sync.bind               "finish",  @finishSync
     $(window).bind          "keydown", @handleKeypress
 
     @el.append(@banner.render().el)
     @el.append(@header.render().el)
-    @el.append(@searchBar.render().el)
-    @el.append(@searchResultsList.render().el)
-    @el.append(@savedAlbumsList.render().el)
+    @el.append(@listManager.render().el)
     @el.append(@friendBrowser.render().el)
 
-    @savedAlbumsList.populate()
-    @savedAlbumsList.filter("current")
-    @switchView("savedAlbumsList")
-    @searchBar.focus()
+    @tabIndex = 0
+    @navigate("/current")
 
     @startSync()
 
@@ -86,11 +49,11 @@ class AppView extends View
   navigate: (href) ->
     switch href
       when "/current"
-        @switchView("savedAlbumsList")
-        @savedAlbumsList.filter("current")
+        @listManager.switchView("current")
+        @switchView("listManager")
       when "/archived"
-        @switchView("savedAlbumsList")
-        @savedAlbumsList.filter("archived")
+        @listManager.switchView("archived")
+        @switchView("listManager")
       when "/friends"
         @switchView("friendBrowser")
 
@@ -103,43 +66,23 @@ class AppView extends View
         e.preventDefault()
         @tab(+1)
       else
-        @searchBar.handleKeypress(e)
+        @currentView.handleKeypress(e)
 
   tab: (offset) ->
-    focus = $(':focus')[0]
+    elements  = _.sortBy $(":visible[tabindex]").get(), (e) -> e.tabIndex
+    focus     = $(':focus')[0]
+    nextIndex = null
 
     if focus?
-      indices        = $(":visible[tabindex]").get().map (e) -> e.tabIndex
-      nextIndexIndex = (_.indexOf(indices, focus.tabIndex) + offset + indices.length) % indices.length
-      nextIndex      = indices[nextIndexIndex]
+      currentIndex = _.indexOf elements.map((e) -> e.tabIndex), focus.tabIndex
+      nextIndex    = (currentIndex + offset + elements.length) % elements.length
+    else
+      nextIndex = 0
 
-      $("[tabindex=#{nextIndex}]").focus()
-
-  startSearch: (query) ->
-    return unless query
-    @searchBar.showSpinner()
-    AlbumSearchResults.url = "/albums/search?" + $.param({q: query})
-    AlbumSearchResults.fetch()
-
-  finishSearch: ->
-    @searchBar.hideSpinner()
-    @searchResultsList.populate()
-    @switchView("searchResultsList")
-
-  cancelSearch: ->
-    @switchView("savedAlbumsList")
-
-  addAlbum: (album) ->
-    album.addTo(SavedAlbums)
-
-    @switchView("savedAlbumsList")
-    @searchBar.clear().focus()
-    @header.switchTo("nav")
+    $(elements[nextIndex]).focus()
 
 _.extend AppView.prototype, Tabbable, {
-  getTabbableElements: ->
-    @searchBar.getTabbableElements()
-      .concat(@currentView.getTabbableElements())
+  getTabbableElements: -> [@currentView]
 }
 
 App = new AppView
