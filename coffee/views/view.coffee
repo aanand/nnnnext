@@ -13,3 +13,9 @@ class View extends Backbone.View
     @currentView.show()
     @reTab() if typeof(@reTab) == 'function'
 
+  select: (e) ->
+    if e?
+      return if e.type == "keypress" and e.keyCode != 13
+      e.preventDefault()
+
+    @list.trigger("select", @model) if @list?

@@ -22,7 +22,8 @@ FriendView = (function() {
     </div>\
   ');
   FriendView.prototype.events = {
-    "click": "handleClick"
+    click: "select",
+    keypress: "select"
   };
   FriendView.prototype.initialize = function(options) {
     return this.list = options.list;
@@ -30,12 +31,6 @@ FriendView = (function() {
   FriendView.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON()));
     return this;
-  };
-  FriendView.prototype.handleClick = function(e) {
-    e.preventDefault();
-    if (this.list != null) {
-      return this.list.trigger("select", this.model);
-    }
   };
   return FriendView;
 })();

@@ -2,9 +2,9 @@ class AlbumView extends View
   tagName: 'li'
 
   events:
-    "keypress": "handleKeypress"
-    "mouseover": "showOrHideRating"
-    "mouseout": "showOrHideRating"
+    keypress:  "select"
+    mouseover: "showOrHideRating"
+    mouseout:  "showOrHideRating"
 
   initialize: (options) ->
     @list = options.list
@@ -37,11 +37,6 @@ class AlbumView extends View
 
     this
 
-  handleKeypress: (e) ->
-    return unless e.keyCode == 13
-    e.preventDefault()
-    @select()
-
   showOrHideRating: (e) ->
     if @showRating and (@model.get("rating") or ($(@el).is(":hover") and @allowRate))
       @$('.rate').addClass('visible')
@@ -50,9 +45,6 @@ class AlbumView extends View
 
   focus: (e) ->
     $(@el).focus()
-
-  select: ->
-    @list.trigger("select", @model) if @list?
 
 _.extend AlbumView.prototype, Tabbable
 
@@ -107,7 +99,7 @@ class SearchAlbumView extends AlbumView
 
   events:
     _.extend _.clone(AlbumView.prototype.events),
-      "click": "select"
+      click: "select"
 
 class FriendsAlbumView extends AlbumView
   template: _.template('

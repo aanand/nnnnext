@@ -30,5 +30,16 @@ View = (function() {
       return this.reTab();
     }
   };
+  View.prototype.select = function(e) {
+    if (e != null) {
+      if (e.type === "keypress" && e.keyCode !== 13) {
+        return;
+      }
+      e.preventDefault();
+    }
+    if (this.list != null) {
+      return this.list.trigger("select", this.model);
+    }
+  };
   return View;
 })();

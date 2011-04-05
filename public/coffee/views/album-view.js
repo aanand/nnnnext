@@ -14,9 +14,9 @@ AlbumView = (function() {
   __extends(AlbumView, View);
   AlbumView.prototype.tagName = 'li';
   AlbumView.prototype.events = {
-    "keypress": "handleKeypress",
-    "mouseover": "showOrHideRating",
-    "mouseout": "showOrHideRating"
+    keypress: "select",
+    mouseover: "showOrHideRating",
+    mouseout: "showOrHideRating"
   };
   AlbumView.prototype.initialize = function(options) {
     return this.list = options.list;
@@ -47,13 +47,6 @@ AlbumView = (function() {
     }
     return this;
   };
-  AlbumView.prototype.handleKeypress = function(e) {
-    if (e.keyCode !== 13) {
-      return;
-    }
-    e.preventDefault();
-    return this.select();
-  };
   AlbumView.prototype.showOrHideRating = function(e) {
     if (this.showRating && (this.model.get("rating") || ($(this.el).is(":hover") && this.allowRate))) {
       return this.$('.rate').addClass('visible');
@@ -63,11 +56,6 @@ AlbumView = (function() {
   };
   AlbumView.prototype.focus = function(e) {
     return $(this.el).focus();
-  };
-  AlbumView.prototype.select = function() {
-    if (this.list != null) {
-      return this.list.trigger("select", this.model);
-    }
   };
   return AlbumView;
 })();
@@ -136,7 +124,7 @@ SearchAlbumView = (function() {
     <div class="artist"><%= artist %></div>\
   ');
   SearchAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
-    "click": "select"
+    click: "select"
   });
   return SearchAlbumView;
 })();

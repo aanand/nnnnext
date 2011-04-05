@@ -11,7 +11,8 @@ class FriendView extends View
   ')
 
   events:
-    "click": "handleClick"
+    click:    "select"
+    keypress: "select"
 
   initialize: (options) ->
     @list = options.list
@@ -19,8 +20,4 @@ class FriendView extends View
   render: ->
     $(@el).html(@template(@model.toJSON()))
     this
-
-  handleClick: (e) ->
-    e.preventDefault()
-    @list.trigger("select", @model) if @list?
 
