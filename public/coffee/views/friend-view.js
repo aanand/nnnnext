@@ -13,6 +13,7 @@ FriendView = (function() {
   }
   __extends(FriendView, View);
   FriendView.prototype.tagName = 'li';
+  FriendView.prototype.className = 'friend';
   FriendView.prototype.template = _.template('\
     <img src="<%= image %>"/>\
 \
@@ -22,6 +23,10 @@ FriendView = (function() {
     </div>\
   ');
   FriendView.prototype.events = {
+    mouseover: "highlight",
+    mouseout: "highlight",
+    focus: "highlight",
+    blur: "highlight",
     click: "select",
     keypress: "select"
   };

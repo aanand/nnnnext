@@ -1,5 +1,6 @@
 class FriendView extends View
   tagName: 'li'
+  className: 'friend'
 
   template: _.template('
     <img src="<%= image %>"/>
@@ -11,6 +12,10 @@ class FriendView extends View
   ')
 
   events:
+    mouseover: "highlight"
+    mouseout:  "highlight"
+    focus:     "highlight"
+    blur:      "highlight"
     click:    "select"
     keypress: "select"
 

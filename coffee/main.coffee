@@ -79,6 +79,7 @@ class AppView extends View
     else
       nextIndex = 0
 
+    $(focus).blur() if focus?
     $(elements[nextIndex]).focus()
 
 _.extend AppView.prototype, Tabbable, {

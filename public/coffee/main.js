@@ -94,6 +94,9 @@ AppView = (function() {
     } else {
       nextIndex = 0;
     }
+    if (focus != null) {
+      $(focus).blur();
+    }
     return $(elements[nextIndex]).focus();
   };
   return AppView;

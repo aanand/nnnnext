@@ -13,10 +13,13 @@ AlbumView = (function() {
   }
   __extends(AlbumView, View);
   AlbumView.prototype.tagName = 'li';
+  AlbumView.prototype.className = 'album';
   AlbumView.prototype.events = {
     keypress: "select",
     mouseover: "showOrHideRating",
-    mouseout: "showOrHideRating"
+    mouseout: "showOrHideRating",
+    focus: "highlight",
+    blur: "highlight"
   };
   AlbumView.prototype.initialize = function(options) {
     return this.list = options.list;
@@ -124,7 +127,9 @@ SearchAlbumView = (function() {
     <div class="artist"><%= artist %></div>\
   ');
   SearchAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
-    click: "select"
+    click: "select",
+    mouseover: "highlight",
+    mouseout: "highlight"
   });
   return SearchAlbumView;
 })();
@@ -149,9 +154,9 @@ FriendsAlbumView = (function() {
     }, this));
     return vars;
   };
-  FriendsAlbumView.prototype.events = {
+  FriendsAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
     "click .add": "add"
-  };
+  });
   FriendsAlbumView.prototype.showRating = true;
   FriendsAlbumView.prototype.add = function(e) {
     this.model.unset("state");

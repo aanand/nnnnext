@@ -41,6 +41,24 @@ View = (function() {
       return this.list.trigger("select", this.model);
     }
   };
+  View.prototype.highlight = function(e) {
+    switch (e.type) {
+      case "mouseover":
+      case "mouseout":
+        return this.setHighlight($(this.el).is(":hover"));
+      case "focus":
+        return this.setHighlight(true);
+      case "blur":
+        return this.setHighlight(false);
+    }
+  };
+  View.prototype.setHighlight = function(yep) {
+    if (yep) {
+      return $(this.el).addClass("highlight");
+    } else {
+      return $(this.el).removeClass("highlight");
+    }
+  };
   return View;
 })();
 Tabbable = {

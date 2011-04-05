@@ -20,6 +20,21 @@ class View extends Backbone.View
 
     @list.trigger("select", @model) if @list?
 
+  highlight: (e) ->
+    switch e.type
+      when "mouseover", "mouseout"
+        @setHighlight($(@el).is(":hover"))
+      when "focus"
+        @setHighlight(true)
+      when "blur"
+        @setHighlight(false)
+
+  setHighlight: (yep) ->
+    if yep
+      $(@el).addClass("highlight")
+    else
+      $(@el).removeClass("highlight")
+
 Tabbable =
   setTabIndex: (n) ->
     @tabIndex = n

@@ -127,5 +127,15 @@ FriendsAlbumsList = (function() {
     FriendsAlbumsList.__super__.initialize.call(this, options);
     return this.collection.bind("refresh", this.populate);
   };
+  FriendsAlbumsList.prototype.populate = function() {
+    var userView;
+    FriendsAlbumsList.__super__.populate.call(this);
+    if (this.user != null) {
+      userView = new FriendView({
+        model: this.user
+      });
+      return $(this.el).prepend(userView.render().el);
+    }
+  };
   return FriendsAlbumsList;
 })();

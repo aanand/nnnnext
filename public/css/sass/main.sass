@@ -194,146 +194,148 @@ textarea:-moz-placeholder
   width:      500px
   padding:    0 5px
 
-  li
-    padding:      4px
-    border:       1px solid #ccc
-    border-width: 0 0 1px 0
-    position:     relative
-    overflow:     hidden
+.ui-list-item
+  padding:      4px
+  border:       1px solid #ccc
+  border-width: 0 0 1px 0
+  position:     relative
+  overflow:     hidden
 
-    &:focus
-      background: $highlight
-      outline:    none
+  &.highlight
+    background: $highlight
+    outline:    none
 
-    .primary
-      font-size:     18px
-      margin-bottom: 2px
+  .primary
+    font-size:     18px
+    margin-bottom: 2px
 
-      a
-        color: inherit
-        text-decoration: none
+    a
+      color: inherit
+      text-decoration: none
 
-        &:hover
-          color: $primary
+      &:hover
+        color: $primary
 
-    .secondary
-      font-size: 14px
-      color:     #888
+  .secondary
+    font-size: 14px
+    color:     #888
 
 .album-list
   @extend .ui-list
 
-  li
-    .title
-      @extend .primary
+.album
+  @extend .ui-list-item
 
-    .artist
-      @extend .secondary
+  .title
+    @extend .primary
 
-    $control-normal: #ddd
-    $control-rated:  #aaa
-    $control-red:    #a44
-    $control-green:  #4a4
-    $control-yellow: #da4
+  .artist
+    @extend .secondary
 
-    .controls
-      position: absolute
-      top:      10px
-      right:    8px
+  $control-normal: #ddd
+  $control-rated:  #aaa
+  $control-red:    #a44
+  $control-green:  #4a4
+  $control-yellow: #da4
 
-    .control
-      display:     block
-      float:       right
-      width:       22px
-      height:      36px
-      margin-left: 10px
-      visibility:  hidden
-      color:       $control-normal
+  .controls
+    position: absolute
+    top:      10px
+    right:    8px
 
-      &.visible
-        visibility: visible
+  .control
+    display:     block
+    float:       right
+    width:       22px
+    height:      36px
+    margin-left: 10px
+    visibility:  hidden
+    color:       $control-normal
 
+    &.visible
+      visibility: visible
+
+  .hover-control
+    @extend .control
+
+  &:hover, &:focus
     .hover-control
-      @extend .control
+      visibility: visible
 
-    &:hover, &:focus
-      .hover-control
-        visibility: visible
+  .rate
+    @extend .control
+    width: auto
 
-    .rate
-      @extend .control
-      width: auto
+    span:after
+      font-size:      20px
+      content:        "★"
+      vertical-align: 2px
 
-      span:after
-        font-size:      20px
-        content:        "★"
-        vertical-align: 2px
+    span.rated:after
+      color: $control-rated
 
-      span.rated:after
-        color: $control-rated
+  &.allow-rate .rate
+    cursor: pointer
 
-    &.allow-rate .rate
-      cursor: pointer
+    span.selected:after
+      color: $control-yellow
 
-      span.selected:after
-        color: $control-yellow
+    &:hover span.rated:after
+      color: $control-normal
 
-      &:hover span.rated:after
-        color: $control-normal
+    &:hover span.selected.rated:after
+      color: $control-yellow
 
-      &:hover span.selected.rated:after
-        color: $control-yellow
+  .archive
+    @extend .hover-control
+    cursor: pointer
 
-    .archive
-      @extend .hover-control
-      cursor: pointer
+    &:after
+      font-size: 26px
+      content:   "✔"
 
-      &:after
-        font-size: 26px
-        content:   "✔"
+    &:hover:after
+      color: $control-green
 
-      &:hover:after
-        color: $control-green
+  .restore
+    @extend .hover-control
+    cursor: pointer
 
-    .restore
-      @extend .hover-control
-      cursor: pointer
+    &:after
+      font-size: 36px
+      content:   "⤾"
+      position:  relative
+      top:       -8px
 
-      &:after
-        font-size: 36px
-        content:   "⤾"
-        position:  relative
-        top:       -8px
+    &:hover:after
+      color: $control-green
 
-      &:hover:after
-        color: $control-green
+  .delete
+    @extend .hover-control
+    cursor: pointer
+    width:  30px
 
-    .delete
-      @extend .hover-control
-      cursor: pointer
-      width:  30px
+    &:after
+      font-size: 26px
+      content:   "✕"
 
-      &:after
-        font-size: 26px
-        content:   "✕"
+    &:hover:after
+      color: $control-red
 
-      &:hover:after
-        color: $control-red
+  .add
+    @extend .control
+    cursor: pointer
 
-    .add
-      @extend .control
-      cursor: pointer
+    &:after
+      font-size: 26px
+      content:   "+"
+      position:  relative
+      top:       -2px
 
-      &:after
-        font-size: 26px
-        content:   "+"
-        position:  relative
-        top:       -2px
+    &:hover:after
+      color: $control-green
 
-      &:hover:after
-        color: $control-green
-
-.album-search-list li
+.album-search-list .album
   cursor: pointer
 
   &.new-album
@@ -357,30 +359,29 @@ textarea:-moz-placeholder
 .friend-list
   @extend .ui-list
 
-  li
-    padding: 8px 4px
-    cursor: pointer
+  li.not-signed-in
+    color: #888
 
-    &.not-signed-in
-      color: #888
+    a
+      color: $primary
 
-      a
-        color: $primary
+.friend
+  @extend .ui-list-item
 
-    &:hover
-      background: $highlight
+  padding: 8px 4px
+  cursor: pointer
 
-    img
-      float: left
-      margin-right: 8px
+  img
+    float: left
+    margin-right: 8px
 
-    .info
-      overflow: hidden
+  .info
+    overflow: hidden
 
-      .name
-        @extend .primary
-        margin-bottom: 4px
-      
-      .nickname
-        @extend .secondary
+    .name
+      @extend .primary
+      margin-bottom: 4px
+
+    .nickname
+      @extend .secondary
 

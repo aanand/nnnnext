@@ -88,3 +88,10 @@ class FriendsAlbumsList extends AlbumList
     super(options)
     @collection.bind "refresh", @populate
 
+  populate: ->
+    super()
+
+    if @user?
+      userView = new FriendView({model: @user})
+      $(@el).prepend(userView.render().el)
+

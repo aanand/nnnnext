@@ -1,10 +1,13 @@
 class AlbumView extends View
   tagName: 'li'
+  className: 'album'
 
   events:
     keypress:  "select"
     mouseover: "showOrHideRating"
     mouseout:  "showOrHideRating"
+    focus:     "highlight"
+    blur:      "highlight"
 
   initialize: (options) ->
     @list = options.list
@@ -100,6 +103,8 @@ class SearchAlbumView extends AlbumView
   events:
     _.extend _.clone(AlbumView.prototype.events),
       click: "select"
+      mouseover: "highlight"
+      mouseout:  "highlight"
 
 class FriendsAlbumView extends AlbumView
   template: _.template('
@@ -119,7 +124,8 @@ class FriendsAlbumView extends AlbumView
     vars
 
   events:
-    "click .add": "add"
+    _.extend _.clone(AlbumView.prototype.events),
+      "click .add": "add"
 
   showRating: true
 

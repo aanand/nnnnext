@@ -5,10 +5,10 @@ FriendsAlbums = new AlbumCollection
 
 class FriendBrowser extends View
   initialize: ->
-    _.bindAll(this, "switchToFriend")
+    _.bindAll(this, "loadFriendsAlbums")
 
     @friendList = new FriendList({collection: Friends})
-    @friendList.bind "select", @switchToFriend
+    @friendList.bind "select", @loadFriendsAlbums
 
     @albumList = new FriendsAlbumsList({collection: FriendsAlbums})
 
@@ -27,7 +27,8 @@ class FriendBrowser extends View
 
   handleKeypress: (e) -> true
 
-  switchToFriend: (user) ->
+  loadFriendsAlbums: (user) ->
+    @albumList.user = user
     FriendsAlbums.url = user.albumsUrl()
     FriendsAlbums.fetch()
 

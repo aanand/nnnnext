@@ -16,11 +16,11 @@ FriendBrowser = (function() {
   }
   __extends(FriendBrowser, View);
   FriendBrowser.prototype.initialize = function() {
-    _.bindAll(this, "switchToFriend");
+    _.bindAll(this, "loadFriendsAlbums");
     this.friendList = new FriendList({
       collection: Friends
     });
-    this.friendList.bind("select", this.switchToFriend);
+    this.friendList.bind("select", this.loadFriendsAlbums);
     this.albumList = new FriendsAlbumsList({
       collection: FriendsAlbums
     });
@@ -41,7 +41,8 @@ FriendBrowser = (function() {
   FriendBrowser.prototype.handleKeypress = function(e) {
     return true;
   };
-  FriendBrowser.prototype.switchToFriend = function(user) {
+  FriendBrowser.prototype.loadFriendsAlbums = function(user) {
+    this.albumList.user = user;
     FriendsAlbums.url = user.albumsUrl();
     return FriendsAlbums.fetch();
   };
