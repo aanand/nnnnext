@@ -56,7 +56,7 @@ class ListManager extends View
 
     @switchView("savedAlbumsList")
     @searchBar.clear().focus()
-    @header.switchTo("nav")
+    @trigger("addAlbum")
 
 _.extend ListManager.prototype, Tabbable,
   getTabbableElements: -> [@searchBar, @currentView]

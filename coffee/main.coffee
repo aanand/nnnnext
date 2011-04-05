@@ -23,6 +23,7 @@ class AppView extends View
 
     @header.bind            "navigate", @navigate
     @header.bind            "syncButtonClick", @startSync
+    @listManager.bind       "addAlbum", => @header.switchTo("nav")
     SavedAlbums.bind        "modelSaved", @startSync
     Sync.bind               "finish",  @finishSync
     $(window).bind          "keydown", @handleKeypress

@@ -75,7 +75,7 @@ ListManager = (function() {
     album.addTo(SavedAlbums);
     this.switchView("savedAlbumsList");
     this.searchBar.clear().focus();
-    return this.header.switchTo("nav");
+    return this.trigger("addAlbum");
   };
   return ListManager;
 })();

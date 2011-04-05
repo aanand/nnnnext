@@ -29,6 +29,9 @@ AppView = (function() {
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
     this.header.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
+    this.listManager.bind("addAlbum", __bind(function() {
+      return this.header.switchTo("nav");
+    }, this));
     SavedAlbums.bind("modelSaved", this.startSync);
     Sync.bind("finish", this.finishSync);
     $(window).bind("keydown", this.handleKeypress);
