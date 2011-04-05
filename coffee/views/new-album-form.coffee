@@ -41,6 +41,6 @@ class NewAlbumForm extends View
 
     @trigger("submit", album)
 
-_.extend NewAlbumForm.prototype,
+_.extend NewAlbumForm.prototype, Tabbable,
   getTabbableElements: ->
     @$('input').get()
