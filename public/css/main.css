@@ -243,21 +243,21 @@ textarea:-moz-placeholder {
   .album .add:hover:after {
     color: #44aa44; }
 
-.album-search-list .album {
+.album-search-list .album.highlight {
   cursor: pointer; }
-  .album-search-list .album.new-album {
-    border: none; }
-    .album-search-list .album.new-album label {
-      display: block;
-      color: #888888;
-      font-size: 14px;
-      margin: 8px 0; }
-    .album-search-list .album.new-album input, .album-search-list .album.new-album button {
-      font-size: 18px; }
-    .album-search-list .album.new-album input {
-      width: 200px; }
-    .album-search-list .album.new-album button {
-      margin: 0; }
+.album-search-list .new-album {
+  border: none; }
+  .album-search-list .new-album label {
+    display: block;
+    color: #888888;
+    font-size: 14px;
+    margin: 8px 0; }
+  .album-search-list .new-album input, .album-search-list .new-album button {
+    font-size: 18px; }
+  .album-search-list .new-album input {
+    width: 200px; }
+  .album-search-list .new-album button {
+    margin: 0; }
 
 .friend-list li.not-signed-in {
   color: #888888; }
