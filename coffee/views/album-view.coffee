@@ -130,7 +130,12 @@ class FriendsAlbumView extends AlbumView
   showRating: true
 
   add: (e) ->
-    @model.unset("state")
-    @model.unset("rating")
-    @model.addTo(SavedAlbums)
+    album = new Album({
+      id:     @model.id
+      artist: @model.get("artist")
+      title:  @model.get("title")
+    })
+
+    album.addTo(SavedAlbums)
+
     @$('.add').animate({opacity: 0})

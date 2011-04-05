@@ -159,9 +159,13 @@ FriendsAlbumView = (function() {
   });
   FriendsAlbumView.prototype.showRating = true;
   FriendsAlbumView.prototype.add = function(e) {
-    this.model.unset("state");
-    this.model.unset("rating");
-    this.model.addTo(SavedAlbums);
+    var album;
+    album = new Album({
+      id: this.model.id,
+      artist: this.model.get("artist"),
+      title: this.model.get("title")
+    });
+    album.addTo(SavedAlbums);
     return this.$('.add').animate({
       opacity: 0
     });
