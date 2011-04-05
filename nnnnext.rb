@@ -262,7 +262,7 @@ module Nnnnext::Helpers
 
   def js_includes
     if ENV["CONCATENATE_JS"] == "true"
-      ["/all.js?#{File.mtime(__FILE__).to_i}"]
+      ["/all.js?#{cachebuster}"]
     else
       js_files
     end
@@ -293,6 +293,10 @@ module Nnnnext::Helpers
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }
+  end
+
+  def cachebuster
+    File.mtime(__FILE__).to_i.to_s
   end
 end
 
