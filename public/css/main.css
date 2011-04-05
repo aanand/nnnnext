@@ -160,8 +160,13 @@ textarea:-moz-placeholder {
   padding: 4px;
   border: 1px solid #cccccc;
   border-width: 0 0 1px 0;
-  position: relative;
-  overflow: hidden; }
+  position: relative; }
+  .ui-list-item:after, .album:after, .friend:after {
+    content: "\0020";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden; }
   .ui-list-item.highlight, .highlight.album, .highlight.friend {
     background: rgba(95, 148, 16, 0.2);
     outline: none; }
@@ -268,6 +273,17 @@ textarea:-moz-placeholder {
   padding: 8px 4px; }
   .friend.highlight {
     cursor: pointer; }
+  .friend .back {
+    position: absolute;
+    right: 100%;
+    font-size: 18px;
+    color: #aaaaaa;
+    padding-top: 10px;
+    cursor: pointer; }
+    .friend .back:hover {
+      color: #5f9410; }
+    .friend .back:after {
+      content: "◀"; }
   .friend img {
     float: left;
     margin-right: 8px; }

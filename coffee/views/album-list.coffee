@@ -92,6 +92,7 @@ class FriendsAlbumsList extends AlbumList
     super()
 
     if @user?
-      userView = new FriendView({model: @user, highlightable: false})
+      userView = new FriendView({model: @user, highlightable: false, backButton: true})
+      userView.bind "back", => @trigger("back")
       $(@el).prepend(userView.render().el)
 

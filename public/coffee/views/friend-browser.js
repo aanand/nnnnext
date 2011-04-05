@@ -28,9 +28,12 @@ FriendBrowser = (function() {
     FriendsAlbums.bind("refresh", __bind(function() {
       return this.switchView("albumList");
     }, this));
-    return this.bind("show", __bind(function() {
+    this.bind("show", __bind(function() {
       this.switchView("friendList");
       return this.friendList.fetch();
+    }, this));
+    return this.albumList.bind("back", __bind(function() {
+      return this.switchView("friendList");
     }, this));
   };
   FriendBrowser.prototype.render = function() {

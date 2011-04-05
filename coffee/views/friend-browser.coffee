@@ -20,6 +20,8 @@ class FriendBrowser extends View
       @switchView("friendList")
       @friendList.fetch()
 
+    @albumList.bind "back", => @switchView("friendList")
+
   render: ->
     $(@el).append(@friendList.render().el)
     $(@el).append(@albumList.render().el)

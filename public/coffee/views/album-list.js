@@ -133,8 +133,12 @@ FriendsAlbumsList = (function() {
     if (this.user != null) {
       userView = new FriendView({
         model: this.user,
-        highlightable: false
+        highlightable: false,
+        backButton: true
       });
+      userView.bind("back", __bind(function() {
+        return this.trigger("back");
+      }, this));
       return $(this.el).prepend(userView.render().el);
     }
   };

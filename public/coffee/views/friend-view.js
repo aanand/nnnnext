@@ -15,6 +15,10 @@ FriendView = (function() {
   FriendView.prototype.tagName = 'li';
   FriendView.prototype.className = 'friend';
   FriendView.prototype.template = _.template('\
+    <% if (backButton) { %>\
+      <div class="back"/>\
+    <% } %>\
+\
     <img src="<%= image %>"/>\
 \
     <div class="info">\
@@ -24,18 +28,27 @@ FriendView = (function() {
   ');
   FriendView.prototype.events = {
     click: "select",
-    keypress: "select"
+    keypress: "select",
+    "click .back": "back"
   };
   FriendView.prototype.initialize = function(options) {
+    var _ref;
     this.list = options.list;
+    this.backButton = (_ref = options.backButton) != null ? _ref : false;
     if (options.highlightable !== false) {
       _.bindAll(this, "highlight");
       return $(this.el).bind("mouseover", this.highlight).bind("mouseout", this.highlight).bind("focus", this.highlight).bind("blur", this.highlight);
     }
   };
   FriendView.prototype.render = function() {
-    $(this.el).html(this.template(this.model.toJSON()));
+    var vars;
+    vars = this.model.toJSON();
+    vars.backButton = this.backButton;
+    $(this.el).html(this.template(vars));
     return this;
+  };
+  FriendView.prototype.back = function() {
+    return this.trigger("back");
   };
   return FriendView;
 })();

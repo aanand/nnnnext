@@ -3,6 +3,10 @@ class FriendView extends View
   className: 'friend'
 
   template: _.template('
+    <% if (backButton) { %>
+      <div class="back"/>
+    <% } %>
+
     <img src="<%= image %>"/>
 
     <div class="info">
@@ -14,9 +18,11 @@ class FriendView extends View
   events:
     click:    "select"
     keypress: "select"
+    "click .back": "back"
 
   initialize: (options) ->
     @list = options.list
+    @backButton = options.backButton ? false
 
     unless options.highlightable == false
       _.bindAll(this, "highlight")
@@ -28,6 +34,11 @@ class FriendView extends View
         .bind("blur",      @highlight)
 
   render: ->
-    $(@el).html(@template(@model.toJSON()))
+    vars = @model.toJSON()
+    vars.backButton = @backButton
+    $(@el).html(@template(vars))
     this
+
+  back: ->
+    @trigger("back")
 
