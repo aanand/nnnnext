@@ -238,7 +238,10 @@ module Nnnnext::Controllers
         return "Not Found"
       end
 
-      json u.albums.where(state: "current")
+      albums = u.albums.where(state: "current").descending(:stateChanged) +
+               u.albums.where(state: "archived").descending(:stateChanged).limit(10)
+
+      json(albums)
     end
   end
 end

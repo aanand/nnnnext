@@ -30,7 +30,7 @@ AlbumView = (function() {
     return this.model.toJSON();
   };
   AlbumView.prototype.render = function() {
-    var rating, stars;
+    var rating, stars, state;
     $(this.el).html(this.template(this.templateVars()));
     if (this.showRating) {
       this.$('.controls').append('\
@@ -47,6 +47,9 @@ AlbumView = (function() {
     }
     if (this.allowRate) {
       $(this.el).addClass("allow-rate");
+    }
+    if (state = this.model.get("state")) {
+      $(this.el).attr("data-state", state);
     }
     return this;
   };
@@ -86,14 +89,6 @@ SavedAlbumView = (function() {
     "click .restore": "restore",
     "click .delete": "delete"
   });
-  SavedAlbumView.prototype.render = function() {
-    var state;
-    SavedAlbumView.__super__.render.call(this);
-    if (state = this.model.get("state")) {
-      $(this.el).attr("data-state", state);
-    }
-    return this;
-  };
   SavedAlbumView.prototype.showRating = true;
   SavedAlbumView.prototype.allowRate = true;
   SavedAlbumView.prototype.highlightStars = function(e) {

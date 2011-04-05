@@ -269,6 +269,9 @@ textarea:-moz-placeholder {
   .album-search-list .new-album button {
     margin: 0; }
 
+.friends-albums-list .album[data-state="archived"] .title {
+  color: #666666; }
+
 .friend-list li.not-signed-in {
   color: #888888; }
   .friend-list li.not-signed-in a {

@@ -38,6 +38,9 @@ class AlbumView extends View
     if @allowRate
       $(@el).addClass("allow-rate")
 
+    if state = @model.get("state")
+      $(@el).attr("data-state", state)
+
     this
 
   showOrHideRating: (e) ->
@@ -71,11 +74,6 @@ class SavedAlbumView extends AlbumView
       "click .archive":       "archive"
       "click .restore":       "restore"
       "click .delete":        "delete"
-
-  render: ->
-    super()
-    $(@el).attr("data-state", state) if state = @model.get("state")
-    this
 
   showRating: true
   allowRate: true
