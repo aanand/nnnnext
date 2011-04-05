@@ -60,11 +60,14 @@ button
   border: 1px solid #ccc
   border-bottom-color: #888
   border-right-color: #888
-  +vertical-gradient(#eee, #bbb)
-  +border-radius(2px)
   color: #444
   text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.75)
   height: 1.8em
+  +border-radius(2px)
+  +vertical-gradient(#eee, #bbb)
+
+  &:active
+    +vertical-gradient(#888, #bbb)
 
 input.placeholder_text,
 textarea.placeholder_text,
@@ -181,21 +184,40 @@ textarea:-moz-placeholder
       background: url(/img/sync-spinner.gif)
 
 .album-search-bar
-  display:       inline-block
-  width:         600px
+  $width:        510px
+  $button-width: 80px
+  $height:       40px
+
+  width:         $width
+  height:        $height
   margin-bottom: 16px
+  border:        1px solid
+  border-color:  #ccc #aaa #aaa #ccc
+  position:      relative
+  +box-shadow(1px 1px 2px #aaa)
 
   input
     float:     left
-    width:     510px
+    width:     $width - $button-width
+    height:    $height
+    border:    none
     font-size: 24px
     padding:   8px
-    +box-shadow(1px 1px 2px #aaa)
+
+  button
+    float:       left
+    width:       $button-width
+    height:      $height
+    border:      none
+    border-left: 1px solid #aaa
+    font-size:   16px
+    +border-radius(0)
 
   .spinner
-    float:       left
+    position: absolute
+    left: 100%
     margin-left: 10px
-    margin-top:  8px
+    margin-top:  4px
     display:     block
     width:       32px
     height:      32px

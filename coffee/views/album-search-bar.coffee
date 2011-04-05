@@ -1,13 +1,16 @@
 class AlbumSearchBar extends View
+  className: 'album-search-bar'
+  tagName: 'form'
+
   template: _.template('
     <input type="text"/>
+    <button type="submit">Search</button>
     <div class="spinner" style="display:none"/>
   ')
 
   events:
     "change input": "handleChange"
-
-  className: 'album-search-bar'
+    "submit": "handleSubmit"
 
   initialize: ->
     _.bindAll(this, "handleKeypress")
@@ -20,17 +23,6 @@ class AlbumSearchBar extends View
     return unless @$("input").is(":focus")
 
     switch e.keyCode
-      when 13
-        e.preventDefault()
-
-        val = @$("input").val()
-
-        if val == ""
-          @clear()
-          @trigger("clear")
-        else
-          @trigger("submit", val)
-
       when 27
         e.preventDefault()
 
@@ -39,6 +31,17 @@ class AlbumSearchBar extends View
 
   handleChange: (e) ->
     @trigger("clear") if @$("input").val() == ""
+
+  handleSubmit: (e) ->
+    e.preventDefault()
+
+    val = @$("input").val()
+
+    if val == ""
+      @clear()
+      @trigger("clear")
+    else
+      @trigger("submit", val)
 
   clear: -> @$('input').val(''); this
   focus: -> @$('input').focus(); this

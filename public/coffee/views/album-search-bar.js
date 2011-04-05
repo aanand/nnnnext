@@ -12,14 +12,17 @@ AlbumSearchBar = (function() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
   __extends(AlbumSearchBar, View);
+  AlbumSearchBar.prototype.className = 'album-search-bar';
+  AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.template = _.template('\
     <input type="text"/>\
+    <button type="submit">Search</button>\
     <div class="spinner" style="display:none"/>\
   ');
   AlbumSearchBar.prototype.events = {
-    "change input": "handleChange"
+    "change input": "handleChange",
+    "submit": "handleSubmit"
   };
-  AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.initialize = function() {
     return _.bindAll(this, "handleKeypress");
   };
@@ -28,21 +31,10 @@ AlbumSearchBar = (function() {
     return this;
   };
   AlbumSearchBar.prototype.handleKeypress = function(e) {
-    var val;
     if (!this.$("input").is(":focus")) {
       return;
     }
     switch (e.keyCode) {
-      case 13:
-        e.preventDefault();
-        val = this.$("input").val();
-        if (val === "") {
-          this.clear();
-          return this.trigger("clear");
-        } else {
-          return this.trigger("submit", val);
-        }
-        break;
       case 27:
         e.preventDefault();
         this.clear();
@@ -52,6 +44,17 @@ AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.handleChange = function(e) {
     if (this.$("input").val() === "") {
       return this.trigger("clear");
+    }
+  };
+  AlbumSearchBar.prototype.handleSubmit = function(e) {
+    var val;
+    e.preventDefault();
+    val = this.$("input").val();
+    if (val === "") {
+      this.clear();
+      return this.trigger("clear");
+    } else {
+      return this.trigger("submit", val);
     }
   };
   AlbumSearchBar.prototype.clear = function() {
