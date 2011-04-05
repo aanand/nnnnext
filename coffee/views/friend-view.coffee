@@ -12,15 +12,20 @@ class FriendView extends View
   ')
 
   events:
-    mouseover: "highlight"
-    mouseout:  "highlight"
-    focus:     "highlight"
-    blur:      "highlight"
     click:    "select"
     keypress: "select"
 
   initialize: (options) ->
     @list = options.list
+
+    unless options.highlightable == false
+      _.bindAll(this, "highlight")
+
+      $(@el)
+        .bind("mouseover", @highlight)
+        .bind("mouseout",  @highlight)
+        .bind("focus",     @highlight)
+        .bind("blur",      @highlight)
 
   render: ->
     $(@el).html(@template(@model.toJSON()))

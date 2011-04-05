@@ -132,7 +132,8 @@ FriendsAlbumsList = (function() {
     FriendsAlbumsList.__super__.populate.call(this);
     if (this.user != null) {
       userView = new FriendView({
-        model: this.user
+        model: this.user,
+        highlightable: false
       });
       return $(this.el).prepend(userView.render().el);
     }

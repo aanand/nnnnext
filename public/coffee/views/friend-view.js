@@ -23,15 +23,15 @@ FriendView = (function() {
     </div>\
   ');
   FriendView.prototype.events = {
-    mouseover: "highlight",
-    mouseout: "highlight",
-    focus: "highlight",
-    blur: "highlight",
     click: "select",
     keypress: "select"
   };
   FriendView.prototype.initialize = function(options) {
-    return this.list = options.list;
+    this.list = options.list;
+    if (options.highlightable !== false) {
+      _.bindAll(this, "highlight");
+      return $(this.el).bind("mouseover", this.highlight).bind("mouseout", this.highlight).bind("focus", this.highlight).bind("blur", this.highlight);
+    }
   };
   FriendView.prototype.render = function() {
     $(this.el).html(this.template(this.model.toJSON()));

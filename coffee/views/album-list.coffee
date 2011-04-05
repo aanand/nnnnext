@@ -92,6 +92,6 @@ class FriendsAlbumsList extends AlbumList
     super()
 
     if @user?
-      userView = new FriendView({model: @user})
+      userView = new FriendView({model: @user, highlightable: false})
       $(@el).prepend(userView.render().el)
 

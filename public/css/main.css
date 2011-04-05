@@ -265,8 +265,9 @@ textarea:-moz-placeholder {
     color: #5f9410; }
 
 .friend {
-  padding: 8px 4px;
-  cursor: pointer; }
+  padding: 8px 4px; }
+  .friend.highlight {
+    cursor: pointer; }
   .friend img {
     float: left;
     margin-right: 8px; }
