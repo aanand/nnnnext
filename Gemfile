@@ -1,6 +1,6 @@
 source :rubygems
 
-gem "camping"
+gem "camping", git: "git://github.com/camping/camping.git", ref: "separate-gemspecs"
 gem "tilt"
 gem "haml"
 gem "httparty"
