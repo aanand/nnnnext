@@ -19,20 +19,6 @@ FriendList = (function() {
       return this.populate();
     }, this));
   };
-  FriendList.prototype.fetch = function() {
-    if (typeof UserInfo != "undefined" && UserInfo !== null) {
-      if (!(this.collection.length > 0)) {
-        return this.collection.fetch();
-      }
-    } else {
-      return $(this.el).html('\
-        <li class="not-signed-in">\
-          <a href="/auth/twitter">Connect with Twitter</a>\
-          to share your list with your friends.\
-        </li>\
-      ');
-    }
-  };
   FriendList.prototype.populate = function() {
     $(this.el).empty();
     this.collection.models.forEach(__bind(function(user) {

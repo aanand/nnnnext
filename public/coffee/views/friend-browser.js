@@ -15,8 +15,10 @@ FriendBrowser = (function() {
     FriendBrowser.__super__.constructor.apply(this, arguments);
   }
   __extends(FriendBrowser, View);
+  FriendBrowser.prototype.className = 'friend-browser';
   FriendBrowser.prototype.initialize = function() {
-    _.bindAll(this, "loadFriendsAlbums");
+    _.bindAll(this, "loadFriends", "loadFriendsAlbums");
+    this.spinner = $('<div class="spinner"/>');
     this.friendList = new FriendList({
       collection: Friends
     });
@@ -24,25 +26,43 @@ FriendBrowser = (function() {
     this.albumList = new FriendsAlbumsList({
       collection: FriendsAlbums
     });
-    this.views = [this.friendList, this.albumList];
+    this.views = [this.spinner, this.friendList, this.albumList];
+    this.bind("show", this.loadFriends);
+    Friends.bind("refresh", __bind(function() {
+      return this.switchView("friendList");
+    }, this));
     FriendsAlbums.bind("refresh", __bind(function() {
       return this.switchView("albumList");
-    }, this));
-    this.bind("show", __bind(function() {
-      this.switchView("friendList");
-      return this.friendList.fetch();
     }, this));
     return this.albumList.bind("back", __bind(function() {
       return this.switchView("friendList");
     }, this));
   };
   FriendBrowser.prototype.render = function() {
+    $(this.el).append(this.spinner);
     $(this.el).append(this.friendList.render().el);
     $(this.el).append(this.albumList.render().el);
     return this;
   };
   FriendBrowser.prototype.handleKeypress = function(e) {
     return true;
+  };
+  FriendBrowser.prototype.loadFriends = function() {
+    if (typeof UserInfo != "undefined" && UserInfo !== null) {
+      if (Friends.length > 0) {
+        return this.switchView("friendList");
+      } else {
+        this.switchView("spinner");
+        return Friends.fetch();
+      }
+    } else {
+      return $(this.el).html('\
+        <div class="not-signed-in">\
+          <a href="/auth/twitter">Connect with Twitter</a>\
+          to share your list with your friends.\
+        </div>\
+      ');
+    }
   };
   FriendBrowser.prototype.loadFriendsAlbums = function(user) {
     this.albumList.user = user;

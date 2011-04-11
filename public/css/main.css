@@ -291,6 +291,12 @@ textarea:-moz-placeholder {
 .friends-albums-list .album[data-state="archived"] .title {
   color: #666666; }
 
+.friend-browser .spinner {
+  width: 66px;
+  height: 66px;
+  margin: 100px auto 0;
+  background: url(/img/spinner-big.gif); }
+
 .friend-list li.not-signed-in {
   color: #888888; }
   .friend-list li.not-signed-in a {

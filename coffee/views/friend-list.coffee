@@ -5,17 +5,6 @@ class FriendList extends View
   initialize: ->
     @collection.bind "refresh", => @populate()
 
-  fetch: ->
-    if UserInfo?
-      @collection.fetch() unless @collection.length > 0
-    else
-      $(@el).html('
-        <li class="not-signed-in">
-          <a href="/auth/twitter">Connect with Twitter</a>
-          to share your list with your friends.
-        </li>
-      ')
-
   populate: ->
     $(@el).empty()
 
