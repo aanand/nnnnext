@@ -1,7 +1,7 @@
 require "bundler"
 Bundler.setup
 
-$:.unshift("lib")
+$:.unshift("nnnnext")
 
 # stdlib
 require "json"
@@ -15,7 +15,7 @@ require "sass/plugin/rack"
 require "oa-oauth"
 require "mongoid"
 
-# lib
+# application code
 require "album_search"
 require "twitter"
 require "daemon"
