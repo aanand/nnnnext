@@ -162,7 +162,9 @@ module Nnnnext::Controllers
         return "Unauthorized"
       end
 
-      client_albums  = JSON.parse(@request.body.read)
+      json = @request.body.set_encoding("UTF-8").read
+
+      client_albums  = JSON.parse(json)
       user_albums    = user.albums
       updated_albums = Set.new(user_albums)
 
