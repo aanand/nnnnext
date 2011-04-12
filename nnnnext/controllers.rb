@@ -52,7 +52,7 @@ module Nnnnext::Controllers
         return "Unauthorized"
       end
 
-      json = @request.body.set_encoding("UTF-8").read
+      json = @request.body.read.force_encoding("UTF-8")
 
       client_albums  = JSON.parse(json)
       user_albums    = user.albums
