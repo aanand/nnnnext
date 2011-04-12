@@ -40,7 +40,8 @@ end
 
 $LOAD_PATH.unshift(Nnnnext.root) unless $LOAD_PATH.include?(Nnnnext.root)
 
-Dir.chdir(Nnnnext.root) do
-  Dir.glob("nnnnext/{support/**/*.rb,**/*.rb}").each { |f| require f }
+Dir.glob(Nnnnext.root + "nnnnext/{support/**/*.rb,**/*.rb}").each do |path|
+  path = path.sub("#{Nnnnext.root}/", "")
+  require path
 end
 
