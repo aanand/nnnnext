@@ -3,11 +3,11 @@
 %html{ lang: "en" }
   %head
     %title nnnnext
-    %link{ rel: "stylesheet", type: "text/css", href: "/css/main.css?#{cachebuster}" }
   %body
     #app
   %script{ type: "text/javascript" }
-    = "UserInfo = #{user.to_json}"
+    = "CacheBuster = #{cachebuster.inspect};\n"
+    = "UserInfo = #{user.to_json};\n"
   - js_includes.each do |path|
     %script{ type: "text/javascript", src: path }
 
