@@ -41,6 +41,7 @@ module Nnnnext::Helpers
              views/friend-view
              views/friend-list
              views/friend-browser
+             views/app-view
              saved-albums
              sync
              main
