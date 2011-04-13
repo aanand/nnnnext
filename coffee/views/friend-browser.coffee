@@ -9,6 +9,13 @@ class FriendBrowser extends View
   initialize: ->
     _.bindAll(this, "loadFriends", "loadFriendsAlbums")
 
+    @signInMessage = $('
+      <div class="not-signed-in">
+        <a href="/auth/twitter">Connect with Twitter</a>
+        to share your list with your friends.
+      </div>
+    ')
+
     @spinner = $('<div class="spinner"/>')
 
     @friendList = new FriendList({collection: Friends})
@@ -16,7 +23,7 @@ class FriendBrowser extends View
 
     @albumList = new FriendsAlbumsList({collection: FriendsAlbums})
 
-    @views = [@spinner, @friendList, @albumList]
+    @views = [@signInMessage, @spinner, @friendList, @albumList]
 
     @bind "show", @loadFriends
 
@@ -25,6 +32,7 @@ class FriendBrowser extends View
     @albumList.bind    "back",    => @switchView("friendList")
 
   render: ->
+    $(@el).append(@signInMessage)
     $(@el).append(@spinner)
     $(@el).append(@friendList.render().el)
     $(@el).append(@albumList.render().el)
@@ -40,12 +48,7 @@ class FriendBrowser extends View
         @switchView("spinner")
         Friends.fetch()
     else
-      $(@el).html('
-        <div class="not-signed-in">
-          <a href="/auth/twitter">Connect with Twitter</a>
-          to share your list with your friends.
-        </div>
-      ')
+      @switchView("signInMessage")
 
   loadFriendsAlbums: (user) ->
     @albumList.user = user

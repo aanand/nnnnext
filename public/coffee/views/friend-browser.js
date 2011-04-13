@@ -18,6 +18,12 @@ FriendBrowser = (function() {
   FriendBrowser.prototype.className = 'friend-browser';
   FriendBrowser.prototype.initialize = function() {
     _.bindAll(this, "loadFriends", "loadFriendsAlbums");
+    this.signInMessage = $('\
+      <div class="not-signed-in">\
+        <a href="/auth/twitter">Connect with Twitter</a>\
+        to share your list with your friends.\
+      </div>\
+    ');
     this.spinner = $('<div class="spinner"/>');
     this.friendList = new FriendList({
       collection: Friends
@@ -26,7 +32,7 @@ FriendBrowser = (function() {
     this.albumList = new FriendsAlbumsList({
       collection: FriendsAlbums
     });
-    this.views = [this.spinner, this.friendList, this.albumList];
+    this.views = [this.signInMessage, this.spinner, this.friendList, this.albumList];
     this.bind("show", this.loadFriends);
     Friends.bind("refresh", __bind(function() {
       return this.switchView("friendList");
@@ -39,6 +45,7 @@ FriendBrowser = (function() {
     }, this));
   };
   FriendBrowser.prototype.render = function() {
+    $(this.el).append(this.signInMessage);
     $(this.el).append(this.spinner);
     $(this.el).append(this.friendList.render().el);
     $(this.el).append(this.albumList.render().el);
@@ -56,12 +63,7 @@ FriendBrowser = (function() {
         return Friends.fetch();
       }
     } else {
-      return $(this.el).html('\
-        <div class="not-signed-in">\
-          <a href="/auth/twitter">Connect with Twitter</a>\
-          to share your list with your friends.\
-        </div>\
-      ');
+      return this.switchView("signInMessage");
     }
   };
   FriendBrowser.prototype.loadFriendsAlbums = function(user) {
