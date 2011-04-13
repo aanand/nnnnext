@@ -1,0 +1,51 @@
+@import _colors
+@import _mixins
+
+*, input
+  font-family: helvetica, sans-serif
+
+body
+  margin: 0
+  -webkit-text-size-adjust: 100%
+
+.album-search-bar
+  +vertical-gradient($lightest, $lighter)
+  padding: 14px 20px
+
+  .inner
+    $height: 60px
+
+    height: $height
+    padding: 0 $height*1 0 $height*0.25
+    background: white
+    // border: 2px solid $primary
+    +border-radius($height*0.7)
+    +box-shadow(inset 0px $height/8 $height/4 rgba(0,0,0,0.35))
+
+  input
+    width: 100%
+    margin-top: 6px
+    font-size: 30px
+    border: none
+    background: none
+    -webkit-appearance: none
+
+  button
+    display: none
+
+.album-list
+  margin: 0
+  padding: 0
+
+  li
+    padding: 20px
+    border-bottom: 1px solid #ccc
+
+    .title
+      font-size: 36px
+      font-weight: bold
+
+    .artist
+      font-size: 30px
+      color: #666
+

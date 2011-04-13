@@ -15,9 +15,11 @@ AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.template = _.template('\
-    <input type="text"/>\
-    <button type="submit">Search</button>\
-    <div class="spinner" style="display:none"/>\
+    <div class="inner">\
+      <input type="text"/>\
+      <button type="submit">Search</button>\
+      <div class="spinner" style="display:none"/>\
+    </div>\
   ');
   AlbumSearchBar.prototype.events = {
     "change input": "handleChange",

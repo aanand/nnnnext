@@ -3,9 +3,11 @@ class AlbumSearchBar extends View
   tagName: 'form'
 
   template: _.template('
-    <input type="text"/>
-    <button type="submit">Search</button>
-    <div class="spinner" style="display:none"/>
+    <div class="inner">
+      <input type="text"/>
+      <button type="submit">Search</button>
+      <div class="spinner" style="display:none"/>
+    </div>
   ')
 
   events:

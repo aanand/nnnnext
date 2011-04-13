@@ -5,6 +5,7 @@ loadCSS = function(path) {
 };
 if (Mobile) {
   loadCSS('/css/mobile.css');
+  $('head').append('<meta name="apple-mobile-web-app-capable" content="yes">').append('<meta name="viewport" content="width=640,user-scalable=no">');
 } else {
   loadCSS('/css/main.css');
 }
