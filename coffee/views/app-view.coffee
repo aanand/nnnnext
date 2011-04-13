@@ -21,12 +21,12 @@ class AppView extends View
 
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress")
 
-    @header.bind            "navigate", @navigate
-    @header.bind            "syncButtonClick", @startSync
-    @listManager.bind       "addAlbum", => @header.switchTo("nav")
-    SavedAlbums.bind        "modelSaved", @startSync
-    Sync.bind               "finish",  @finishSync
-    $(window).bind          "keydown", @handleKeypress
+    @header.bind      "navigate",        @navigate
+    @header.bind      "syncButtonClick", @startSync
+    @listManager.bind "addAlbum",        => @header.switchTo("nav")
+    SavedAlbums.bind  "modelSaved",      @startSync
+    Sync.bind         "finish",          @finishSync
+    $(window).bind    "keydown",         @handleKeypress
 
     @el.append(@banner.render().el)
     @el.append(@header.render().el)
