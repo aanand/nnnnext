@@ -19,6 +19,7 @@ class AlbumSearchBar extends View
 
   render: ->
     $(@el).html(@template())
+    @$('button').hide() if Mobile
     this
 
   handleKeypress: (e) ->
@@ -32,21 +33,24 @@ class AlbumSearchBar extends View
         @trigger("clear")
 
   handleChange: (e) ->
-    @trigger("clear") if @$("input").val() == ""
+    if @val() == ""
+      @trigger("clear")
+    else if Mobile
+      @trigger("submit", @val())
 
   handleSubmit: (e) ->
     e.preventDefault()
 
-    val = @$("input").val()
-
-    if val == ""
+    if @val() == ""
       @clear()
       @trigger("clear")
     else
-      @trigger("submit", val)
+      @trigger("submit", @val())
 
+  val:   -> @$("input").val()
   clear: -> @$('input').val(''); this
   focus: -> @$('input').focus(); this
+  blur:  -> @$('input').blur();  this
 
   showSpinner: -> @$('.spinner').show()
   hideSpinner: -> @$('.spinner').hide()

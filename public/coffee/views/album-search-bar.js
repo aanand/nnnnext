@@ -30,6 +30,9 @@ AlbumSearchBar = (function() {
   };
   AlbumSearchBar.prototype.render = function() {
     $(this.el).html(this.template());
+    if (Mobile) {
+      this.$('button').hide();
+    }
     return this;
   };
   AlbumSearchBar.prototype.handleKeypress = function(e) {
@@ -44,20 +47,23 @@ AlbumSearchBar = (function() {
     }
   };
   AlbumSearchBar.prototype.handleChange = function(e) {
-    if (this.$("input").val() === "") {
+    if (this.val() === "") {
       return this.trigger("clear");
+    } else if (Mobile) {
+      return this.trigger("submit", this.val());
     }
   };
   AlbumSearchBar.prototype.handleSubmit = function(e) {
-    var val;
     e.preventDefault();
-    val = this.$("input").val();
-    if (val === "") {
+    if (this.val() === "") {
       this.clear();
       return this.trigger("clear");
     } else {
-      return this.trigger("submit", val);
+      return this.trigger("submit", this.val());
     }
+  };
+  AlbumSearchBar.prototype.val = function() {
+    return this.$("input").val();
   };
   AlbumSearchBar.prototype.clear = function() {
     this.$('input').val('');
@@ -65,6 +71,10 @@ AlbumSearchBar = (function() {
   };
   AlbumSearchBar.prototype.focus = function() {
     this.$('input').focus();
+    return this;
+  };
+  AlbumSearchBar.prototype.blur = function() {
+    this.$('input').blur();
     return this;
   };
   AlbumSearchBar.prototype.showSpinner = function() {

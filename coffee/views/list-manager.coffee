@@ -45,6 +45,7 @@ class ListManager extends View
 
   finishSearch: ->
     @searchBar.hideSpinner()
+    @searchBar.blur() if Mobile
     @searchResultsList.populate()
     @switchView("searchResultsList")
 
@@ -55,7 +56,8 @@ class ListManager extends View
     album.addTo(SavedAlbums)
 
     @switchView("savedAlbumsList")
-    @searchBar.clear().focus()
+    @searchBar.clear()
+    @searchBar.focus() unless Mobile
     @trigger("addAlbum")
 
 _.extend ListManager.prototype, Tabbable,

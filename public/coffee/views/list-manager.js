@@ -65,6 +65,9 @@ ListManager = (function() {
   };
   ListManager.prototype.finishSearch = function() {
     this.searchBar.hideSpinner();
+    if (Mobile) {
+      this.searchBar.blur();
+    }
     this.searchResultsList.populate();
     return this.switchView("searchResultsList");
   };
@@ -74,7 +77,10 @@ ListManager = (function() {
   ListManager.prototype.addAlbum = function(album) {
     album.addTo(SavedAlbums);
     this.switchView("savedAlbumsList");
-    this.searchBar.clear().focus();
+    this.searchBar.clear();
+    if (!Mobile) {
+      this.searchBar.focus();
+    }
     return this.trigger("addAlbum");
   };
   return ListManager;
