@@ -7,12 +7,10 @@ class AppView extends View
     @banner = new Banner
 
     @header = new Header
-    @header.href = "/current"
 
-    if SavedAlbums.length > 0
-      @header.section = "nav"
-    else
-      @header.section = "intro"
+    @navigation = new Navigation
+    @navigation.href = "/current"
+    @header.addNavigation(@navigation) unless Mobile
 
     @listManager   = new ListManager
     @friendBrowser = new FriendBrowser
@@ -21,20 +19,22 @@ class AppView extends View
 
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress")
 
-    @header.bind      "navigate",        @navigate
+    @navigation.bind  "navigate",        @navigate
     @header.bind      "syncButtonClick", @startSync
-    @listManager.bind "addAlbum",        => @header.switchTo("nav")
+    @listManager.bind "addAlbum",        => @navigation.show()
     SavedAlbums.bind  "modelSaved",      @startSync
     Sync.bind         "finish",          @finishSync
     $(window).bind    "keydown",         @handleKeypress
 
     @el.append(@banner.render().el)
     @el.append(@header.render().el)
+    @el.append(@navigation.render().el) if Mobile
     @el.append(@listManager.render().el)
     @el.append(@friendBrowser.render().el)
 
+    @navigation.hide() if SavedAlbums.length == 0 and not(UserInfo?)
     @tabIndex = 0
-    @navigate("/current")
+    @navigate(@navigation.href)
 
     @startSync()
 
@@ -45,7 +45,7 @@ class AppView extends View
 
   finishSync: ->
     window.setTimeout((=> @header.syncing(false)), 500)
-    @header.switchTo("nav") if SavedAlbums.length > 0
+    @navigation.show() if SavedAlbums.length > 0
 
   navigate: (href) ->
     switch href

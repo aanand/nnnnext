@@ -8,8 +8,52 @@ body
   margin: 0
   -webkit-text-size-adjust: 100%
 
+.header
+  height: 86px
+  border-bottom: 2px solid $dark
+  +vertical-gradient($light, $primary)
+
+  &:after
+    content:         "nnnnext"
+    display:         block
+    padding-top:     20px
+    text-align:      center
+    text-decoration: none
+    text-shadow:     0px -2px 0px transparentize($dark, 0.5)
+    font-size:       40px
+    font-weight:     bold
+    color:           white
+
+.navigation
+  position:   absolute
+  left:       0
+  bottom:     0
+  width: 100%
+  height:     96px
+  border-top: 2px solid #111
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#575757), color-stop(0.05, #323232), color-stop(0.5, #151515), color-stop(0.51, black), to(black))
+  display:    table
+  border-spacing: 4px
+
+  .inner
+    display: table-row
+
+  a
+    display:         table-cell
+    vertical-align:  middle
+    text-align:      center
+    text-decoration: none
+    color:           white
+    font-size:       20px
+    font-weight:     bold
+
+    &.active
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#4b4b4b), color-stop(0.5, #363636), color-stop(0.51, #252525), to(#252525))
+      +border-radius(6px)
+
 .album-search-bar
   +vertical-gradient($lightest, $lighter)
+  border-bottom: 1px solid $light
   padding: 14px 20px
 
   .inner
@@ -18,7 +62,6 @@ body
     height: $height
     padding: 0 $height*1 0 $height*0.25
     background: white
-    // border: 2px solid $primary
     +border-radius($height*0.7)
     +box-shadow(inset 0px $height/8 $height/4 rgba(0,0,0,0.35))
 

@@ -119,27 +119,6 @@ textarea:-moz-placeholder
   display:       block
   margin-bottom: 8px
 
-  a
-    color:           #888
-    text-decoration: none
-
-    &.current
-      color: $primary
-
-  .nav
-    list-style: none
-    margin:     0
-    padding:    0
-
-    li
-      display: inline-block
-
-      &:before
-        content: "• "
-
-      &:first-child:before
-        content: ""
-
   .sync-controls
     position: absolute
     top: 4px
@@ -155,6 +134,21 @@ textarea:-moz-placeholder
 
     .spinner
       background: url(/img/sync-spinner.gif)
+
+.navigation
+  a
+    display:         inline-block
+    color:           #888
+    text-decoration: none
+
+    &.active
+      color: $primary
+
+    &:before
+      content: "• "
+
+    &:first-child:before
+      content: ""
 
 .album-search-bar
   $width:        510px

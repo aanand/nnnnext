@@ -17,30 +17,35 @@ AppView = (function() {
     SavedAlbums.fetch();
     this.banner = new Banner;
     this.header = new Header;
-    this.header.href = "/current";
-    if (SavedAlbums.length > 0) {
-      this.header.section = "nav";
-    } else {
-      this.header.section = "intro";
+    this.navigation = new Navigation;
+    this.navigation.href = "/current";
+    if (!Mobile) {
+      this.header.addNavigation(this.navigation);
     }
     this.listManager = new ListManager;
     this.friendBrowser = new FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
-    this.header.bind("navigate", this.navigate);
+    this.navigation.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
     this.listManager.bind("addAlbum", __bind(function() {
-      return this.header.switchTo("nav");
+      return this.navigation.show();
     }, this));
     SavedAlbums.bind("modelSaved", this.startSync);
     Sync.bind("finish", this.finishSync);
     $(window).bind("keydown", this.handleKeypress);
     this.el.append(this.banner.render().el);
     this.el.append(this.header.render().el);
+    if (Mobile) {
+      this.el.append(this.navigation.render().el);
+    }
     this.el.append(this.listManager.render().el);
     this.el.append(this.friendBrowser.render().el);
+    if (SavedAlbums.length === 0 && !(typeof UserInfo != "undefined" && UserInfo !== null)) {
+      this.navigation.hide();
+    }
     this.tabIndex = 0;
-    this.navigate("/current");
+    this.navigate(this.navigation.href);
     return this.startSync();
   };
   AppView.prototype.startSync = function() {
@@ -55,7 +60,7 @@ AppView = (function() {
       return this.header.syncing(false);
     }, this)), 500);
     if (SavedAlbums.length > 0) {
-      return this.header.switchTo("nav");
+      return this.navigation.show();
     }
   };
   AppView.prototype.navigate = function(href) {

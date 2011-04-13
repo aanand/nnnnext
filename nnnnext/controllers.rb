@@ -6,6 +6,19 @@ module Nnnnext::Controllers
     end
   end
 
+  class Wipe
+    def get
+      @headers["content-type"] = "text/html; charset=utf-8"
+
+      %{
+        <script type="text/javascript">
+          localStorage.clear();
+          window.location.href = "/";
+        </script>
+      }
+    end
+  end
+
   class ConcatenatedJavascript < R("/all.js")
     def get
       logger.puts "concatenating javascript..."

@@ -33,6 +33,7 @@ module Nnnnext::Helpers
              views/view
              views/banner
              views/header
+             views/navigation
              views/list-manager
              views/album-view
              views/album-list
