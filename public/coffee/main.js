@@ -11,3 +11,6 @@ if (Mobile) {
 }
 App = new AppView;
 $(document.body).append(App.render().el);
+setTimeout((function() {
+  return App.refreshScroll();
+}), 1000);

@@ -29,14 +29,27 @@ class AppView extends View
     @el.append(@banner.render().el)
     @el.append(@header.render().el)
     @el.append(@navigation.render().el) if Mobile
-    @el.append(@listManager.render().el)
-    @el.append(@friendBrowser.render().el)
+    
+    scroller = $("<div id='scroller'/>")
+    @views.forEach (v) -> scroller.append(v.render().el)
+    @scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(@el)
+
+    @iScroll = new iScroll(@scrollWrapper.get(0)) if Mobile
 
     @navigation.hide() if SavedAlbums.length == 0 and not(UserInfo?)
     @tabIndex = 0
     @navigate(@navigation.href)
 
     @startSync()
+
+  refreshScroll: ->
+    return unless @iScroll?
+    window.setTimeout((=> @iScroll.refresh()), 0)
+    console.log @iScroll.y
+
+  switchView: (viewName) ->
+    super(viewName)
+    @refreshScroll()
 
   startSync: ->
     return unless UserInfo?

@@ -47,6 +47,13 @@ body {
       -webkit-border-radius: 6px;
       -moz-border-radius: 6px; }
 
+#scroll-wrapper {
+  position: absolute;
+  top: 86px;
+  bottom: 96px;
+  left: 0;
+  right: 0; }
+
 .album-search-bar {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#d7efb4), to(#a1e143));
   background-image: -moz-linear-gradient(center top, #d7efb4 0%, #a1e143 100%);

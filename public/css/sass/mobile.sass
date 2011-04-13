@@ -8,8 +8,11 @@ body
   margin: 0
   -webkit-text-size-adjust: 100%
 
+$header-height: 86px
+$footer-height: 96px
+
 .header
-  height: 86px
+  height: $header-height
   border-bottom: 2px solid $dark
   +vertical-gradient($light, $primary)
 
@@ -28,8 +31,8 @@ body
   position:   absolute
   left:       0
   bottom:     0
-  width: 100%
-  height:     96px
+  width:      100%
+  height:     $footer-height
   border-top: 2px solid #111
   background-image: -webkit-gradient(linear, left top, left bottom, from(#575757), color-stop(0.05, #323232), color-stop(0.5, #151515), color-stop(0.51, black), to(black))
   display:    table
@@ -50,6 +53,13 @@ body
     &.active
       background-image: -webkit-gradient(linear, left top, left bottom, from(#4b4b4b), color-stop(0.5, #363636), color-stop(0.51, #252525), to(#252525))
       +border-radius(6px)
+
+#scroll-wrapper
+  position: absolute
+  top:      $header-height
+  bottom:   $footer-height
+  left:     0
+  right:    0
 
 .album-search-bar
   +vertical-gradient($lightest, $lighter)

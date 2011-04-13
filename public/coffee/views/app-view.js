@@ -14,6 +14,7 @@ AppView = (function() {
   __extends(AppView, View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
+    var scroller;
     SavedAlbums.fetch();
     this.banner = new Banner;
     this.header = new Header;
@@ -39,14 +40,33 @@ AppView = (function() {
     if (Mobile) {
       this.el.append(this.navigation.render().el);
     }
-    this.el.append(this.listManager.render().el);
-    this.el.append(this.friendBrowser.render().el);
+    scroller = $("<div id='scroller'/>");
+    this.views.forEach(function(v) {
+      return scroller.append(v.render().el);
+    });
+    this.scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(this.el);
+    if (Mobile) {
+      this.iScroll = new iScroll(this.scrollWrapper.get(0));
+    }
     if (SavedAlbums.length === 0 && !(typeof UserInfo != "undefined" && UserInfo !== null)) {
       this.navigation.hide();
     }
     this.tabIndex = 0;
     this.navigate(this.navigation.href);
     return this.startSync();
+  };
+  AppView.prototype.refreshScroll = function() {
+    if (this.iScroll == null) {
+      return;
+    }
+    window.setTimeout((__bind(function() {
+      return this.iScroll.refresh();
+    }, this)), 0);
+    return console.log(this.iScroll.y);
+  };
+  AppView.prototype.switchView = function(viewName) {
+    AppView.__super__.switchView.call(this, viewName);
+    return this.refreshScroll();
   };
   AppView.prototype.startSync = function() {
     if (typeof UserInfo == "undefined" || UserInfo === null) {

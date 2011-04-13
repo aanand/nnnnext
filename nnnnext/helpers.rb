@@ -26,6 +26,7 @@ module Nnnnext::Helpers
             underscore
             backbone
             backbone.localStorage
+            iscroll
            ).map { |n| "/js/#{n}.js" }
 
     js += %w(models/album

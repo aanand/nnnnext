@@ -14,3 +14,5 @@ else
 
 App = new AppView
 $(document.body).append(App.render().el)
+setTimeout((-> App.refreshScroll()), 1000)
+
