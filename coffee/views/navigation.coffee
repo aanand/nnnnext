@@ -36,18 +36,3 @@ class Navigation extends View
     else
       super()
 
-  # show: ->
-    # $(@el).css({ position: "relative", overflow: "hidden" })
-
-    # height = $(@el).height()
-
-    # @$('.title')
-      # .css({ position: "absolute", top: "0", left: "0", right: "0" })
-      # .show()
-      # .animate({ top: -height })
-
-    # @$('.nav')
-      # .css({ position: "absolute", top: height, left: "0", right: "0" })
-      # .show()
-      # .animate({ top: 0 })
-
