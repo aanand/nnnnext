@@ -1,4 +1,4 @@
-class ListManager extends View
+class UI.ListManager extends View
   initialize: ->
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch")
 
@@ -45,7 +45,6 @@ class ListManager extends View
 
   finishSearch: ->
     @searchBar.hideSpinner()
-    @searchBar.blur() if Mobile
     @searchResultsList.populate()
     @switchView("searchResultsList")
 
@@ -57,9 +56,20 @@ class ListManager extends View
 
     @switchView("savedAlbumsList")
     @searchBar.clear()
-    @searchBar.focus() unless Mobile
     @trigger("addAlbum")
 
-_.extend ListManager.prototype, Tabbable,
+_.extend UI.ListManager.prototype, Tabbable,
   getTabbableElements: -> [@searchBar, @currentView]
+
+class Desktop.ListManager extends UI.ListManager
+  addAlbum: (album) ->
+    super(album)
+    console.log "focusing search bar"
+    @searchBar.focus()
+
+class Touch.ListManager extends UI.ListManager
+  finishSearch: ->
+    super()
+    console.log "blurring search bar"
+    @searchBar.blur()
 

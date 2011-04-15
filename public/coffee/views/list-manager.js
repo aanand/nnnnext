@@ -1,4 +1,3 @@
-var ListManager;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-ListManager = (function() {
+UI.ListManager = (function() {
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
@@ -65,9 +64,6 @@ ListManager = (function() {
   };
   ListManager.prototype.finishSearch = function() {
     this.searchBar.hideSpinner();
-    if (Mobile) {
-      this.searchBar.blur();
-    }
     this.searchResultsList.populate();
     return this.switchView("searchResultsList");
   };
@@ -78,15 +74,36 @@ ListManager = (function() {
     album.addTo(SavedAlbums);
     this.switchView("savedAlbumsList");
     this.searchBar.clear();
-    if (!Mobile) {
-      this.searchBar.focus();
-    }
     return this.trigger("addAlbum");
   };
   return ListManager;
 })();
-_.extend(ListManager.prototype, Tabbable, {
+_.extend(UI.ListManager.prototype, Tabbable, {
   getTabbableElements: function() {
     return [this.searchBar, this.currentView];
   }
 });
+Desktop.ListManager = (function() {
+  function ListManager() {
+    ListManager.__super__.constructor.apply(this, arguments);
+  }
+  __extends(ListManager, UI.ListManager);
+  ListManager.prototype.addAlbum = function(album) {
+    ListManager.__super__.addAlbum.call(this, album);
+    console.log("focusing search bar");
+    return this.searchBar.focus();
+  };
+  return ListManager;
+})();
+Touch.ListManager = (function() {
+  function ListManager() {
+    ListManager.__super__.constructor.apply(this, arguments);
+  }
+  __extends(ListManager, UI.ListManager);
+  ListManager.prototype.finishSearch = function() {
+    ListManager.__super__.finishSearch.call(this);
+    console.log("blurring search bar");
+    return this.searchBar.blur();
+  };
+  return ListManager;
+})();

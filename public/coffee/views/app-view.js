@@ -17,7 +17,7 @@ UI.AppView = (function() {
     this.banner = new Banner;
     this.header = new Header;
     this.initNavigation();
-    this.listManager = new ListManager;
+    this.listManager = new Views.ListManager;
     this.friendBrowser = new FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");

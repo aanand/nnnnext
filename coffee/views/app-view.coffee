@@ -10,7 +10,7 @@ class UI.AppView extends View
 
     @initNavigation()
 
-    @listManager   = new ListManager
+    @listManager   = new Views.ListManager
     @friendBrowser = new FriendBrowser
 
     @views = [@listManager, @friendBrowser]
