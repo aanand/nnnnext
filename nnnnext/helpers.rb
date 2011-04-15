@@ -31,6 +31,7 @@ module Nnnnext::Helpers
 
     js += %w(models/album
              models/user
+             views/view-shop
              views/view
              views/banner
              views/header

@@ -1,4 +1,4 @@
-class AppView extends View
+class UI.AppView extends View
   el: $('#app')
 
   initialize: ->
@@ -8,9 +8,7 @@ class AppView extends View
 
     @header = new Header
 
-    @navigation = new Navigation
-    @navigation.href = "/current"
-    @header.addNavigation(@navigation) unless Mobile
+    @initNavigation()
 
     @listManager   = new ListManager
     @friendBrowser = new FriendBrowser
@@ -26,15 +24,7 @@ class AppView extends View
     Sync.bind         "finish",          @finishSync
     $(window).bind    "keydown",         @handleKeypress
 
-    @el.append(@banner.render().el)
-    @el.append(@header.render().el)
-    @el.append(@navigation.render().el) if Mobile
-    
-    scroller = $("<div id='scroller'/>")
-    @views.forEach (v) -> scroller.append(v.render().el)
-    @scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(@el)
-
-    @iScroll = new iScroll(@scrollWrapper.get(0)) if Mobile
+    @renderSubviews()
 
     @navigation.hide() if SavedAlbums.length == 0 and not(UserInfo?)
     @tabIndex = 0
@@ -42,14 +32,18 @@ class AppView extends View
 
     @startSync()
 
-  refreshScroll: ->
-    return unless @iScroll?
-    window.setTimeout((=> @iScroll.refresh()), 0)
-    console.log @iScroll.y
+  initNavigation: ->
+    @navigation = new Navigation
+    @navigation.href = "/current"
 
-  switchView: (viewName) ->
-    super(viewName)
-    @refreshScroll()
+  renderSubviews: ->
+    @el.append(@banner.render().el)
+    @el.append(@header.render().el)
+
+  refreshScroll: ->
+
+  appendTo: (parent) ->
+    $(parent).append(@render().el)
 
   startSync: ->
     return unless UserInfo?
@@ -96,7 +90,43 @@ class AppView extends View
     $(focus).blur() if focus?
     $(elements[nextIndex]).focus()
 
-_.extend AppView.prototype, Tabbable, {
+_.extend UI.AppView.prototype, Tabbable, {
   getTabbableElements: -> [@currentView]
 }
+
+class Desktop.AppView extends UI.AppView
+  initNavigation: ->
+    super()
+    console.log "adding navigation to header"
+    @header.addNavigation(@navigation)
+
+  renderSubviews: ->
+    super()
+    console.log "appending subviews directly to @el"
+    @views.forEach (v) => @el.append(v.render().el)
+
+class Touch.AppView extends UI.AppView
+  renderSubviews: ->
+    super()
+    console.log "appending navigation directly to @el"
+    @el.append(@navigation.render().el)
+
+    console.log "appending subviews to #scroller"
+    scroller = $("<div id='scroller'/>")
+    @views.forEach (v) -> scroller.append(v.render().el)
+    @scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(@el)
+
+    @iScroll = new iScroll(@scrollWrapper.get(0))
+
+  appendTo: (parent) ->
+    super(parent)
+    window.setTimeout((=> @refreshScroll()), 1000)
+
+  switchView: (viewName) ->
+    super(viewName)
+    @refreshScroll()
+
+  refreshScroll: ->
+    console.log "refreshing @iScroll"
+    window.setTimeout((=> @iScroll.refresh()), 0)
 
