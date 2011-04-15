@@ -1,4 +1,3 @@
-var AlbumSearchBar;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,20 +6,13 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-AlbumSearchBar = (function() {
+UI.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
   __extends(AlbumSearchBar, View);
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
-  AlbumSearchBar.prototype.template = _.template('\
-    <div class="inner">\
-      <input type="text"/>\
-      <button type="submit">Search</button>\
-      <div class="spinner" style="display:none"/>\
-    </div>\
-  ');
   AlbumSearchBar.prototype.events = {
     "change input": "handleChange",
     "submit": "handleSubmit"
@@ -30,9 +22,6 @@ AlbumSearchBar = (function() {
   };
   AlbumSearchBar.prototype.render = function() {
     $(this.el).html(this.template());
-    if (Mobile) {
-      this.$('button').hide();
-    }
     return this;
   };
   AlbumSearchBar.prototype.handleKeypress = function(e) {
@@ -49,8 +38,6 @@ AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.handleChange = function(e) {
     if (this.val() === "") {
       return this.trigger("clear");
-    } else if (Mobile) {
-      return this.trigger("submit", this.val());
     }
   };
   AlbumSearchBar.prototype.handleSubmit = function(e) {
@@ -85,8 +72,38 @@ AlbumSearchBar = (function() {
   };
   return AlbumSearchBar;
 })();
-_.extend(AlbumSearchBar.prototype, Tabbable, {
+_.extend(UI.AlbumSearchBar.prototype, Tabbable, {
   getTabbableElements: function() {
     return this.$('input').get();
   }
 });
+Desktop.AlbumSearchBar = (function() {
+  function AlbumSearchBar() {
+    AlbumSearchBar.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AlbumSearchBar, UI.AlbumSearchBar);
+  AlbumSearchBar.prototype.template = _.template('\
+    <input type="text"/>\
+    <button type="submit">Search</button>\
+    <div class="spinner" style="display:none"/>\
+  ');
+  return AlbumSearchBar;
+})();
+Touch.AlbumSearchBar = (function() {
+  function AlbumSearchBar() {
+    AlbumSearchBar.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AlbumSearchBar, UI.AlbumSearchBar);
+  AlbumSearchBar.prototype.template = _.template('\
+    <div class="inner">\
+      <input type="text"/>\
+    </div>\
+  ');
+  AlbumSearchBar.prototype.handleChange = function(e) {
+    AlbumSearchBar.__super__.handleChange.call(this, e);
+    if (this.val() !== "") {
+      return this.trigger("submit", this.val());
+    }
+  };
+  return AlbumSearchBar;
+})();

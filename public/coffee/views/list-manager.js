@@ -15,7 +15,7 @@ ListManager = (function() {
   ListManager.prototype.initialize = function() {
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
     this.albumSearchResults = new AlbumCollection;
-    this.searchBar = new AlbumSearchBar({
+    this.searchBar = new Views.AlbumSearchBar({
       collection: this.albumSearchResults
     });
     this.searchResultsList = new AlbumSearchList({

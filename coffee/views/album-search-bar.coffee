@@ -1,14 +1,6 @@
-class AlbumSearchBar extends View
+class UI.AlbumSearchBar extends View
   className: 'album-search-bar'
   tagName: 'form'
-
-  template: _.template('
-    <div class="inner">
-      <input type="text"/>
-      <button type="submit">Search</button>
-      <div class="spinner" style="display:none"/>
-    </div>
-  ')
 
   events:
     "change input": "handleChange"
@@ -19,7 +11,6 @@ class AlbumSearchBar extends View
 
   render: ->
     $(@el).html(@template())
-    @$('button').hide() if Mobile
     this
 
   handleKeypress: (e) ->
@@ -35,8 +26,6 @@ class AlbumSearchBar extends View
   handleChange: (e) ->
     if @val() == ""
       @trigger("clear")
-    else if Mobile
-      @trigger("submit", @val())
 
   handleSubmit: (e) ->
     e.preventDefault()
@@ -55,7 +44,25 @@ class AlbumSearchBar extends View
   showSpinner: -> @$('.spinner').show()
   hideSpinner: -> @$('.spinner').hide()
 
-_.extend AlbumSearchBar.prototype, Tabbable, {
+_.extend UI.AlbumSearchBar.prototype, Tabbable, {
   getTabbableElements: -> @$('input').get()
 }
+
+class Desktop.AlbumSearchBar extends UI.AlbumSearchBar
+  template: _.template('
+    <input type="text"/>
+    <button type="submit">Search</button>
+    <div class="spinner" style="display:none"/>
+  ')
+
+class Touch.AlbumSearchBar extends UI.AlbumSearchBar
+  template: _.template('
+    <div class="inner">
+      <input type="text"/>
+    </div>
+  ')
+
+  handleChange: (e) ->
+    super(e)
+    @trigger("submit", @val()) unless @val() == ""
 
