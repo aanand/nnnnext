@@ -33,7 +33,7 @@ class UI.AppView extends View
     @startSync()
 
   initNavigation: ->
-    @navigation = new Navigation
+    @navigation = new Views.Navigation
     @navigation.href = "/current"
 
   renderSubviews: ->

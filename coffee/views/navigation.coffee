@@ -1,4 +1,4 @@
-class Navigation extends View
+class UI.Navigation extends View
   className: 'navigation'
 
   template: _.template('
@@ -30,9 +30,8 @@ class Navigation extends View
       .filter("[href='#{@href}']")
         .addClass('active')
 
+class Touch.Navigation extends UI.Navigation
   show: ->
-    if Mobile
-      $(@el).css({ display: "table" })
-    else
-      super()
+    console.log "setting display: table"
+    $(@el).css({ display: "table" })
 

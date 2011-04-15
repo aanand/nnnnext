@@ -38,7 +38,7 @@ UI.AppView = (function() {
     return this.startSync();
   };
   AppView.prototype.initNavigation = function() {
-    this.navigation = new Navigation;
+    this.navigation = new Views.Navigation;
     return this.navigation.href = "/current";
   };
   AppView.prototype.renderSubviews = function() {

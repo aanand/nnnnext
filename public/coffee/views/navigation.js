@@ -1,4 +1,3 @@
-var Navigation;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-Navigation = (function() {
+UI.Navigation = (function() {
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
@@ -41,14 +40,18 @@ Navigation = (function() {
     this.href = href;
     return this.$('a').removeClass('active').filter("[href='" + this.href + "']").addClass('active');
   };
+  return Navigation;
+})();
+Touch.Navigation = (function() {
+  function Navigation() {
+    Navigation.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Navigation, UI.Navigation);
   Navigation.prototype.show = function() {
-    if (Mobile) {
-      return $(this.el).css({
-        display: "table"
-      });
-    } else {
-      return Navigation.__super__.show.call(this);
-    }
+    console.log("setting display: table");
+    return $(this.el).css({
+      display: "table"
+    });
   };
   return Navigation;
 })();
