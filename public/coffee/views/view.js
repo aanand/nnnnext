@@ -1,4 +1,4 @@
-var Tabbable, View;
+var Tabbable;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,7 +7,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-View = (function() {
+Views.View = (function() {
   function View() {
     View.__super__.constructor.apply(this, arguments);
   }

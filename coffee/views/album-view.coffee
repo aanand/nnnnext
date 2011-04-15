@@ -1,4 +1,4 @@
-class AlbumView extends View
+class Views.AlbumView extends Views.View
   tagName: 'li'
   className: 'album'
 
@@ -54,7 +54,7 @@ class AlbumView extends View
 
 _.extend AlbumView.prototype, Tabbable
 
-class SavedAlbumView extends AlbumView
+class Views.SavedAlbumView extends Views.AlbumView
   template: _.template('
     <div class="controls">
       <div class="delete"></div>
@@ -92,7 +92,7 @@ class SavedAlbumView extends AlbumView
   restore: -> @model.restore()
   delete:  -> @model.delete()
 
-class SearchAlbumView extends AlbumView
+class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('
     <div class="title"><%= title %></div>
     <div class="artist"><%= artist %></div>
@@ -104,7 +104,7 @@ class SearchAlbumView extends AlbumView
       mouseover: "highlight"
       mouseout:  "highlight"
 
-class FriendsAlbumView extends AlbumView
+class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('
     <div class="controls">
       <div class="add <% if (!inMyList) { %>visible<% } %>"></div>

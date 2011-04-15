@@ -1,4 +1,4 @@
-class Views.ListManager extends View
+class Views.ListManager extends Views.View
   initialize: ->
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch")
 

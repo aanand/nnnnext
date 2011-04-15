@@ -1,4 +1,4 @@
-class View extends Backbone.View
+class Views.View extends Backbone.View
   show: ->
     @trigger("show")
     $(@el).show()

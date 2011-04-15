@@ -1,4 +1,3 @@
-var AlbumView, FriendsAlbumView, SavedAlbumView, SearchAlbumView;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,11 +6,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-AlbumView = (function() {
+Views.AlbumView = (function() {
   function AlbumView() {
     AlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumView, View);
+  __extends(AlbumView, Views.View);
   AlbumView.prototype.tagName = 'li';
   AlbumView.prototype.className = 'album';
   AlbumView.prototype.events = {
@@ -66,11 +65,11 @@ AlbumView = (function() {
   return AlbumView;
 })();
 _.extend(AlbumView.prototype, Tabbable);
-SavedAlbumView = (function() {
+Views.SavedAlbumView = (function() {
   function SavedAlbumView() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SavedAlbumView, AlbumView);
+  __extends(SavedAlbumView, Views.AlbumView);
   SavedAlbumView.prototype.template = _.template('\
     <div class="controls">\
       <div class="delete"></div>\
@@ -112,11 +111,11 @@ SavedAlbumView = (function() {
   };
   return SavedAlbumView;
 })();
-SearchAlbumView = (function() {
+Views.SearchAlbumView = (function() {
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SearchAlbumView, AlbumView);
+  __extends(SearchAlbumView, Views.AlbumView);
   SearchAlbumView.prototype.template = _.template('\
     <div class="title"><%= title %></div>\
     <div class="artist"><%= artist %></div>\
@@ -128,11 +127,11 @@ SearchAlbumView = (function() {
   });
   return SearchAlbumView;
 })();
-FriendsAlbumView = (function() {
+Views.FriendsAlbumView = (function() {
   function FriendsAlbumView() {
     FriendsAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendsAlbumView, AlbumView);
+  __extends(FriendsAlbumView, Views.AlbumView);
   FriendsAlbumView.prototype.template = _.template('\
     <div class="controls">\
       <div class="add <% if (!inMyList) { %>visible<% } %>"></div>\

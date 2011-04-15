@@ -1,4 +1,3 @@
-var AlbumList, AlbumSearchList, FriendsAlbumsList, SavedAlbumsList;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,11 +6,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-AlbumList = (function() {
+Views.AlbumList = (function() {
   function AlbumList() {
     AlbumList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumList, View);
+  __extends(AlbumList, Views.View);
   AlbumList.prototype.tagName = 'ul';
   AlbumList.prototype.className = 'album-list';
   AlbumList.prototype.initialize = function(options) {
@@ -38,11 +37,11 @@ _.extend(AlbumList.prototype, Tabbable, {
     });
   }
 });
-SavedAlbumsList = (function() {
+Views.SavedAlbumsList = (function() {
   function SavedAlbumsList() {
     SavedAlbumsList.__super__.constructor.apply(this, arguments);
   }
-  __extends(SavedAlbumsList, AlbumList);
+  __extends(SavedAlbumsList, Views.AlbumList);
   SavedAlbumsList.prototype.itemViewClass = SavedAlbumView;
   SavedAlbumsList.prototype.className = "" + AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
@@ -94,11 +93,11 @@ SavedAlbumsList = (function() {
   };
   return SavedAlbumsList;
 })();
-AlbumSearchList = (function() {
+Views.AlbumSearchList = (function() {
   function AlbumSearchList() {
     AlbumSearchList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchList, AlbumList);
+  __extends(AlbumSearchList, Views.AlbumList);
   AlbumSearchList.prototype.itemViewClass = SearchAlbumView;
   AlbumSearchList.prototype.className = "" + AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
@@ -116,11 +115,11 @@ AlbumSearchList = (function() {
   };
   return AlbumSearchList;
 })();
-FriendsAlbumsList = (function() {
+Views.FriendsAlbumsList = (function() {
   function FriendsAlbumsList() {
     FriendsAlbumsList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendsAlbumsList, AlbumList);
+  __extends(FriendsAlbumsList, Views.AlbumList);
   FriendsAlbumsList.prototype.itemViewClass = FriendsAlbumView;
   FriendsAlbumsList.prototype.className = "" + AlbumList.prototype.className + " friends-albums-list";
   FriendsAlbumsList.prototype.initialize = function(options) {

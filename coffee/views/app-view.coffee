@@ -1,4 +1,4 @@
-class Views.AppView extends View
+class Views.AppView extends Views.View
   el: $('#app')
 
   initialize: ->

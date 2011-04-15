@@ -1,4 +1,3 @@
-var Banner;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,11 +6,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-Banner = (function() {
+Views.Banner = (function() {
   function Banner() {
     Banner.__super__.constructor.apply(this, arguments);
   }
-  __extends(Banner, View);
+  __extends(Banner, Views.View);
   Banner.prototype.className = 'banner';
   Banner.prototype.template = _.template('\
     <div class="title"/>\

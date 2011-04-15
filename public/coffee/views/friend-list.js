@@ -1,4 +1,3 @@
-var FriendList;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,11 +6,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-FriendList = (function() {
+Views.FriendList = (function() {
   function FriendList() {
     FriendList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendList, View);
+  __extends(FriendList, Views.View);
   FriendList.prototype.tagName = 'ul';
   FriendList.prototype.className = 'friend-list';
   FriendList.prototype.initialize = function() {

@@ -10,7 +10,7 @@ Views.Navigation = (function() {
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
-  __extends(Navigation, View);
+  __extends(Navigation, Views.View);
   Navigation.prototype.className = 'navigation';
   Navigation.prototype.template = _.template('\
     <div class="inner">\

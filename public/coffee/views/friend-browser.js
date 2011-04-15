@@ -1,4 +1,4 @@
-var FriendBrowser, Friends, FriendsAlbums;
+var Friends, FriendsAlbums;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -10,11 +10,11 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
 Friends = new UserCollection;
 Friends.url = "/friends";
 FriendsAlbums = new AlbumCollection;
-FriendBrowser = (function() {
+Views.FriendBrowser = (function() {
   function FriendBrowser() {
     FriendBrowser.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendBrowser, View);
+  __extends(FriendBrowser, Views.View);
   FriendBrowser.prototype.className = 'friend-browser';
   FriendBrowser.prototype.initialize = function() {
     _.bindAll(this, "loadFriends", "loadFriendsAlbums");

@@ -1,4 +1,4 @@
-class FriendView extends View
+class Views.FriendView extends Views.View
   tagName: 'li'
   className: 'friend'
 

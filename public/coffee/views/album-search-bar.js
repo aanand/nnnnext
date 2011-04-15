@@ -10,7 +10,7 @@ Views.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchBar, View);
+  __extends(AlbumSearchBar, Views.View);
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.events = {

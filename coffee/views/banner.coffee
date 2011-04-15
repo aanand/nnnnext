@@ -1,4 +1,4 @@
-class Banner extends View
+class Views.Banner extends Views.View
   className: 'banner'
 
   template: _.template('

@@ -1,4 +1,4 @@
-class Views.AlbumSearchBar extends View
+class Views.AlbumSearchBar extends Views.View
   className: 'album-search-bar'
   tagName: 'form'
 

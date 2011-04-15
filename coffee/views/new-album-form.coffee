@@ -1,4 +1,4 @@
-class NewAlbumForm extends View
+class Views.NewAlbumForm extends Views.View
   tagName: 'li'
   className: 'new-album'
 

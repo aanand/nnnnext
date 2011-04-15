@@ -3,7 +3,7 @@ Friends.url = "/friends"
 
 FriendsAlbums = new AlbumCollection
 
-class FriendBrowser extends View
+class Views.FriendBrowser extends Views.View
   className: 'friend-browser'
 
   initialize: ->

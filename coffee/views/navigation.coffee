@@ -1,4 +1,4 @@
-class Views.Navigation extends View
+class Views.Navigation extends Views.View
   className: 'navigation'
 
   template: _.template('

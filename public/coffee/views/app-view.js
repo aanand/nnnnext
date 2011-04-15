@@ -10,7 +10,7 @@ Views.AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, View);
+  __extends(AppView, Views.View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
     SavedAlbums.fetch();

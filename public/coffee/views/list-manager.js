@@ -10,7 +10,7 @@ Views.ListManager = (function() {
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, View);
+  __extends(ListManager, Views.View);
   ListManager.prototype.initialize = function() {
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
     this.albumSearchResults = new AlbumCollection;

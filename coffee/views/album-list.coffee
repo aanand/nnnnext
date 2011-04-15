@@ -1,4 +1,4 @@
-class AlbumList extends View
+class Views.AlbumList extends Views.View
   tagName: 'ul'
   className: 'album-list'
 
@@ -18,7 +18,7 @@ _.extend AlbumList.prototype, Tabbable, {
     @collection.map (album) -> album.view.el
 }
 
-class SavedAlbumsList extends AlbumList
+class Views.SavedAlbumsList extends Views.AlbumList
   itemViewClass: SavedAlbumView
   className: "#{AlbumList.prototype.className} saved-albums-list"
 
@@ -66,7 +66,7 @@ class SavedAlbumsList extends AlbumList
   modelDestroyed: (album) ->
     album.view.remove() if album.view?
 
-class AlbumSearchList extends AlbumList
+class Views.AlbumSearchList extends Views.AlbumList
   itemViewClass: SearchAlbumView
   className: "#{AlbumList.prototype.className} album-search-list"
 
@@ -80,7 +80,7 @@ class AlbumSearchList extends AlbumList
   getTabbableElements: ->
     super().concat(@newAlbumForm)
 
-class FriendsAlbumsList extends AlbumList
+class Views.FriendsAlbumsList extends Views.AlbumList
   itemViewClass: FriendsAlbumView
   className: "#{AlbumList.prototype.className} friends-albums-list"
 

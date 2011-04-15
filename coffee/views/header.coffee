@@ -1,4 +1,4 @@
-class Header extends View
+class Views.Header extends Views.View
   className: 'header'
 
   template: _.template('
