@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-UI.AppView = (function() {
+Views.AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
@@ -17,7 +17,7 @@ UI.AppView = (function() {
     this.banner = new Banner;
     this.header = new Header;
     this.initNavigation();
-    this.listManager = new Views.ListManager;
+    this.listManager = new UI.ListManager;
     this.friendBrowser = new FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
@@ -38,7 +38,7 @@ UI.AppView = (function() {
     return this.startSync();
   };
   AppView.prototype.initNavigation = function() {
-    this.navigation = new Views.Navigation;
+    this.navigation = new UI.Navigation;
     return this.navigation.href = "/current";
   };
   AppView.prototype.renderSubviews = function() {
@@ -110,7 +110,7 @@ UI.AppView = (function() {
   };
   return AppView;
 })();
-_.extend(UI.AppView.prototype, Tabbable, {
+_.extend(Views.AppView.prototype, Tabbable, {
   getTabbableElements: function() {
     return [this.currentView];
   }
@@ -119,7 +119,7 @@ Desktop.AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, UI.AppView);
+  __extends(AppView, Views.AppView);
   AppView.prototype.initNavigation = function() {
     AppView.__super__.initNavigation.call(this);
     console.log("adding navigation to header");
@@ -138,7 +138,7 @@ Touch.AppView = (function() {
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, UI.AppView);
+  __extends(AppView, Views.AppView);
   AppView.prototype.renderSubviews = function() {
     var scroller;
     AppView.__super__.renderSubviews.call(this);

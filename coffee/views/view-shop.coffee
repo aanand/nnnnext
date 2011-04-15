@@ -1,7 +1,6 @@
 ViewShop = ->
 
-UI = ViewShop.prototype
-
+Views   = ViewShop.prototype
 Desktop = new ViewShop
 Touch   = new ViewShop
 

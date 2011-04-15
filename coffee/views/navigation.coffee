@@ -1,4 +1,4 @@
-class UI.Navigation extends View
+class Views.Navigation extends View
   className: 'navigation'
 
   template: _.template('
@@ -30,7 +30,7 @@ class UI.Navigation extends View
       .filter("[href='#{@href}']")
         .addClass('active')
 
-class Touch.Navigation extends UI.Navigation
+class Touch.Navigation extends Views.Navigation
   show: ->
     console.log "setting display: table"
     $(@el).css({ display: "table" })

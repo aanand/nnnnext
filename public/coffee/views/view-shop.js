@@ -1,5 +1,5 @@
-var Desktop, Touch, UI, ViewShop;
+var Desktop, Touch, ViewShop, Views;
 ViewShop = function() {};
-UI = ViewShop.prototype;
+Views = ViewShop.prototype;
 Desktop = new ViewShop;
 Touch = new ViewShop;

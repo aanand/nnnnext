@@ -4,7 +4,7 @@ loadCSS = (path) ->
   $('head').append("<link rel='stylesheet' type='text/css' href='#{path}?#{CacheBuster}'/>")
 
 if Mobile
-  Views = Touch
+  UI = Touch
 
   loadCSS('/css/mobile.css')
 
@@ -12,9 +12,9 @@ if Mobile
     .append('<meta name="apple-mobile-web-app-capable" content="yes">')
     .append('<meta name="viewport" content="width=640,user-scalable=no">')
 else
-  Views = Desktop
+  UI = Desktop
   loadCSS('/css/main.css')
 
-App = new Views.AppView
+App = new UI.AppView
 App.appendTo(document.body)
 

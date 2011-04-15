@@ -1,4 +1,4 @@
-class UI.AppView extends View
+class Views.AppView extends View
   el: $('#app')
 
   initialize: ->
@@ -10,7 +10,7 @@ class UI.AppView extends View
 
     @initNavigation()
 
-    @listManager   = new Views.ListManager
+    @listManager   = new UI.ListManager
     @friendBrowser = new FriendBrowser
 
     @views = [@listManager, @friendBrowser]
@@ -33,7 +33,7 @@ class UI.AppView extends View
     @startSync()
 
   initNavigation: ->
-    @navigation = new Views.Navigation
+    @navigation = new UI.Navigation
     @navigation.href = "/current"
 
   renderSubviews: ->
@@ -90,11 +90,11 @@ class UI.AppView extends View
     $(focus).blur() if focus?
     $(elements[nextIndex]).focus()
 
-_.extend UI.AppView.prototype, Tabbable, {
+_.extend Views.AppView.prototype, Tabbable, {
   getTabbableElements: -> [@currentView]
 }
 
-class Desktop.AppView extends UI.AppView
+class Desktop.AppView extends Views.AppView
   initNavigation: ->
     super()
     console.log "adding navigation to header"
@@ -105,7 +105,7 @@ class Desktop.AppView extends UI.AppView
     console.log "appending subviews directly to @el"
     @views.forEach (v) => @el.append(v.render().el)
 
-class Touch.AppView extends UI.AppView
+class Touch.AppView extends Views.AppView
   renderSubviews: ->
     super()
     console.log "appending navigation directly to @el"

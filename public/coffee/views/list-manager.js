@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-UI.ListManager = (function() {
+Views.ListManager = (function() {
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
@@ -14,7 +14,7 @@ UI.ListManager = (function() {
   ListManager.prototype.initialize = function() {
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
     this.albumSearchResults = new AlbumCollection;
-    this.searchBar = new Views.AlbumSearchBar({
+    this.searchBar = new UI.AlbumSearchBar({
       collection: this.albumSearchResults
     });
     this.searchResultsList = new AlbumSearchList({
@@ -78,7 +78,7 @@ UI.ListManager = (function() {
   };
   return ListManager;
 })();
-_.extend(UI.ListManager.prototype, Tabbable, {
+_.extend(Views.ListManager.prototype, Tabbable, {
   getTabbableElements: function() {
     return [this.searchBar, this.currentView];
   }
@@ -87,7 +87,7 @@ Desktop.ListManager = (function() {
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, UI.ListManager);
+  __extends(ListManager, Views.ListManager);
   ListManager.prototype.addAlbum = function(album) {
     ListManager.__super__.addAlbum.call(this, album);
     console.log("focusing search bar");
@@ -99,7 +99,7 @@ Touch.ListManager = (function() {
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, UI.ListManager);
+  __extends(ListManager, Views.ListManager);
   ListManager.prototype.finishSearch = function() {
     ListManager.__super__.finishSearch.call(this);
     console.log("blurring search bar");

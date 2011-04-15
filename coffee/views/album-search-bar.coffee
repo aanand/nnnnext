@@ -1,4 +1,4 @@
-class UI.AlbumSearchBar extends View
+class Views.AlbumSearchBar extends View
   className: 'album-search-bar'
   tagName: 'form'
 
@@ -44,18 +44,18 @@ class UI.AlbumSearchBar extends View
   showSpinner: -> @$('.spinner').show()
   hideSpinner: -> @$('.spinner').hide()
 
-_.extend UI.AlbumSearchBar.prototype, Tabbable, {
+_.extend Views.AlbumSearchBar.prototype, Tabbable, {
   getTabbableElements: -> @$('input').get()
 }
 
-class Desktop.AlbumSearchBar extends UI.AlbumSearchBar
+class Desktop.AlbumSearchBar extends Views.AlbumSearchBar
   template: _.template('
     <input type="text"/>
     <button type="submit">Search</button>
     <div class="spinner" style="display:none"/>
   ')
 
-class Touch.AlbumSearchBar extends UI.AlbumSearchBar
+class Touch.AlbumSearchBar extends Views.AlbumSearchBar
   template: _.template('
     <div class="inner">
       <input type="text"/>

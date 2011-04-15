@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-UI.AlbumSearchBar = (function() {
+Views.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
@@ -72,7 +72,7 @@ UI.AlbumSearchBar = (function() {
   };
   return AlbumSearchBar;
 })();
-_.extend(UI.AlbumSearchBar.prototype, Tabbable, {
+_.extend(Views.AlbumSearchBar.prototype, Tabbable, {
   getTabbableElements: function() {
     return this.$('input').get();
   }
@@ -81,7 +81,7 @@ Desktop.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchBar, UI.AlbumSearchBar);
+  __extends(AlbumSearchBar, Views.AlbumSearchBar);
   AlbumSearchBar.prototype.template = _.template('\
     <input type="text"/>\
     <button type="submit">Search</button>\
@@ -93,7 +93,7 @@ Touch.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchBar, UI.AlbumSearchBar);
+  __extends(AlbumSearchBar, Views.AlbumSearchBar);
   AlbumSearchBar.prototype.template = _.template('\
     <div class="inner">\
       <input type="text"/>\

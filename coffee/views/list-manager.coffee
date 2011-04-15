@@ -1,10 +1,10 @@
-class UI.ListManager extends View
+class Views.ListManager extends View
   initialize: ->
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch")
 
     @albumSearchResults = new AlbumCollection
 
-    @searchBar          = new Views.AlbumSearchBar({collection: @albumSearchResults})
+    @searchBar          = new UI.AlbumSearchBar({collection: @albumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: @albumSearchResults})
     @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
     
@@ -58,16 +58,16 @@ class UI.ListManager extends View
     @searchBar.clear()
     @trigger("addAlbum")
 
-_.extend UI.ListManager.prototype, Tabbable,
+_.extend Views.ListManager.prototype, Tabbable,
   getTabbableElements: -> [@searchBar, @currentView]
 
-class Desktop.ListManager extends UI.ListManager
+class Desktop.ListManager extends Views.ListManager
   addAlbum: (album) ->
     super(album)
     console.log "focusing search bar"
     @searchBar.focus()
 
-class Touch.ListManager extends UI.ListManager
+class Touch.ListManager extends Views.ListManager
   finishSearch: ->
     super()
     console.log "blurring search bar"

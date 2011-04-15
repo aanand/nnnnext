@@ -6,7 +6,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 };
-UI.Navigation = (function() {
+Views.Navigation = (function() {
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
@@ -46,7 +46,7 @@ Touch.Navigation = (function() {
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
-  __extends(Navigation, UI.Navigation);
+  __extends(Navigation, Views.Navigation);
   Navigation.prototype.show = function() {
     console.log("setting display: table");
     return $(this.el).css({
