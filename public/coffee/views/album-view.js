@@ -64,7 +64,7 @@ Views.AlbumView = (function() {
   };
   return AlbumView;
 })();
-_.extend(Views.AlbumView.prototype, Tabbable);
+_.extend(Views.AlbumView.prototype, Views.Tabbable);
 Views.SavedAlbumView = (function() {
   function SavedAlbumView() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);

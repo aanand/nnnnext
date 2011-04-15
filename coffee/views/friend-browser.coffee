@@ -55,6 +55,6 @@ class Views.FriendBrowser extends Views.View
     FriendsAlbums.url = user.albumsUrl()
     FriendsAlbums.fetch()
 
-_.extend Views.FriendBrowser.prototype, Tabbable,
+_.extend Views.FriendBrowser.prototype, Views.Tabbable,
   getTabbableElements: -> [@currentView]
 

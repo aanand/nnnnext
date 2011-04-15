@@ -58,7 +58,7 @@ class Views.ListManager extends Views.View
     @searchBar.clear()
     @trigger("addAlbum")
 
-_.extend Views.ListManager.prototype, Tabbable,
+_.extend Views.ListManager.prototype, Views.Tabbable,
   getTabbableElements: -> [@searchBar, @currentView]
 
 class Desktop.ListManager extends Views.ListManager

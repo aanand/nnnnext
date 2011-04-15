@@ -35,7 +35,7 @@ class Views.View extends Backbone.View
     else
       $(@el).removeClass("highlight")
 
-Tabbable =
+Views.Tabbable =
   setTabIndex: (n) ->
     @tabIndex = n
 

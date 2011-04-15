@@ -30,7 +30,7 @@ Views.AlbumList = (function() {
   };
   return AlbumList;
 })();
-_.extend(Views.AlbumList.prototype, Tabbable, {
+_.extend(Views.AlbumList.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return this.collection.map(function(album) {
       return album.view.el;

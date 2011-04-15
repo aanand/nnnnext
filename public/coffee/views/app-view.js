@@ -110,7 +110,7 @@ Views.AppView = (function() {
   };
   return AppView;
 })();
-_.extend(Views.AppView.prototype, Tabbable, {
+_.extend(Views.AppView.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return [this.currentView];
   }

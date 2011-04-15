@@ -13,7 +13,7 @@ class Views.AlbumList extends Views.View
   makeView: (album) ->
     album.view = new @itemViewClass({model: album, list: this})
 
-_.extend Views.AlbumList.prototype, Tabbable, {
+_.extend Views.AlbumList.prototype, Views.Tabbable, {
   getTabbableElements: ->
     @collection.map (album) -> album.view.el
 }

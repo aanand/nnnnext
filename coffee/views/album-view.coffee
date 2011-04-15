@@ -52,7 +52,7 @@ class Views.AlbumView extends Views.View
   focus: (e) ->
     $(@el).focus()
 
-_.extend Views.AlbumView.prototype, Tabbable
+_.extend Views.AlbumView.prototype, Views.Tabbable
 
 class Views.SavedAlbumView extends Views.AlbumView
   template: _.template('

@@ -50,7 +50,7 @@ Views.NewAlbumForm = (function() {
   };
   return NewAlbumForm;
 })();
-_.extend(Views.NewAlbumForm.prototype, Tabbable, {
+_.extend(Views.NewAlbumForm.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return this.$('input').get();
   }

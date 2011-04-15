@@ -78,7 +78,7 @@ Views.ListManager = (function() {
   };
   return ListManager;
 })();
-_.extend(Views.ListManager.prototype, Tabbable, {
+_.extend(Views.ListManager.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return [this.searchBar, this.currentView];
   }

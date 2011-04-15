@@ -44,7 +44,7 @@ class Views.AlbumSearchBar extends Views.View
   showSpinner: -> @$('.spinner').show()
   hideSpinner: -> @$('.spinner').hide()
 
-_.extend Views.AlbumSearchBar.prototype, Tabbable, {
+_.extend Views.AlbumSearchBar.prototype, Views.Tabbable, {
   getTabbableElements: -> @$('input').get()
 }
 

@@ -90,7 +90,7 @@ class Views.AppView extends Views.View
     $(focus).blur() if focus?
     $(elements[nextIndex]).focus()
 
-_.extend Views.AppView.prototype, Tabbable, {
+_.extend Views.AppView.prototype, Views.Tabbable, {
   getTabbableElements: -> [@currentView]
 }
 

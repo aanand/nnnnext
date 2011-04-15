@@ -72,7 +72,7 @@ Views.AlbumSearchBar = (function() {
   };
   return AlbumSearchBar;
 })();
-_.extend(Views.AlbumSearchBar.prototype, Tabbable, {
+_.extend(Views.AlbumSearchBar.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return this.$('input').get();
   }

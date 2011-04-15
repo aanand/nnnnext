@@ -73,7 +73,7 @@ Views.FriendBrowser = (function() {
   };
   return FriendBrowser;
 })();
-_.extend(Views.FriendBrowser.prototype, Tabbable, {
+_.extend(Views.FriendBrowser.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return [this.currentView];
   }

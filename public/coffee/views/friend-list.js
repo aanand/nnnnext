@@ -33,7 +33,7 @@ Views.FriendList = (function() {
   };
   return FriendList;
 })();
-_.extend(Views.FriendList.prototype, Tabbable, {
+_.extend(Views.FriendList.prototype, Views.Tabbable, {
   getTabbableElements: function() {
     return this.collection.models.map(function(m) {
       return m.view.el;
