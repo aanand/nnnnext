@@ -9,7 +9,7 @@ class Views.FriendList extends Views.View
     $(@el).empty()
 
     @collection.models.forEach (user) =>
-      view = new FriendView({model: user, list: this})
+      view = new UI.FriendView({model: user, list: this})
       user.view = view
       $(@el).append(view.render().el)
 

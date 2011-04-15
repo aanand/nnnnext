@@ -20,7 +20,7 @@ Views.ListManager = (function() {
     this.searchResultsList = new AlbumSearchList({
       collection: this.albumSearchResults
     });
-    this.savedAlbumsList = new SavedAlbumsList({
+    this.savedAlbumsList = new UI.SavedAlbumsList({
       collection: SavedAlbums
     });
     this.views = [this.searchResultsList, this.savedAlbumsList];

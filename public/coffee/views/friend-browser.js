@@ -25,11 +25,11 @@ Views.FriendBrowser = (function() {
       </div>\
     ');
     this.spinner = $('<div class="spinner"/>');
-    this.friendList = new FriendList({
+    this.friendList = new UI.FriendList({
       collection: Friends
     });
     this.friendList.bind("select", this.loadFriendsAlbums);
-    this.albumList = new FriendsAlbumsList({
+    this.albumList = new UI.FriendsAlbumsList({
       collection: FriendsAlbums
     });
     this.views = [this.signInMessage, this.spinner, this.friendList, this.albumList];

@@ -73,7 +73,7 @@ class Views.AlbumSearchList extends Views.AlbumList
   populate: ->
     super()
 
-    @newAlbumForm = new NewAlbumForm({nothingFound: (@collection.length == 0)})
+    @newAlbumForm = new UI.NewAlbumForm({nothingFound: (@collection.length == 0)})
     @newAlbumForm.bind "submit", (model) => @trigger("select", model)
     $(@el).append(@newAlbumForm.render().el)
 
@@ -95,7 +95,7 @@ class Views.FriendsAlbumsList extends Views.AlbumList
       $(@el).append("<li class='nothing-found'>#{@user.get("nickname")} doesn’t have any albums queued.</li>")
 
     if @user?
-      userView = new FriendView({model: @user, highlightable: false, backButton: true})
+      userView = new UI.FriendView({model: @user, highlightable: false, backButton: true})
       userView.bind "back", => @trigger("back")
       $(@el).prepend(userView.render().el)
 

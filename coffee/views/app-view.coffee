@@ -4,14 +4,14 @@ class Views.AppView extends Views.View
   initialize: ->
     SavedAlbums.fetch()
 
-    @banner = new Banner
+    @banner = new UI.Banner
 
-    @header = new Header
+    @header = new UI.Header
 
     @initNavigation()
 
     @listManager   = new UI.ListManager
-    @friendBrowser = new FriendBrowser
+    @friendBrowser = new UI.FriendBrowser
 
     @views = [@listManager, @friendBrowser]
 

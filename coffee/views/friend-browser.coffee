@@ -18,10 +18,10 @@ class Views.FriendBrowser extends Views.View
 
     @spinner = $('<div class="spinner"/>')
 
-    @friendList = new FriendList({collection: Friends})
+    @friendList = new UI.FriendList({collection: Friends})
     @friendList.bind "select", @loadFriendsAlbums
 
-    @albumList = new FriendsAlbumsList({collection: FriendsAlbums})
+    @albumList = new UI.FriendsAlbumsList({collection: FriendsAlbums})
 
     @views = [@signInMessage, @spinner, @friendList, @albumList]
 

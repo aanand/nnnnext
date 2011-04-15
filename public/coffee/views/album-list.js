@@ -102,7 +102,7 @@ Views.AlbumSearchList = (function() {
   AlbumSearchList.prototype.className = "" + AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
     AlbumSearchList.__super__.populate.call(this);
-    this.newAlbumForm = new NewAlbumForm({
+    this.newAlbumForm = new UI.NewAlbumForm({
       nothingFound: this.collection.length === 0
     });
     this.newAlbumForm.bind("submit", __bind(function(model) {
@@ -133,7 +133,7 @@ Views.FriendsAlbumsList = (function() {
       $(this.el).append("<li class='nothing-found'>" + (this.user.get("nickname")) + " doesn’t have any albums queued.</li>");
     }
     if (this.user != null) {
-      userView = new FriendView({
+      userView = new UI.FriendView({
         model: this.user,
         highlightable: false,
         backButton: true

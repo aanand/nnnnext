@@ -14,11 +14,11 @@ Views.AppView = (function() {
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
     SavedAlbums.fetch();
-    this.banner = new Banner;
-    this.header = new Header;
+    this.banner = new UI.Banner;
+    this.header = new UI.Header;
     this.initNavigation();
     this.listManager = new UI.ListManager;
-    this.friendBrowser = new FriendBrowser;
+    this.friendBrowser = new UI.FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
     _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
     this.navigation.bind("navigate", this.navigate);

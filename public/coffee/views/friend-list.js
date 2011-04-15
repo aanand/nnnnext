@@ -22,7 +22,7 @@ Views.FriendList = (function() {
     $(this.el).empty();
     this.collection.models.forEach(__bind(function(user) {
       var view;
-      view = new FriendView({
+      view = new UI.FriendView({
         model: user,
         list: this
       });

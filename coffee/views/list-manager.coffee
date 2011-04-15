@@ -6,7 +6,7 @@ class Views.ListManager extends Views.View
 
     @searchBar          = new UI.AlbumSearchBar({collection: @albumSearchResults})
     @searchResultsList  = new AlbumSearchList({collection: @albumSearchResults})
-    @savedAlbumsList    = new SavedAlbumsList({collection: SavedAlbums})
+    @savedAlbumsList    = new UI.SavedAlbumsList({collection: SavedAlbums})
     
     @views = [@searchResultsList, @savedAlbumsList]
 
