@@ -3,11 +3,17 @@
 %html{ lang: "en" }
   %head
     %title nnnnext
+    %script{ type: "text/javascript" }
+      = "CacheBuster = #{cachebuster.inspect};\n"
+      = "UserInfo = #{user.to_json};\n"
+    :javascript
+      Mobile = navigator.userAgent.match(/iPhone/);
+      (function() {
+        var cssHref = Mobile ? '/css/mobile.css' : '/css/main.css';
+        document.write("<link rel='stylesheet' type='text/css' href='"+cssHref+"?"+CacheBuster+"'/>");
+      })()
   %body
     #app
-  %script{ type: "text/javascript" }
-    = "CacheBuster = #{cachebuster.inspect};\n"
-    = "UserInfo = #{user.to_json};\n"
   - js_includes.each do |path|
     %script{ type: "text/javascript", src: path }
 
