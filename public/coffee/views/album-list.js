@@ -30,7 +30,7 @@ Views.AlbumList = (function() {
   };
   return AlbumList;
 })();
-_.extend(AlbumList.prototype, Tabbable, {
+_.extend(Views.AlbumList.prototype, Tabbable, {
   getTabbableElements: function() {
     return this.collection.map(function(album) {
       return album.view.el;
@@ -42,8 +42,8 @@ Views.SavedAlbumsList = (function() {
     SavedAlbumsList.__super__.constructor.apply(this, arguments);
   }
   __extends(SavedAlbumsList, Views.AlbumList);
-  SavedAlbumsList.prototype.itemViewClass = SavedAlbumView;
-  SavedAlbumsList.prototype.className = "" + AlbumList.prototype.className + " saved-albums-list";
+  SavedAlbumsList.prototype.itemViewClass = Views.SavedAlbumView;
+  SavedAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
     SavedAlbumsList.__super__.initialize.call(this, options);
     _.bindAll(this, "makeView", "modelSaved");
@@ -98,8 +98,8 @@ Views.AlbumSearchList = (function() {
     AlbumSearchList.__super__.constructor.apply(this, arguments);
   }
   __extends(AlbumSearchList, Views.AlbumList);
-  AlbumSearchList.prototype.itemViewClass = SearchAlbumView;
-  AlbumSearchList.prototype.className = "" + AlbumList.prototype.className + " album-search-list";
+  AlbumSearchList.prototype.itemViewClass = Views.SearchAlbumView;
+  AlbumSearchList.prototype.className = "" + Views.AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
     AlbumSearchList.__super__.populate.call(this);
     this.newAlbumForm = new UI.NewAlbumForm({
@@ -120,8 +120,8 @@ Views.FriendsAlbumsList = (function() {
     FriendsAlbumsList.__super__.constructor.apply(this, arguments);
   }
   __extends(FriendsAlbumsList, Views.AlbumList);
-  FriendsAlbumsList.prototype.itemViewClass = FriendsAlbumView;
-  FriendsAlbumsList.prototype.className = "" + AlbumList.prototype.className + " friends-albums-list";
+  FriendsAlbumsList.prototype.itemViewClass = Views.FriendsAlbumView;
+  FriendsAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " friends-albums-list";
   FriendsAlbumsList.prototype.initialize = function(options) {
     FriendsAlbumsList.__super__.initialize.call(this, options);
     return this.collection.bind("refresh", this.populate);

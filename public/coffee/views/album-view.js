@@ -64,7 +64,7 @@ Views.AlbumView = (function() {
   };
   return AlbumView;
 })();
-_.extend(AlbumView.prototype, Tabbable);
+_.extend(Views.AlbumView.prototype, Tabbable);
 Views.SavedAlbumView = (function() {
   function SavedAlbumView() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);
@@ -80,7 +80,7 @@ Views.SavedAlbumView = (function() {
     <div class="title"><%= title %></div>\
     <div class="artist"><%= artist %></div>\
   ');
-  SavedAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
+  SavedAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     "mouseover .rate span": "highlightStars",
     "mouseout .rate": "clearStars",
     "click .rate span": "rate",
@@ -120,7 +120,7 @@ Views.SearchAlbumView = (function() {
     <div class="title"><%= title %></div>\
     <div class="artist"><%= artist %></div>\
   ');
-  SearchAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
+  SearchAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     click: "select",
     mouseover: "highlight",
     mouseout: "highlight"
@@ -148,7 +148,7 @@ Views.FriendsAlbumView = (function() {
     }, this));
     return vars;
   };
-  FriendsAlbumView.prototype.events = _.extend(_.clone(AlbumView.prototype.events), {
+  FriendsAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     "click .add": "add"
   });
   FriendsAlbumView.prototype.showRating = true;

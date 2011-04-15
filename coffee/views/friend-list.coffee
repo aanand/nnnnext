@@ -15,5 +15,5 @@ class Views.FriendList extends Views.View
 
     @reTab()
 
-_.extend FriendList.prototype, Tabbable,
+_.extend Views.FriendList.prototype, Tabbable,
   getTabbableElements: -> @collection.models.map (m) -> m.view.el

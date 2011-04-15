@@ -17,7 +17,7 @@ Views.ListManager = (function() {
     this.searchBar = new UI.AlbumSearchBar({
       collection: this.albumSearchResults
     });
-    this.searchResultsList = new AlbumSearchList({
+    this.searchResultsList = new UI.AlbumSearchList({
       collection: this.albumSearchResults
     });
     this.savedAlbumsList = new UI.SavedAlbumsList({

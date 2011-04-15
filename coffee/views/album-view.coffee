@@ -52,7 +52,7 @@ class Views.AlbumView extends Views.View
   focus: (e) ->
     $(@el).focus()
 
-_.extend AlbumView.prototype, Tabbable
+_.extend Views.AlbumView.prototype, Tabbable
 
 class Views.SavedAlbumView extends Views.AlbumView
   template: _.template('
@@ -67,7 +67,7 @@ class Views.SavedAlbumView extends Views.AlbumView
   ')
 
   events:
-    _.extend _.clone(AlbumView.prototype.events),
+    _.extend _.clone(Views.AlbumView.prototype.events),
       "mouseover .rate span": "highlightStars"
       "mouseout .rate":       "clearStars"
       "click .rate span":     "rate"
@@ -99,7 +99,7 @@ class Views.SearchAlbumView extends Views.AlbumView
   ')
 
   events:
-    _.extend _.clone(AlbumView.prototype.events),
+    _.extend _.clone(Views.AlbumView.prototype.events),
       click: "select"
       mouseover: "highlight"
       mouseout:  "highlight"
@@ -122,7 +122,7 @@ class Views.FriendsAlbumView extends Views.AlbumView
     vars
 
   events:
-    _.extend _.clone(AlbumView.prototype.events),
+    _.extend _.clone(Views.AlbumView.prototype.events),
       "click .add": "add"
 
   showRating: true
