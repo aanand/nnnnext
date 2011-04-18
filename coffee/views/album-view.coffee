@@ -56,14 +56,16 @@ _.extend Views.AlbumView.prototype, Views.Tabbable
 
 class Views.SavedAlbumView extends Views.AlbumView
   template: _.template('
+    <div class="info">
+      <div class="title"><%= title %></div>
+      <div class="artist"><%= artist %></div>
+    </div>
+
     <div class="controls">
       <div class="delete"></div>
       <% if (state == "archived") { %><div class="restore"></div><% } %>
       <% if (state == "current")  { %><div class="archive"></div><% } %>
     </div>
-
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
   ')
 
   events:
@@ -101,20 +103,33 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
 
   ontouchstart: ->
     @touchmoved = false
-    $(@el).addClass('active')
+    $(@el).addClass('touched')
     true
 
   ontouchmove: ->
     unless @touchmoved
       @touchmoved = true
-      $(@el).removeClass('active')
+      $(@el).removeClass('touched')
     true
 
   ontouchend: ->
     unless @touchmoved
-      console.log "touched"
-      $(@el).removeClass('active')
+      $(@el).removeClass('touched')
+      @toggleOpen()
     true
+
+  open: ->
+    $(@el).addClass('open')
+    @list.albumOpened(this.model)
+
+  close: ->
+    $(@el).removeClass('open')
+
+  toggleOpen: ->
+    if $(@el).hasClass('open')
+      @close()
+    else
+      @open()
 
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('

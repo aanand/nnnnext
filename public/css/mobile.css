@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *, input {
   font-family: helvetica, sans-serif; }
 
@@ -6,7 +7,7 @@ body {
   -webkit-text-size-adjust: 100%; }
 
 .header {
-  height: 86px;
+  height: 84px;
   border-bottom: 2px solid #3a5a0a;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#83c91b), to(#5f9410));
   background-image: -moz-linear-gradient(center top, #83c91b 0%, #5f9410 100%);
@@ -77,20 +78,64 @@ body {
     -webkit-appearance: none; }
 
 .album-list {
+  list-style: none;
   margin: 0;
   padding: 0; }
   .album-list li {
-    padding: 20px;
-    border-bottom: 1px solid #cccccc;
-    color: black; }
-    .album-list li.active {
+    position: relative;
+    border-bottom: 1px solid #cccccc; }
+    .album-list li .info {
+      position: relative;
+      z-index: 2;
+      background: white;
+      color: black;
+      padding: 20px;
+      -webkit-transform: translate3d(0, 0, 0);
+      -webkit-transition: -webkit-transform 0.35s; }
+      .album-list li .info .title {
+        font-size: 36px;
+        font-weight: bold; }
+      .album-list li .info .artist {
+        font-size: 30px;
+        color: #666666; }
+    .album-list li.touched .info {
       background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
       background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
       background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%);
       color: white; }
-    .album-list li .title {
-      font-size: 36px;
-      font-weight: bold; }
-    .album-list li .artist {
-      font-size: 30px;
-      color: #666666; }
+    .album-list li.open .info {
+      -webkit-transform: translate3d(100%, 0, 0);
+      -webkit-transition: -webkit-transform 0.35s; }
+    .album-list li .controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
+      text-align: center; }
+      .album-list li .controls .button, .album-list li .controls .delete, .album-list li .controls .restore, .album-list li .controls .archive {
+        display: inline-block;
+        position: relative;
+        width: 100px;
+        height: 100px;
+        margin-top: 7px; }
+      .album-list li .controls .button:after, .album-list li .controls .delete:after, .album-list li .controls .restore:after, .album-list li .controls .archive:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100px;
+        text-align: center;
+        color: white; }
+      .album-list li .controls .delete:after {
+        font-size: 80px;
+        top: -7px;
+        content: "✕"; }
+      .album-list li .controls .restore:after {
+        font-size: 70px;
+        content: "⤾"; }
+      .album-list li .controls .archive:after {
+        font-size: 80px;
+        top: -9px;
+        content: "✔"; }

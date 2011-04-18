@@ -12,8 +12,9 @@ $header-height: 86px
 $footer-height: 96px
 
 .header
-  height: $header-height
-  border-bottom: 2px solid $dark
+  $border-width: 2px
+  height: $header-height - $border-width
+  border-bottom: $border-width solid $dark
   +vertical-gradient($light, $primary)
 
   &:after
@@ -84,23 +85,80 @@ $footer-height: 96px
     -webkit-appearance: none
 
 .album-list
+  list-style: none
   margin: 0
   padding: 0
 
   li
-    padding: 20px
+    position: relative
     border-bottom: 1px solid #ccc
-    color: black
 
-    &.active
+    .info
+      position: relative
+      z-index: 2
+      background: white
+      color: black
+      padding: 20px
+      -webkit-transform: translate3d(0, 0, 0)
+      -webkit-transition: -webkit-transform 0.35s
+
+      .title
+        font-size: 36px
+        font-weight: bold
+
+      .artist
+        font-size: 30px
+        color: #666
+
+    &.touched .info
       +vertical-gradient(#4286f5, #194fdb)
       color: white
+    
+    &.open .info
+      -webkit-transform: translate3d(100%, 0, 0)
+      -webkit-transition: -webkit-transform 0.35s
 
-    .title
-      font-size: 36px
-      font-weight: bold
+    .controls
+      position:         absolute
+      top:              0
+      left:             0
+      right:            0
+      bottom:           0
+      z-index:          1
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#333), color-stop(0.33, #444), color-stop(0.67, #444), to(#333))
+      text-align:       center
 
-    .artist
-      font-size: 30px
-      color: #666
+      .button
+        display:    inline-block
+        position:   relative
+        width:      100px
+        height:     100px
+        margin-top: 7px
+
+        // border: 1px solid white
+
+      .button:after
+        position: absolute
+        top:      0
+        left:     0
+        width:    100px
+        text-align: center
+        color:    white
+
+      .delete, .restore, .archive
+        @extend .button
+
+      .delete:after
+        font-size: 80px
+        top: -7px
+        content:   "✕"
+
+      .restore:after
+        font-size: 70px
+        content:   "⤾"
+
+      .archive:after
+        font-size: 80px
+        top: -9px
+        content:   "✔"
 

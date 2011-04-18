@@ -71,14 +71,16 @@ Views.SavedAlbumView = (function() {
   }
   __extends(SavedAlbumView, Views.AlbumView);
   SavedAlbumView.prototype.template = _.template('\
+    <div class="info">\
+      <div class="title"><%= title %></div>\
+      <div class="artist"><%= artist %></div>\
+    </div>\
+\
     <div class="controls">\
       <div class="delete"></div>\
       <% if (state == "archived") { %><div class="restore"></div><% } %>\
       <% if (state == "current")  { %><div class="archive"></div><% } %>\
     </div>\
-\
-    <div class="title"><%= title %></div>\
-    <div class="artist"><%= artist %></div>\
   ');
   SavedAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     "mouseover .rate span": "highlightStars",
@@ -123,22 +125,36 @@ Touch.SavedAlbumView = (function() {
   });
   SavedAlbumView.prototype.ontouchstart = function() {
     this.touchmoved = false;
-    $(this.el).addClass('active');
+    $(this.el).addClass('touched');
     return true;
   };
   SavedAlbumView.prototype.ontouchmove = function() {
     if (!this.touchmoved) {
       this.touchmoved = true;
-      $(this.el).removeClass('active');
+      $(this.el).removeClass('touched');
     }
     return true;
   };
   SavedAlbumView.prototype.ontouchend = function() {
     if (!this.touchmoved) {
-      console.log("touched");
-      $(this.el).removeClass('active');
+      $(this.el).removeClass('touched');
+      this.toggleOpen();
     }
     return true;
+  };
+  SavedAlbumView.prototype.open = function() {
+    $(this.el).addClass('open');
+    return this.list.albumOpened(this.model);
+  };
+  SavedAlbumView.prototype.close = function() {
+    return $(this.el).removeClass('open');
+  };
+  SavedAlbumView.prototype.toggleOpen = function() {
+    if ($(this.el).hasClass('open')) {
+      return this.close();
+    } else {
+      return this.open();
+    }
   };
   return SavedAlbumView;
 })();

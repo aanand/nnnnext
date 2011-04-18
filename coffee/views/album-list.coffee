@@ -66,6 +66,12 @@ class Views.SavedAlbumsList extends Views.AlbumList
   modelDestroyed: (album) ->
     album.view.remove() if album.view?
 
+class Touch.SavedAlbumsList extends Views.SavedAlbumsList
+  albumOpened: (album) ->
+    for a in @collection.models
+      if a != album
+        a.view.close()
+
 class Views.AlbumSearchList extends Views.AlbumList
   itemViewClassName: 'SearchAlbumView'
   className: "#{Views.AlbumList.prototype.className} album-search-list"
