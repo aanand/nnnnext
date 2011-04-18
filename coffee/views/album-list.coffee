@@ -11,7 +11,7 @@ class Views.AlbumList extends Views.View
       $(@el).append(@makeView(album).render().el)
 
   makeView: (album) ->
-    album.view = new @itemViewClass({model: album, list: this})
+    album.view = new UI[@itemViewClassName]({model: album, list: this})
 
 _.extend Views.AlbumList.prototype, Views.Tabbable, {
   getTabbableElements: ->
@@ -19,7 +19,7 @@ _.extend Views.AlbumList.prototype, Views.Tabbable, {
 }
 
 class Views.SavedAlbumsList extends Views.AlbumList
-  itemViewClass: Views.SavedAlbumView
+  itemViewClassName: 'SavedAlbumView'
   className: "#{Views.AlbumList.prototype.className} saved-albums-list"
 
   initialize: (options) ->
@@ -67,7 +67,7 @@ class Views.SavedAlbumsList extends Views.AlbumList
     album.view.remove() if album.view?
 
 class Views.AlbumSearchList extends Views.AlbumList
-  itemViewClass: Views.SearchAlbumView
+  itemViewClassName: 'SearchAlbumView'
   className: "#{Views.AlbumList.prototype.className} album-search-list"
 
   populate: ->
@@ -81,7 +81,7 @@ class Views.AlbumSearchList extends Views.AlbumList
     super().concat(@newAlbumForm)
 
 class Views.FriendsAlbumsList extends Views.AlbumList
-  itemViewClass: Views.FriendsAlbumView
+  itemViewClassName: 'FriendsAlbumView'
   className: "#{Views.AlbumList.prototype.className} friends-albums-list"
 
   initialize: (options) ->

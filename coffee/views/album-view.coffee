@@ -92,6 +92,30 @@ class Views.SavedAlbumView extends Views.AlbumView
   restore: -> @model.restore()
   delete:  -> @model.delete()
 
+class Touch.SavedAlbumView extends Views.SavedAlbumView
+  events:
+    _.extend _.clone(Views.SavedAlbumView.prototype.events),
+      "touchstart": "ontouchstart"
+      "touchmove":  "ontouchmove"
+      "touchend":   "ontouchend"
+
+  ontouchstart: ->
+    @touchmoved = false
+    $(@el).addClass('active')
+    true
+
+  ontouchmove: ->
+    unless @touchmoved
+      @touchmoved = true
+      $(@el).removeClass('active')
+    true
+
+  ontouchend: ->
+    unless @touchmoved
+      console.log "touched"
+      $(@el).removeClass('active')
+    true
+
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('
     <div class="title"><%= title %></div>

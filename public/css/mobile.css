@@ -81,7 +81,13 @@ body {
   padding: 0; }
   .album-list li {
     padding: 20px;
-    border-bottom: 1px solid #cccccc; }
+    border-bottom: 1px solid #cccccc;
+    color: black; }
+    .album-list li.active {
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
+      background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
+      background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%);
+      color: white; }
     .album-list li .title {
       font-size: 36px;
       font-weight: bold; }

@@ -23,7 +23,7 @@ Views.AlbumList = (function() {
     }, this));
   };
   AlbumList.prototype.makeView = function(album) {
-    return album.view = new this.itemViewClass({
+    return album.view = new UI[this.itemViewClassName]({
       model: album,
       list: this
     });
@@ -42,7 +42,7 @@ Views.SavedAlbumsList = (function() {
     SavedAlbumsList.__super__.constructor.apply(this, arguments);
   }
   __extends(SavedAlbumsList, Views.AlbumList);
-  SavedAlbumsList.prototype.itemViewClass = Views.SavedAlbumView;
+  SavedAlbumsList.prototype.itemViewClassName = 'SavedAlbumView';
   SavedAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
     SavedAlbumsList.__super__.initialize.call(this, options);
@@ -98,7 +98,7 @@ Views.AlbumSearchList = (function() {
     AlbumSearchList.__super__.constructor.apply(this, arguments);
   }
   __extends(AlbumSearchList, Views.AlbumList);
-  AlbumSearchList.prototype.itemViewClass = Views.SearchAlbumView;
+  AlbumSearchList.prototype.itemViewClassName = 'SearchAlbumView';
   AlbumSearchList.prototype.className = "" + Views.AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
     AlbumSearchList.__super__.populate.call(this);
@@ -120,7 +120,7 @@ Views.FriendsAlbumsList = (function() {
     FriendsAlbumsList.__super__.constructor.apply(this, arguments);
   }
   __extends(FriendsAlbumsList, Views.AlbumList);
-  FriendsAlbumsList.prototype.itemViewClass = Views.FriendsAlbumView;
+  FriendsAlbumsList.prototype.itemViewClassName = 'FriendsAlbumView';
   FriendsAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " friends-albums-list";
   FriendsAlbumsList.prototype.initialize = function(options) {
     FriendsAlbumsList.__super__.initialize.call(this, options);

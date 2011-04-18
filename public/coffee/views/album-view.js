@@ -111,6 +111,37 @@ Views.SavedAlbumView = (function() {
   };
   return SavedAlbumView;
 })();
+Touch.SavedAlbumView = (function() {
+  function SavedAlbumView() {
+    SavedAlbumView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(SavedAlbumView, Views.SavedAlbumView);
+  SavedAlbumView.prototype.events = _.extend(_.clone(Views.SavedAlbumView.prototype.events), {
+    "touchstart": "ontouchstart",
+    "touchmove": "ontouchmove",
+    "touchend": "ontouchend"
+  });
+  SavedAlbumView.prototype.ontouchstart = function() {
+    this.touchmoved = false;
+    $(this.el).addClass('active');
+    return true;
+  };
+  SavedAlbumView.prototype.ontouchmove = function() {
+    if (!this.touchmoved) {
+      this.touchmoved = true;
+      $(this.el).removeClass('active');
+    }
+    return true;
+  };
+  SavedAlbumView.prototype.ontouchend = function() {
+    if (!this.touchmoved) {
+      console.log("touched");
+      $(this.el).removeClass('active');
+    }
+    return true;
+  };
+  return SavedAlbumView;
+})();
 Views.SearchAlbumView = (function() {
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
