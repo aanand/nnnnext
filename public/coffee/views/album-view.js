@@ -84,12 +84,20 @@ Views.SavedAlbumView = (function() {
   ');
   SavedAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     "mouseover .rate span": "highlightStars",
-    "mouseout .rate": "clearStars",
-    "click .rate span": "rate",
-    "click .archive": "archive",
-    "click .restore": "restore",
-    "click .delete": "delete"
+    "mouseout .rate": "clearStars"
   });
+  SavedAlbumView.prototype.initialize = function(options) {
+    SavedAlbumView.__super__.initialize.call(this, options);
+    return _.bindAll(this, "rate", "archive", "restore", "delete");
+  };
+  SavedAlbumView.prototype.render = function() {
+    SavedAlbumView.__super__.render.call(this);
+    this.$(".rate span").tap(this.rate);
+    this.$(".archive").tap(this.archive);
+    this.$(".restore").tap(this.restore);
+    this.$(".delete").tap(this["delete"]);
+    return this;
+  };
   SavedAlbumView.prototype.showRating = true;
   SavedAlbumView.prototype.allowRate = true;
   SavedAlbumView.prototype.highlightStars = function(e) {
@@ -118,36 +126,16 @@ Touch.SavedAlbumView = (function() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);
   }
   __extends(SavedAlbumView, Views.SavedAlbumView);
-  SavedAlbumView.prototype.events = _.extend(_.clone(Views.SavedAlbumView.prototype.events), {
-    "touchstart": "ontouchstart",
-    "touchmove": "ontouchmove",
-    "touchend": "ontouchend"
-  });
-  SavedAlbumView.prototype.ontouchstart = function() {
-    this.touchmoved = false;
-    $(this.el).addClass('touched');
-    return true;
-  };
-  SavedAlbumView.prototype.ontouchmove = function() {
-    if (!this.touchmoved) {
-      this.touchmoved = true;
-      $(this.el).removeClass('touched');
-    }
-    return true;
-  };
-  SavedAlbumView.prototype.ontouchend = function() {
-    if (!this.touchmoved) {
-      $(this.el).removeClass('touched');
-      this.toggleOpen();
-    }
-    return true;
-  };
-  SavedAlbumView.prototype.open = function() {
-    $(this.el).addClass('open');
-    return this.list.albumOpened(this.model);
-  };
-  SavedAlbumView.prototype.close = function() {
-    return $(this.el).removeClass('open');
+  SavedAlbumView.prototype.initialize = function(options) {
+    SavedAlbumView.__super__.initialize.call(this, options);
+    $(this.el).tap(__bind(function() {
+      return this.toggleOpen();
+    }, this));
+    return this.list.bind("scroll", __bind(function(isScrolling) {
+      if (isScrolling) {
+        return this.close();
+      }
+    }, this));
   };
   SavedAlbumView.prototype.toggleOpen = function() {
     if ($(this.el).hasClass('open')) {
@@ -155,6 +143,13 @@ Touch.SavedAlbumView = (function() {
     } else {
       return this.open();
     }
+  };
+  SavedAlbumView.prototype.open = function() {
+    $(this.el).addClass('open');
+    return this.list.albumOpened(this.model);
+  };
+  SavedAlbumView.prototype.close = function() {
+    return $(this.el).removeClass('open');
   };
   return SavedAlbumView;
 })();

@@ -31,6 +31,9 @@ class Views.SavedAlbumsList extends Views.AlbumList
     @collection.bind "modelSaved", @modelSaved
     @collection.bind "modelDestroyed", @modelDestroyed
 
+    $(@el).isScrollable (isScrolling) =>
+      @trigger("scroll", isScrolling)
+
   filter: (state) ->
     @filterState = state
 

@@ -23,6 +23,7 @@ module Nnnnext::Helpers
   def js_files
     js = %w(jquery
             json2
+            ontap
             underscore
             backbone
             backbone.localStorage

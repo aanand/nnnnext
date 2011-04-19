@@ -72,10 +72,18 @@ class Views.SavedAlbumView extends Views.AlbumView
     _.extend _.clone(Views.AlbumView.prototype.events),
       "mouseover .rate span": "highlightStars"
       "mouseout .rate":       "clearStars"
-      "click .rate span":     "rate"
-      "click .archive":       "archive"
-      "click .restore":       "restore"
-      "click .delete":        "delete"
+
+  initialize: (options) ->
+    super(options)
+    _.bindAll(this, "rate", "archive", "restore", "delete")
+
+  render: ->
+    super()
+    @$(".rate span").tap(@rate)
+    @$(".archive").tap(@archive)
+    @$(".restore").tap(@restore)
+    @$(".delete").tap(@delete)
+    this
 
   showRating: true
   allowRate: true
@@ -95,28 +103,16 @@ class Views.SavedAlbumView extends Views.AlbumView
   delete:  -> @model.delete()
 
 class Touch.SavedAlbumView extends Views.SavedAlbumView
-  events:
-    _.extend _.clone(Views.SavedAlbumView.prototype.events),
-      "touchstart": "ontouchstart"
-      "touchmove":  "ontouchmove"
-      "touchend":   "ontouchend"
+  initialize: (options) ->
+    super(options)
+    $(@el).tap => @toggleOpen()
+    @list.bind "scroll", (isScrolling) => @close() if isScrolling
 
-  ontouchstart: ->
-    @touchmoved = false
-    $(@el).addClass('touched')
-    true
-
-  ontouchmove: ->
-    unless @touchmoved
-      @touchmoved = true
-      $(@el).removeClass('touched')
-    true
-
-  ontouchend: ->
-    unless @touchmoved
-      $(@el).removeClass('touched')
-      @toggleOpen()
-    true
+  toggleOpen: ->
+    if $(@el).hasClass('open')
+      @close()
+    else
+      @open()
 
   open: ->
     $(@el).addClass('open')
@@ -124,12 +120,6 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
 
   close: ->
     $(@el).removeClass('open')
-
-  toggleOpen: ->
-    if $(@el).hasClass('open')
-      @close()
-    else
-      @open()
 
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('

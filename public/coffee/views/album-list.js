@@ -49,7 +49,10 @@ Views.SavedAlbumsList = (function() {
     _.bindAll(this, "makeView", "modelSaved");
     this.collection.bind("add", this.makeView);
     this.collection.bind("modelSaved", this.modelSaved);
-    return this.collection.bind("modelDestroyed", this.modelDestroyed);
+    this.collection.bind("modelDestroyed", this.modelDestroyed);
+    return $(this.el).isScrollable(__bind(function(isScrolling) {
+      return this.trigger("scroll", isScrolling);
+    }, this));
   };
   SavedAlbumsList.prototype.filter = function(state) {
     this.filterState = state;
