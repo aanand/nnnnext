@@ -134,7 +134,7 @@ body {
         content: "✕"; }
       .album-list li .controls .restore:after {
         font-size: 70px;
-        content: "⤾"; }
+        content: "↩"; }
       .album-list li .controls .archive:after {
         font-size: 80px;
         top: -9px;
