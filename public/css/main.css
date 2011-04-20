@@ -171,29 +171,31 @@ textarea:-moz-placeholder {
   width: 500px;
   padding: 0 5px; }
 
-.ui-list-item, .album, .friend {
+.ui-list-item, .album, .album-search-list .new-album, .friend {
   padding: 4px;
   border: 1px solid #cccccc;
-  border-width: 0 0 1px 0;
+  border-width: 1px 0 0 0;
   position: relative; }
-  .ui-list-item:after, .album:after, .friend:after {
+  .ui-list-item:after, .album:after, .album-search-list .new-album:after, .friend:after {
     content: "\0020";
     display: block;
     height: 0;
     clear: both;
     visibility: hidden; }
-  .ui-list-item.highlight, .highlight.album, .highlight.friend {
+  .ui-list-item:first-child, .album:first-child, .album-search-list .new-album:first-child, .friend:first-child {
+    border-width: 0; }
+  .ui-list-item.highlight, .highlight.album, .album-search-list .highlight.new-album, .highlight.friend {
     background: rgba(95, 148, 16, 0.2);
     outline: none; }
-  .ui-list-item .primary, .album .primary, .friend .primary, .ui-list-item .album .title, .album .ui-list-item .title, .album .title, .friend .album .title, .album .friend .title, .ui-list-item .friend .info .name, .friend .info .ui-list-item .name, .album .friend .info .name, .friend .info .album .name, .friend .info .name {
+  .ui-list-item .primary, .album .primary, .album-search-list .new-album .primary, .friend .primary, .ui-list-item .album .title, .album .ui-list-item .title, .album .title, .album-search-list .new-album .album .title, .album .album-search-list .new-album .title, .friend .album .title, .album .friend .title, .ui-list-item .friend .info .name, .friend .info .ui-list-item .name, .album .friend .info .name, .friend .info .album .name, .album-search-list .new-album .friend .info .name, .friend .info .album-search-list .new-album .name, .friend .info .name {
     font-size: 18px;
     margin-bottom: 2px; }
-    .ui-list-item .primary a, .album .primary a, .friend .primary a, .ui-list-item .album .title a, .album .ui-list-item .title a, .album .title a, .friend .album .title a, .album .friend .title a, .ui-list-item .friend .info .name a, .friend .info .ui-list-item .name a, .album .friend .info .name a, .friend .info .album .name a, .friend .info .name a {
+    .ui-list-item .primary a, .album .primary a, .album-search-list .new-album .primary a, .friend .primary a, .ui-list-item .album .title a, .album .ui-list-item .title a, .album .title a, .album-search-list .new-album .album .title a, .album .album-search-list .new-album .title a, .friend .album .title a, .album .friend .title a, .ui-list-item .friend .info .name a, .friend .info .ui-list-item .name a, .album .friend .info .name a, .friend .info .album .name a, .album-search-list .new-album .friend .info .name a, .friend .info .album-search-list .new-album .name a, .friend .info .name a {
       color: inherit;
       text-decoration: none; }
-      .ui-list-item .primary a:hover, .album .primary a:hover, .friend .primary a:hover, .ui-list-item .album .title a:hover, .album .ui-list-item .title a:hover, .album .title a:hover, .friend .album .title a:hover, .album .friend .title a:hover, .ui-list-item .friend .info .name a:hover, .friend .info .ui-list-item .name a:hover, .album .friend .info .name a:hover, .friend .info .album .name a:hover, .friend .info .name a:hover {
+      .ui-list-item .primary a:hover, .album .primary a:hover, .album-search-list .new-album .primary a:hover, .friend .primary a:hover, .ui-list-item .album .title a:hover, .album .ui-list-item .title a:hover, .album .title a:hover, .album-search-list .new-album .album .title a:hover, .album .album-search-list .new-album .title a:hover, .friend .album .title a:hover, .album .friend .title a:hover, .ui-list-item .friend .info .name a:hover, .friend .info .ui-list-item .name a:hover, .album .friend .info .name a:hover, .friend .info .album .name a:hover, .album-search-list .new-album .friend .info .name a:hover, .friend .info .album-search-list .new-album .name a:hover, .friend .info .name a:hover {
         color: #5f9410; }
-  .ui-list-item .secondary, .album .secondary, .friend .secondary, .ui-list-item .album .artist, .album .ui-list-item .artist, .album .artist, .friend .album .artist, .album .friend .artist, .ui-list-item .friend .info .nickname, .friend .info .ui-list-item .nickname, .album .friend .info .nickname, .friend .info .album .nickname, .friend .info .nickname {
+  .ui-list-item .secondary, .album .secondary, .album-search-list .new-album .secondary, .friend .secondary, .ui-list-item .album .artist, .album .ui-list-item .artist, .album .artist, .album-search-list .new-album .album .artist, .album .album-search-list .new-album .artist, .friend .album .artist, .album .friend .artist, .ui-list-item .friend .info .nickname, .friend .info .ui-list-item .nickname, .album .friend .info .nickname, .friend .info .album .nickname, .album-search-list .new-album .friend .info .nickname, .friend .info .album-search-list .new-album .nickname, .friend .info .nickname {
     font-size: 14px;
     color: #888888; }
 
@@ -271,19 +273,17 @@ textarea:-moz-placeholder {
 
 .album-search-list .album.highlight {
   cursor: pointer; }
-.album-search-list .new-album {
-  border: none; }
-  .album-search-list .new-album label {
-    display: block;
-    color: #888888;
-    font-size: 14px;
-    margin: 8px 0; }
-  .album-search-list .new-album input, .album-search-list .new-album button {
-    font-size: 18px; }
-  .album-search-list .new-album input {
-    width: 200px; }
-  .album-search-list .new-album button {
-    margin: 0; }
+.album-search-list .new-album label {
+  display: block;
+  color: #888888;
+  font-size: 14px;
+  margin: 8px 0; }
+.album-search-list .new-album input, .album-search-list .new-album button {
+  font-size: 18px; }
+.album-search-list .new-album input {
+  width: 200px; }
+.album-search-list .new-album button {
+  margin: 0; }
 
 .friends-albums-list .album[data-state="archived"] .title {
   color: #666666; }

@@ -202,9 +202,12 @@ textarea:-moz-placeholder
 .ui-list-item
   padding:      4px
   border:       1px solid #ccc
-  border-width: 0 0 1px 0
+  border-width: 1px 0 0 0
   position:     relative
   +clearfix
+
+  &:first-child
+    border-width: 0
 
   &.highlight
     background: $highlight
@@ -345,7 +348,7 @@ textarea:-moz-placeholder
     cursor: pointer
 
   .new-album
-    border: none
+    @extend .ui-list-item
 
     label
       display:   block
