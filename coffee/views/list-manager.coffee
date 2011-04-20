@@ -6,9 +6,10 @@ class Views.ListManager extends Views.View
 
     @searchBar          = new UI.AlbumSearchBar({collection: @albumSearchResults})
     @searchResultsList  = new UI.AlbumSearchList({collection: @albumSearchResults})
-    @savedAlbumsList    = new UI.SavedAlbumsList({collection: SavedAlbums})
+    @currentAlbumsList  = new UI.SavedAlbumsList({collection: CurrentAlbums})
+    @archivedAlbumsList = new UI.SavedAlbumsList({collection: ArchivedAlbums})
     
-    @views = [@searchResultsList, @savedAlbumsList]
+    @views = [@searchResultsList, @currentAlbumsList, @archivedAlbumsList]
 
     @searchBar.bind         "submit",  @startSearch
     @searchBar.bind         "clear", @cancelSearch
@@ -20,9 +21,11 @@ class Views.ListManager extends Views.View
   render: ->
     $(@el).append(@searchBar.render().el)
     $(@el).append(@searchResultsList.render().el)
-    $(@el).append(@savedAlbumsList.render().el)
+    $(@el).append(@currentAlbumsList.render().el)
+    $(@el).append(@archivedAlbumsList.render().el)
     
-    @savedAlbumsList.populate()
+    @currentAlbumsList.populate()
+    @archivedAlbumsList.populate()
 
     this
 
@@ -32,8 +35,7 @@ class Views.ListManager extends Views.View
   switchView: (name) ->
     switch name
       when "current", "archived"
-        super("savedAlbumsList")
-        @savedAlbumsList.filter(name)
+        super("#{name}AlbumsList")
       else
         super(name)
 
@@ -49,12 +51,12 @@ class Views.ListManager extends Views.View
     @switchView("searchResultsList")
 
   cancelSearch: ->
-    @switchView("savedAlbumsList")
+    @switchView("current")
 
   addAlbum: (album) ->
     album.addTo(SavedAlbums)
 
-    @switchView("savedAlbumsList")
+    @switchView("current")
     @searchBar.clear()
     @trigger("addAlbum")
 

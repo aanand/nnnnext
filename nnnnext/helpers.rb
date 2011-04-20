@@ -22,6 +22,7 @@ module Nnnnext::Helpers
 
   def js_files
     js = %w(jquery
+            jquery.insertAt
             json2
             ontap
             underscore
@@ -30,8 +31,11 @@ module Nnnnext::Helpers
             iscroll
            ).map { |n| "/js/#{n}.js" }
 
-    js += %w(models/album
+    js += %w(local-sync
+             models/album
              models/user
+             collections/album-collection
+             collections/filtered-collection
              views/view-shop
              views/view
              views/banner
@@ -46,7 +50,7 @@ module Nnnnext::Helpers
              views/friend-list
              views/friend-browser
              views/app-view
-             saved-albums
+             collections
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }

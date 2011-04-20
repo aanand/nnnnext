@@ -20,10 +20,13 @@ Views.ListManager = (function() {
     this.searchResultsList = new UI.AlbumSearchList({
       collection: this.albumSearchResults
     });
-    this.savedAlbumsList = new UI.SavedAlbumsList({
-      collection: SavedAlbums
+    this.currentAlbumsList = new UI.SavedAlbumsList({
+      collection: CurrentAlbums
     });
-    this.views = [this.searchResultsList, this.savedAlbumsList];
+    this.archivedAlbumsList = new UI.SavedAlbumsList({
+      collection: ArchivedAlbums
+    });
+    this.views = [this.searchResultsList, this.currentAlbumsList, this.archivedAlbumsList];
     this.searchBar.bind("submit", this.startSearch);
     this.searchBar.bind("clear", this.cancelSearch);
     this.searchResultsList.bind("select", this.addAlbum);
@@ -35,8 +38,10 @@ Views.ListManager = (function() {
   ListManager.prototype.render = function() {
     $(this.el).append(this.searchBar.render().el);
     $(this.el).append(this.searchResultsList.render().el);
-    $(this.el).append(this.savedAlbumsList.render().el);
-    this.savedAlbumsList.populate();
+    $(this.el).append(this.currentAlbumsList.render().el);
+    $(this.el).append(this.archivedAlbumsList.render().el);
+    this.currentAlbumsList.populate();
+    this.archivedAlbumsList.populate();
     return this;
   };
   ListManager.prototype.handleKeypress = function(e) {
@@ -46,8 +51,7 @@ Views.ListManager = (function() {
     switch (name) {
       case "current":
       case "archived":
-        ListManager.__super__.switchView.call(this, "savedAlbumsList");
-        return this.savedAlbumsList.filter(name);
+        return ListManager.__super__.switchView.call(this, "" + name + "AlbumsList");
       default:
         return ListManager.__super__.switchView.call(this, name);
     }
@@ -68,11 +72,11 @@ Views.ListManager = (function() {
     return this.switchView("searchResultsList");
   };
   ListManager.prototype.cancelSearch = function() {
-    return this.switchView("savedAlbumsList");
+    return this.switchView("current");
   };
   ListManager.prototype.addAlbum = function(album) {
     album.addTo(SavedAlbums);
-    this.switchView("savedAlbumsList");
+    this.switchView("current");
     this.searchBar.clear();
     return this.trigger("addAlbum");
   };

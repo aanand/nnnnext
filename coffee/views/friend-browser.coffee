@@ -1,8 +1,3 @@
-Friends = new UserCollection
-Friends.url = "/friends"
-
-FriendsAlbums = new AlbumCollection
-
 class Views.FriendBrowser extends Views.View
   className: 'friend-browser'
 

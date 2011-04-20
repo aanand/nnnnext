@@ -1,4 +1,4 @@
-var SavedAlbums, storageNamespace, storageNamespacePrefix, unsyncedStorageNamespace;
+var ArchivedAlbums, CurrentAlbums, SavedAlbums, storageNamespace, storageNamespacePrefix, unsyncedStorageNamespace;
 storageNamespacePrefix = "nnnnext";
 unsyncedStorageNamespace = "" + storageNamespacePrefix + "/unsynced";
 storageNamespace = null;
@@ -18,7 +18,24 @@ if (typeof UserInfo != "undefined" && UserInfo !== null) {
 }
 SavedAlbums = new AlbumCollection({
   localStorage: new Store("" + storageNamespace + "/albums"),
-  sync: Backbone.localSync,
+  sync: Backbone.localSync
+});
+CurrentAlbums = new FilteredCollection({
+  model: Album,
+  parent: SavedAlbums,
+  filter: function(a) {
+    return a.get("state") === "current";
+  },
+  comparator: function(a) {
+    return -a.get("stateChanged");
+  }
+});
+ArchivedAlbums = new FilteredCollection({
+  model: Album,
+  parent: SavedAlbums,
+  filter: function(a) {
+    return a.get("state") === "archived";
+  },
   comparator: function(a) {
     return -a.get("stateChanged");
   }

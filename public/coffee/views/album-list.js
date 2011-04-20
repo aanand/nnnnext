@@ -46,52 +46,30 @@ Views.SavedAlbumsList = (function() {
   SavedAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
     SavedAlbumsList.__super__.initialize.call(this, options);
-    _.bindAll(this, "makeView", "modelSaved");
-    this.collection.bind("add", this.makeView);
-    this.collection.bind("modelSaved", this.modelSaved);
-    this.collection.bind("modelDestroyed", this.modelDestroyed);
+    _.bindAll(this, "add", "remove", "change");
+    this.collection.bind("add", this.add);
+    this.collection.bind("refresh", this.populate);
+    this.collection.bind("remove", this.remove);
+    this.collection.bind("change", this.change);
     return $(this.el).isScrollable(__bind(function(isScrolling) {
       return this.trigger("scroll", isScrolling);
     }, this));
   };
-  SavedAlbumsList.prototype.filter = function(state) {
-    this.filterState = state;
-    return this.collection.forEach(__bind(function(album) {
-      return this.showOrHideView(album);
-    }, this));
-  };
-  SavedAlbumsList.prototype.showOrHideView = function(album) {
-    if (this.filterState == null) {
-      return;
+  SavedAlbumsList.prototype.add = function(album) {
+    if ((album.view != null) && album.view.el.parentNode !== this.el) {
+      album.removeView();
     }
-    if (album.get("state") === this.filterState) {
-      return album.view.show();
-    } else {
-      return album.view.hide();
+    this.makeView(album).render();
+    return $(this.el).insertAt(album.view.el, this.collection.indexOf(album));
+  };
+  SavedAlbumsList.prototype.remove = function(album) {
+    if ((album.view != null) && album.view.el.parentNode === this.el) {
+      return album.removeView();
     }
   };
-  SavedAlbumsList.prototype.modelSaved = function(album) {
-    var albumEl, childToInsertBefore, correctIndex, currentIndex;
-    album.view.render();
-    this.showOrHideView(album);
-    albumEl = album.view.el;
-    correctIndex = this.collection.indexOf(album);
-    currentIndex = $(this.el).children().get().indexOf(albumEl);
-    if (currentIndex !== correctIndex) {
-      if (currentIndex !== -1) {
-        this.el.removeChild(albumEl);
-      }
-      childToInsertBefore = $(this.el).children()[correctIndex];
-      if (childToInsertBefore != null) {
-        return $(albumEl).insertBefore(childToInsertBefore);
-      } else {
-        return $(albumEl).appendTo(this.el);
-      }
-    }
-  };
-  SavedAlbumsList.prototype.modelDestroyed = function(album) {
+  SavedAlbumsList.prototype.change = function(album) {
     if (album.view != null) {
-      return album.view.remove();
+      return album.view.render();
     }
   };
   return SavedAlbumsList;

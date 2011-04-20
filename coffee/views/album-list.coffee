@@ -25,49 +25,26 @@ class Views.SavedAlbumsList extends Views.AlbumList
   initialize: (options) ->
     super(options)
 
-    _.bindAll(this, "makeView", "modelSaved")
+    _.bindAll(this, "add", "remove", "change")
 
-    @collection.bind "add",        @makeView
-    @collection.bind "modelSaved", @modelSaved
-    @collection.bind "modelDestroyed", @modelDestroyed
+    @collection.bind "add",     @add
+    @collection.bind "refresh", @populate
+    @collection.bind "remove",  @remove
+    @collection.bind "change",  @change
 
     $(@el).isScrollable (isScrolling) =>
       @trigger("scroll", isScrolling)
 
-  filter: (state) ->
-    @filterState = state
+  add: (album) ->
+    album.removeView() if album.view? and album.view.el.parentNode != @el
+    @makeView(album).render()
+    $(@el).insertAt(album.view.el, @collection.indexOf(album))
 
-    @collection.forEach (album) =>
-      @showOrHideView(album)
+  remove: (album) ->
+    album.removeView() if album.view? and album.view.el.parentNode == @el
 
-  showOrHideView: (album) ->
-    return unless @filterState?
-
-    if album.get("state") == @filterState
-      album.view.show()
-    else
-      album.view.hide()
-
-  modelSaved: (album) ->
-    album.view.render()
-    @showOrHideView(album)
-
-    albumEl      = album.view.el
-    correctIndex = @collection.indexOf(album)
-    currentIndex = $(@el).children().get().indexOf(albumEl)
-
-    if currentIndex != correctIndex
-      @el.removeChild(albumEl) if currentIndex != -1
-
-      childToInsertBefore = $(@el).children()[correctIndex]
-
-      if childToInsertBefore?
-        $(albumEl).insertBefore(childToInsertBefore)
-      else
-        $(albumEl).appendTo(@el)
-
-  modelDestroyed: (album) ->
-    album.view.remove() if album.view?
+  change: (album) ->
+    album.view.render() if album.view?
 
 class Touch.SavedAlbumsList extends Views.SavedAlbumsList
   albumOpened: (album) ->

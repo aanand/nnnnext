@@ -26,7 +26,7 @@ Views.AppView = (function() {
     this.listManager.bind("addAlbum", __bind(function() {
       return this.navigation.show();
     }, this));
-    SavedAlbums.bind("modelSaved", this.startSync);
+    LocalSync.bind("sync", this.startSync);
     Sync.bind("finish", this.finishSync);
     $(window).bind("keydown", this.handleKeypress);
     this.renderSubviews();

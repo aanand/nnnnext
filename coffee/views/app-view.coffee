@@ -20,7 +20,7 @@ class Views.AppView extends Views.View
     @navigation.bind  "navigate",        @navigate
     @header.bind      "syncButtonClick", @startSync
     @listManager.bind "addAlbum",        => @navigation.show()
-    SavedAlbums.bind  "modelSaved",      @startSync
+    LocalSync.bind    "sync",            @startSync
     Sync.bind         "finish",          @finishSync
     $(window).bind    "keydown",         @handleKeypress
 

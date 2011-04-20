@@ -1,4 +1,3 @@
-var Friends, FriendsAlbums;
 var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
   for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
   function ctor() { this.constructor = child; }
@@ -7,9 +6,6 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.__super__ = parent.prototype;
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-Friends = new UserCollection;
-Friends.url = "/friends";
-FriendsAlbums = new AlbumCollection;
 Views.FriendBrowser = (function() {
   function FriendBrowser() {
     FriendBrowser.__super__.constructor.apply(this, arguments);
