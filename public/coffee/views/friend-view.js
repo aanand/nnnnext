@@ -33,11 +33,7 @@ Views.FriendView = (function() {
   FriendView.prototype.initialize = function(options) {
     var _ref;
     this.list = options.list;
-    this.backButton = (_ref = options.backButton) != null ? _ref : false;
-    if (options.highlightable !== false) {
-      _.bindAll(this, "highlight");
-      return $(this.el).bind("mouseover", this.highlight).bind("mouseout", this.highlight).bind("focus", this.highlight).bind("blur", this.highlight);
-    }
+    return this.backButton = (_ref = options.backButton) != null ? _ref : false;
   };
   FriendView.prototype.render = function() {
     var vars;

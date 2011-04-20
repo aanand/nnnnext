@@ -24,15 +24,6 @@ class Views.FriendView extends Views.View
     @list = options.list
     @backButton = options.backButton ? false
 
-    unless options.highlightable == false
-      _.bindAll(this, "highlight")
-
-      $(@el)
-        .bind("mouseover", @highlight)
-        .bind("mouseout",  @highlight)
-        .bind("focus",     @highlight)
-        .bind("blur",      @highlight)
-
   render: ->
     vars = @model.toJSON()
     vars.backButton = @backButton

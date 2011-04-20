@@ -6,8 +6,6 @@ class Views.AlbumView extends Views.View
     keypress:  "select"
     mouseover: "showOrHideRating"
     mouseout:  "showOrHideRating"
-    focus:     "highlight"
-    blur:      "highlight"
 
   initialize: (options) ->
     @list = options.list
@@ -130,8 +128,6 @@ class Views.SearchAlbumView extends Views.AlbumView
   events:
     _.extend _.clone(Views.AlbumView.prototype.events),
       click: "select"
-      mouseover: "highlight"
-      mouseout:  "highlight"
 
 class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('

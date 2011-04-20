@@ -16,9 +16,7 @@ Views.AlbumView = (function() {
   AlbumView.prototype.events = {
     keypress: "select",
     mouseover: "showOrHideRating",
-    mouseout: "showOrHideRating",
-    focus: "highlight",
-    blur: "highlight"
+    mouseout: "showOrHideRating"
   };
   AlbumView.prototype.initialize = function(options) {
     return this.list = options.list;
@@ -163,9 +161,7 @@ Views.SearchAlbumView = (function() {
     <div class="artist"><%= artist %></div>\
   ');
   SearchAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
-    click: "select",
-    mouseover: "highlight",
-    mouseout: "highlight"
+    click: "select"
   });
   return SearchAlbumView;
 })();
