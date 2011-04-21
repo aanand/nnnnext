@@ -12,6 +12,7 @@ Views.ListManager = (function() {
   }
   __extends(ListManager, Views.View);
   ListManager.prototype.initialize = function() {
+    var coll, event, _i, _j, _len, _len2, _ref, _ref2;
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
     this.albumSearchResults = new AlbumCollection;
     this.searchBar = new UI.AlbumSearchBar({
@@ -31,6 +32,17 @@ Views.ListManager = (function() {
     this.searchBar.bind("clear", this.cancelSearch);
     this.searchResultsList.bind("select", this.addAlbum);
     this.albumSearchResults.bind("refresh", this.finishSearch);
+    _ref = [SavedAlbums, this.albumSearchResults];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      coll = _ref[_i];
+      _ref2 = ["add", "remove", "refresh"];
+      for (_j = 0, _len2 = _ref2.length; _j < _len2; _j++) {
+        event = _ref2[_j];
+        coll.bind(event, __bind(function() {
+          return this.trigger("update");
+        }, this));
+      }
+    }
     return this.bind("show", __bind(function() {
       return this.searchBar.focus();
     }, this));

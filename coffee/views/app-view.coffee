@@ -15,7 +15,7 @@ class Views.AppView extends Views.View
 
     @views = [@listManager, @friendBrowser]
 
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint")
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint", "refreshScroll")
 
     @navigation.bind  "navigate",        @navigate
     @header.bind      "syncButtonClick", @startSync
@@ -25,6 +25,8 @@ class Views.AppView extends Views.View
     CurrentAlbums.bind "add",            @setHint
     CurrentAlbums.bind "remove",         @setHint
     $(window).bind    "keydown",         @handleKeypress
+
+    v.bind "update", @refreshScroll for v in @views
 
     @renderSubviews()
 
@@ -160,10 +162,6 @@ class Touch.AppView extends Views.AppView
     @scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(@el)
 
     @iScroll = new iScroll(@scrollWrapper.get(0))
-
-  appendTo: (parent) ->
-    super(parent)
-    window.setTimeout((=> @refreshScroll()), 1000)
 
   switchView: (viewName) ->
     super(viewName)

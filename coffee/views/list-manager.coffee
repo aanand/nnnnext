@@ -16,6 +16,10 @@ class Views.ListManager extends Views.View
     @searchResultsList.bind "select",  @addAlbum
     @albumSearchResults.bind "refresh", @finishSearch
 
+    for coll in [SavedAlbums, @albumSearchResults]
+      for event in ["add", "remove", "refresh"]
+        coll.bind event, => @trigger("update")
+
     @bind "show", => @searchBar.focus()
 
   render: ->

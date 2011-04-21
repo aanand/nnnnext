@@ -13,6 +13,7 @@ Views.AppView = (function() {
   __extends(AppView, Views.View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
+    var v, _i, _len, _ref;
     SavedAlbums.fetch();
     this.banner = new UI.Banner;
     this.header = new UI.Header;
@@ -20,7 +21,7 @@ Views.AppView = (function() {
     this.listManager = new UI.ListManager;
     this.friendBrowser = new UI.FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint");
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint", "refreshScroll");
     this.navigation.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
     this.listManager.bind("addAlbum", this.showNavigation);
@@ -29,6 +30,11 @@ Views.AppView = (function() {
     CurrentAlbums.bind("add", this.setHint);
     CurrentAlbums.bind("remove", this.setHint);
     $(window).bind("keydown", this.handleKeypress);
+    _ref = this.views;
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      v = _ref[_i];
+      v.bind("update", this.refreshScroll);
+    }
     this.renderSubviews();
     if (this.isNewUser()) {
       this.hideNavigation();
@@ -178,12 +184,6 @@ Touch.AppView = (function() {
     });
     this.scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(this.el);
     return this.iScroll = new iScroll(this.scrollWrapper.get(0));
-  };
-  AppView.prototype.appendTo = function(parent) {
-    AppView.__super__.appendTo.call(this, parent);
-    return window.setTimeout((__bind(function() {
-      return this.refreshScroll();
-    }, this)), 1000);
   };
   AppView.prototype.switchView = function(viewName) {
     AppView.__super__.switchView.call(this, viewName);
