@@ -209,12 +209,11 @@ textarea:-moz-placeholder
   &:first-child
     border-width: 0
 
-  &.highlight
-    background: $highlight
-    outline:    none
-
   &:focus
-    @extend .highlight
+    $border-width: 3px
+    border-left: $border-width solid $primary
+    margin-left: -$border-width
+    outline: none
 
   .primary
     font-size:     18px
@@ -347,9 +346,10 @@ textarea:-moz-placeholder
       color: $control-green
 
 .album-search-list
-  .album:hover
-    @extend .ui-list-item.highlight
-    cursor: pointer
+  .album
+    &:hover, &:focus
+      background: $highlight
+      cursor: pointer
 
   .new-album
     @extend .ui-list-item
@@ -384,9 +384,10 @@ textarea:-moz-placeholder
 .friend-list
   @extend .ui-list
 
-  .friend:hover
-    @extend .ui-list-item.highlight
-    cursor: pointer
+  .friend
+    &:hover, &:focus
+      background: $highlight
+      cursor: pointer
 
   li.not-signed-in
     color: #888

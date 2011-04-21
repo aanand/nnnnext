@@ -184,8 +184,9 @@ textarea:-moz-placeholder {
     visibility: hidden; }
   .ui-list-item:first-child, .album:first-child, .album-search-list .new-album:first-child, .friend:first-child {
     border-width: 0; }
-  .ui-list-item.highlight, .ui-list-item:focus, .album:focus, .album-search-list .new-album:focus, .friend:focus, .highlight.album, .album.ui-list-item:focus, .album-search-list .album:hover, .album-search-list .highlight.new-album, .album-search-list .new-album.ui-list-item:focus, .friend-list .friend:hover, .highlight.friend, .friend.ui-list-item:focus {
-    background: rgba(95, 148, 16, 0.2);
+  .ui-list-item:focus, .album:focus, .album-search-list .new-album:focus, .friend:focus {
+    border-left: 3px solid #5f9410;
+    margin-left: -3px;
     outline: none; }
   .ui-list-item .primary, .album .primary, .album-search-list .new-album .primary, .friend .primary, .ui-list-item .album .title, .album .ui-list-item .title, .album .title, .album-search-list .new-album .album .title, .album .album-search-list .new-album .title, .friend .album .title, .album .friend .title, .ui-list-item .friend .info .name, .friend .info .ui-list-item .name, .album .friend .info .name, .friend .info .album .name, .album-search-list .new-album .friend .info .name, .friend .info .album-search-list .new-album .name, .friend .info .name {
     font-size: 18px;
@@ -271,7 +272,8 @@ textarea:-moz-placeholder {
   .album .add:hover:after {
     color: #44aa44; }
 
-.album-search-list .album:hover {
+.album-search-list .album:hover, .album-search-list .album:focus {
+  background: rgba(95, 148, 16, 0.2);
   cursor: pointer; }
 .album-search-list .new-album label {
   display: block;
@@ -294,7 +296,8 @@ textarea:-moz-placeholder {
   margin: 100px auto 0;
   background: url(/img/spinner-big.gif); }
 
-.friend-list .friend:hover {
+.friend-list .friend:hover, .friend-list .friend:focus {
+  background: rgba(95, 148, 16, 0.2);
   cursor: pointer; }
 .friend-list li.not-signed-in {
   color: #888888; }
