@@ -284,16 +284,14 @@ textarea:-moz-placeholder
       color: $control-rated
 
   &.allow-rate .rate
-    cursor: pointer
+    span
+      cursor: pointer
 
-    span.selected:after
-      color: $control-yellow
+      &.selected:after
+        color: $control-yellow
 
-    &:hover span.rated:after
-      color: $control-normal
-
-    &:hover span.selected.rated:after
-      color: $control-yellow
+      &.not-selected:after
+        color: $control-normal
 
   .archive
     @extend .hover-control

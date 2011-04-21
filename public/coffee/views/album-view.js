@@ -100,10 +100,11 @@ Views.SavedAlbumView = (function() {
   SavedAlbumView.prototype.allowRate = true;
   SavedAlbumView.prototype.highlightStars = function(e) {
     this.clearStars();
-    return $(e.target).prevAll().andSelf().addClass("selected");
+    $(e.target).prevAll().andSelf().addClass("selected").removeClass("not-selected");
+    return $(e.target).nextAll().removeClass("selected").addClass("not-selected");
   };
   SavedAlbumView.prototype.clearStars = function(e) {
-    return this.$(".rate span").removeClass("selected");
+    return this.$(".rate span").removeClass("selected").removeClass("not-selected");
   };
   SavedAlbumView.prototype.rate = function(e) {
     return this.model.rate(parseInt($(e.target).attr('data-rating')));

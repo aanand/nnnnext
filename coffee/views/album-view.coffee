@@ -88,10 +88,19 @@ class Views.SavedAlbumView extends Views.AlbumView
 
   highlightStars: (e) ->
     @clearStars()
-    $(e.target).prevAll().andSelf().addClass("selected")
+
+    $(e.target).prevAll().andSelf()
+      .addClass("selected")
+      .removeClass("not-selected")
+
+    $(e.target).nextAll()
+      .removeClass("selected")
+      .addClass("not-selected")
 
   clearStars: (e) ->
-    @$(".rate span").removeClass("selected")
+    @$(".rate span")
+      .removeClass("selected")
+      .removeClass("not-selected")
 
   rate: (e) ->
     @model.rate(parseInt($(e.target).attr('data-rating')))

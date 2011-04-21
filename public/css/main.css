@@ -229,14 +229,12 @@ textarea:-moz-placeholder {
     vertical-align: 2px; }
   .album .rate span.rated:after {
     color: #aaaaaa; }
-.album.allow-rate .rate {
+.album.allow-rate .rate span {
   cursor: pointer; }
   .album.allow-rate .rate span.selected:after {
     color: #ddaa44; }
-  .album.allow-rate .rate:hover span.rated:after {
+  .album.allow-rate .rate span.not-selected:after {
     color: #dddddd; }
-  .album.allow-rate .rate:hover span.selected.rated:after {
-    color: #ddaa44; }
 .album .archive {
   cursor: pointer; }
   .album .archive:after {
