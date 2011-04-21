@@ -55,6 +55,23 @@ body {
   left: 0;
   right: 0; }
 
+.hint {
+  background: #d7efb4;
+  color: #3a5a0a;
+  margin: 30px;
+  padding: 1px;
+  position: relative;
+  font-size: 30px;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px; }
+  .hint .text {
+    margin: 29px 30px; }
+    .hint .text ul {
+      list-style: disc;
+      padding-left: 1.5em; }
+  .hint .dismiss {
+    display: none; }
+
 .album-search-bar {
   background-image: -webkit-gradient(linear, left top, left bottom, from(#d7efb4), to(#a1e143));
   background-image: -moz-linear-gradient(center top, #d7efb4 0%, #a1e143 100%);
@@ -81,10 +98,10 @@ body {
   list-style: none;
   margin: 0;
   padding: 0; }
-  .album-list li {
+  .album-list .album {
     position: relative;
     border-bottom: 1px solid #cccccc; }
-    .album-list li .info {
+    .album-list .album .info {
       position: relative;
       z-index: 2;
       background: white;
@@ -92,21 +109,21 @@ body {
       padding: 20px;
       -webkit-transform: translate3d(0, 0, 0);
       -webkit-transition: -webkit-transform 0.35s; }
-      .album-list li .info .title {
+      .album-list .album .info .title {
         font-size: 36px;
         font-weight: bold; }
-      .album-list li .info .artist {
+      .album-list .album .info .artist {
         font-size: 30px;
         color: #666666; }
-    .album-list li.touched .info {
+    .album-list .album.touched .info {
       background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
       background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
       background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%);
       color: white; }
-    .album-list li.open .info {
+    .album-list .album.open .info {
       -webkit-transform: translate3d(100%, 0, 0);
       -webkit-transition: -webkit-transform 0.35s; }
-    .album-list li .controls {
+    .album-list .album .controls {
       position: absolute;
       top: 0;
       left: 0;
@@ -115,29 +132,29 @@ body {
       z-index: 1;
       background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
       text-align: center; }
-      .album-list li .controls .button, .album-list li .controls .delete, .album-list li .controls .restore, .album-list li .controls .archive {
+      .album-list .album .controls .button, .album-list .album .controls .delete, .album-list .album .controls .restore, .album-list .album .controls .archive {
         display: inline-block;
         position: relative;
         width: 100px;
         height: 100px;
         margin-top: 7px; }
-      .album-list li .controls .button:after, .album-list li .controls .delete:after, .album-list li .controls .restore:after, .album-list li .controls .archive:after {
+      .album-list .album .controls .button:after, .album-list .album .controls .delete:after, .album-list .album .controls .restore:after, .album-list .album .controls .archive:after {
         position: absolute;
         top: 0;
         left: 0;
         width: 100px;
         text-align: center;
         color: white; }
-      .album-list li .controls .button.touched:after, .album-list li .controls .touched.delete:after, .album-list li .controls .touched.restore:after, .album-list li .controls .touched.archive:after {
+      .album-list .album .controls .button.touched:after, .album-list .album .controls .touched.delete:after, .album-list .album .controls .touched.restore:after, .album-list .album .controls .touched.archive:after {
         color: blue; }
-      .album-list li .controls .delete:after {
+      .album-list .album .controls .delete:after {
         font-size: 80px;
         top: -7px;
         content: "✕"; }
-      .album-list li .controls .restore:after {
+      .album-list .album .controls .restore:after {
         font-size: 70px;
         content: "↩"; }
-      .album-list li .controls .archive:after {
+      .album-list .album .controls .archive:after {
         font-size: 80px;
         top: -9px;
         content: "✔"; }
