@@ -15,18 +15,21 @@ class Views.AppView extends Views.View
 
     @views = [@listManager, @friendBrowser]
 
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress")
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "setHint")
 
     @navigation.bind  "navigate",        @navigate
     @header.bind      "syncButtonClick", @startSync
     @listManager.bind "addAlbum",        => @navigation.show()
     LocalSync.bind    "sync",            @startSync
     Sync.bind         "finish",          @finishSync
+    CurrentAlbums.bind "add",            @setHint
+    CurrentAlbums.bind "remove",         @setHint
     $(window).bind    "keydown",         @handleKeypress
 
     @renderSubviews()
 
-    @navigation.hide() if SavedAlbums.length == 0 and not(UserInfo?)
+    @navigation.hide() if @isNewUser()
+
     @tabIndex = 0
     @navigate(@navigation.href)
 
@@ -44,6 +47,7 @@ class Views.AppView extends Views.View
 
   appendTo: (parent) ->
     $(parent).append(@render().el)
+    @setHint()
 
   startSync: ->
     return unless UserInfo?
@@ -64,6 +68,8 @@ class Views.AppView extends Views.View
         @switchView("listManager")
       when "/friends"
         @switchView("friendBrowser")
+
+    @setHint()
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -89,6 +95,30 @@ class Views.AppView extends Views.View
 
     $(focus).blur() if focus?
     $(elements[nextIndex]).focus()
+
+  setHint: ->
+    hintClass = if UserInfo?
+      null
+    else if @isNewUser()
+      hintClass = 'IntroHint'
+    else if @hasOneAlbum()
+      hintClass = 'FirstAlbumHint'
+    else
+      hintClass = 'SignInHint'
+
+    hint = if hintClass?
+      if Hint.isDismissed(hintClass)
+        null
+      else
+        new UI[hintClass]
+
+    @listManager.setHint(hint)
+
+  isNewUser: ->
+    SavedAlbums.length == 0 and not(UserInfo?)
+
+  hasOneAlbum: ->
+    SavedAlbums.length == 1 and SavedAlbums.models[0].get("state") == "current"
 
 _.extend Views.AppView.prototype, Views.Tabbable, {
   getTabbableElements: -> [@currentView]

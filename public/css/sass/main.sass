@@ -9,6 +9,9 @@ body, input
   font-family: helvetica
   color:       #444
 
+a
+  color: $primary
+
 // some of the following is stolen from http://formalize.me/
 
 input,
@@ -78,12 +81,6 @@ textarea:-moz-placeholder
     height:     275px
     background: url(/img/title.png)
 
-  .slogan
-    width:      115px
-    height:     37px
-    margin-top: 30px
-    background: url(/img/slogan.png)
-
   .signin
     background: rgba(0,0,0,0.35)
     padding: 5px
@@ -151,6 +148,37 @@ textarea:-moz-placeholder
 
     &:first-child:before
       content: ""
+
+.hint
+  background: $lightest
+  color:      $dark
+  margin-top: 8px
+  padding:    1px
+  position:   relative
+  +border-radius(8px)
+
+  .text
+    margin: 7px 12px
+
+    ul
+      list-style:   disc
+      padding-left: 1.5em
+
+  .dismiss
+    position: absolute
+    top:      8px
+    right:    8px
+    cursor:   pointer
+
+    &:after
+      content: "✕"
+      color:   $light
+      padding: 1px 3px 0 3px
+      +border-radius(2px)
+
+    &:hover:after
+      background: $primary
+      color:      $lightest
 
 .album-search-bar
   $width:        510px
@@ -386,12 +414,6 @@ textarea:-moz-placeholder
     &:hover, &:focus
       background: $highlight
       cursor: pointer
-
-  li.not-signed-in
-    color: #888
-
-    a
-      color: $primary
 
 .friend
   @extend .ui-list-item

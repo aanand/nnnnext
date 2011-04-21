@@ -9,7 +9,6 @@ class Views.Banner extends Views.View
         <a href="/signout"/>
       </div>
     <% } else { %>
-      <div class="slogan"/>
       <div class="signin">
         <a href="/auth/twitter"/>
       </div>

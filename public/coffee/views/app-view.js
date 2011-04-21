@@ -20,7 +20,7 @@ Views.AppView = (function() {
     this.listManager = new UI.ListManager;
     this.friendBrowser = new UI.FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress");
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "setHint");
     this.navigation.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
     this.listManager.bind("addAlbum", __bind(function() {
@@ -28,9 +28,11 @@ Views.AppView = (function() {
     }, this));
     LocalSync.bind("sync", this.startSync);
     Sync.bind("finish", this.finishSync);
+    CurrentAlbums.bind("add", this.setHint);
+    CurrentAlbums.bind("remove", this.setHint);
     $(window).bind("keydown", this.handleKeypress);
     this.renderSubviews();
-    if (SavedAlbums.length === 0 && !(typeof UserInfo != "undefined" && UserInfo !== null)) {
+    if (this.isNewUser()) {
       this.navigation.hide();
     }
     this.tabIndex = 0;
@@ -47,7 +49,8 @@ Views.AppView = (function() {
   };
   AppView.prototype.refreshScroll = function() {};
   AppView.prototype.appendTo = function(parent) {
-    return $(parent).append(this.render().el);
+    $(parent).append(this.render().el);
+    return this.setHint();
   };
   AppView.prototype.startSync = function() {
     if (typeof UserInfo == "undefined" || UserInfo === null) {
@@ -68,13 +71,16 @@ Views.AppView = (function() {
     switch (href) {
       case "/current":
         this.listManager.switchView("current");
-        return this.switchView("listManager");
+        this.switchView("listManager");
+        break;
       case "/archived":
         this.listManager.switchView("archived");
-        return this.switchView("listManager");
+        this.switchView("listManager");
+        break;
       case "/friends":
-        return this.switchView("friendBrowser");
+        this.switchView("friendBrowser");
     }
+    return this.setHint();
   };
   AppView.prototype.handleKeypress = function(e) {
     switch (e.keyCode) {
@@ -107,6 +113,18 @@ Views.AppView = (function() {
       $(focus).blur();
     }
     return $(elements[nextIndex]).focus();
+  };
+  AppView.prototype.setHint = function() {
+    var hint, hintClass;
+    hintClass = typeof UserInfo != "undefined" && UserInfo !== null ? null : this.isNewUser() ? hintClass = 'IntroHint' : this.hasOneAlbum() ? hintClass = 'FirstAlbumHint' : hintClass = 'SignInHint';
+    hint = hintClass != null ? Hint.isDismissed(hintClass) ? null : new UI[hintClass] : void 0;
+    return this.listManager.setHint(hint);
+  };
+  AppView.prototype.isNewUser = function() {
+    return SavedAlbums.length === 0 && !(typeof UserInfo != "undefined" && UserInfo !== null);
+  };
+  AppView.prototype.hasOneAlbum = function() {
+    return SavedAlbums.length === 1 && SavedAlbums.models[0].get("state") === "current";
   };
   return AppView;
 })();

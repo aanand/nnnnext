@@ -4,13 +4,6 @@ class Views.FriendBrowser extends Views.View
   initialize: ->
     _.bindAll(this, "loadFriends", "loadFriendsAlbums")
 
-    @signInMessage = $('
-      <div class="not-signed-in">
-        <a href="/auth/twitter">Connect with Twitter</a>
-        to share your list with your friends.
-      </div>
-    ')
-
     @spinner = $('<div class="spinner"/>')
 
     @friendList = new UI.FriendList({collection: Friends})
@@ -18,7 +11,7 @@ class Views.FriendBrowser extends Views.View
 
     @albumList = new UI.FriendsAlbumsList({collection: FriendsAlbums})
 
-    @views = [@signInMessage, @spinner, @friendList, @albumList]
+    @views = [@spinner, @friendList, @albumList]
 
     @bind "show", @loadFriends
 
@@ -27,7 +20,6 @@ class Views.FriendBrowser extends Views.View
     @albumList.bind    "back",    => @switchView("friendList")
 
   render: ->
-    $(@el).append(@signInMessage)
     $(@el).append(@spinner)
     $(@el).append(@friendList.render().el)
     $(@el).append(@albumList.render().el)
@@ -36,14 +28,11 @@ class Views.FriendBrowser extends Views.View
   handleKeypress: (e) -> true
 
   loadFriends: ->
-    if UserInfo?
-      if Friends.length > 0
-        @switchView("friendList")
-      else
-        @switchView("spinner")
-        Friends.fetch()
+    if UserInfo? and Friends.length == 0
+      @switchView("spinner")
+      Friends.fetch()
     else
-      @switchView("signInMessage")
+      @switchView("friendList")
 
   loadFriendsAlbums: (user) ->
     @albumList.user = user

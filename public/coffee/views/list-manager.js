@@ -44,6 +44,9 @@ Views.ListManager = (function() {
     this.archivedAlbumsList.populate();
     return this;
   };
+  ListManager.prototype.setHint = function(hint) {
+    return this.currentAlbumsList.setHint(hint);
+  };
   ListManager.prototype.handleKeypress = function(e) {
     return this.searchBar.handleKeypress(e);
   };

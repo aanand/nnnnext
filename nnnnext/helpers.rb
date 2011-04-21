@@ -38,9 +38,11 @@ module Nnnnext::Helpers
              collections/filtered-collection
              views/view-shop
              views/view
+             views/list
              views/banner
              views/header
              views/navigation
+             views/hint
              views/list-manager
              views/album-view
              views/album-list
@@ -50,6 +52,7 @@ module Nnnnext::Helpers
              views/friend-list
              views/friend-browser
              views/app-view
+             hint
              collections
              sync
              main

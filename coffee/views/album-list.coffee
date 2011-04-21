@@ -1,22 +1,8 @@
-class Views.AlbumList extends Views.View
-  tagName: 'ul'
+class Views.AlbumList extends Views.List
   className: 'album-list'
-
-  initialize: (options) ->
-    _.bindAll(this, "populate")
-
-  populate: ->
-    $(@el).empty()
-    @collection.forEach (album) =>
-      $(@el).append(@makeView(album).render().el)
 
   makeView: (album) ->
     album.view = new UI[@itemViewClassName]({model: album, list: this})
-
-_.extend Views.AlbumList.prototype, Views.Tabbable, {
-  getTabbableElements: ->
-    @collection.map (album) -> album.view.el
-}
 
 class Views.SavedAlbumsList extends Views.AlbumList
   itemViewClassName: 'SavedAlbumView'

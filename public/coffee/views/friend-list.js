@@ -5,38 +5,33 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+};
 Views.FriendList = (function() {
   function FriendList() {
     FriendList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendList, Views.View);
-  FriendList.prototype.tagName = 'ul';
+  __extends(FriendList, Views.List);
   FriendList.prototype.className = 'friend-list';
-  FriendList.prototype.initialize = function() {
-    return this.collection.bind("refresh", __bind(function() {
-      return this.populate();
-    }, this));
+  FriendList.prototype.initialize = function(options) {
+    FriendList.__super__.initialize.call(this, options);
+    return this.collection.bind("refresh", this.populate);
   };
-  FriendList.prototype.populate = function() {
-    $(this.el).empty();
-    this.collection.models.forEach(__bind(function(user) {
-      var view;
-      view = new UI.FriendView({
-        model: user,
-        list: this
+  FriendList.prototype.makeView = function(user) {
+    return user.view = new UI.FriendView({
+      model: user,
+      list: this
+    });
+  };
+  FriendList.prototype.render = function() {
+    var hint;
+    FriendList.__super__.render.call(this);
+    if (typeof UserInfo == "undefined" || UserInfo === null) {
+      hint = new UI.SignInHint({
+        dismissButton: false
       });
-      user.view = view;
-      return $(this.el).append(view.render().el);
-    }, this));
-    return this.reTab();
+      this.appendHint(hint);
+    }
+    return this;
   };
   return FriendList;
 })();
-_.extend(Views.FriendList.prototype, Views.Tabbable, {
-  getTabbableElements: function() {
-    return this.collection.models.map(function(m) {
-      return m.view.el;
-    });
-  }
-});

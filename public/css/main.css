@@ -3,6 +3,9 @@ body, input {
   font-family: helvetica;
   color: #444444; }
 
+a {
+  color: #5f9410; }
+
 input,
 button,
 select,
@@ -68,11 +71,6 @@ textarea:-moz-placeholder {
     width: 115px;
     height: 275px;
     background: url(/img/title.png); }
-  .banner .slogan {
-    width: 115px;
-    height: 37px;
-    margin-top: 30px;
-    background: url(/img/slogan.png); }
   .banner .signin {
     background: rgba(0, 0, 0, 0.35);
     padding: 5px;
@@ -128,6 +126,34 @@ textarea:-moz-placeholder {
     content: "• "; }
   .navigation a:first-child:before {
     content: ""; }
+
+.hint {
+  background: #d7efb4;
+  color: #3a5a0a;
+  margin-top: 8px;
+  padding: 1px;
+  position: relative;
+  -webkit-border-radius: 8px;
+  -moz-border-radius: 8px; }
+  .hint .text {
+    margin: 7px 12px; }
+    .hint .text ul {
+      list-style: disc;
+      padding-left: 1.5em; }
+  .hint .dismiss {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    cursor: pointer; }
+    .hint .dismiss:after {
+      content: "✕";
+      color: #83c91b;
+      padding: 1px 3px 0 3px;
+      -webkit-border-radius: 2px;
+      -moz-border-radius: 2px; }
+    .hint .dismiss:hover:after {
+      background: #5f9410;
+      color: #d7efb4; }
 
 .album-search-bar {
   width: 510px;
@@ -297,10 +323,6 @@ textarea:-moz-placeholder {
 .friend-list .friend:hover, .friend-list .friend:focus {
   background: rgba(95, 148, 16, 0.2);
   cursor: pointer; }
-.friend-list li.not-signed-in {
-  color: #888888; }
-  .friend-list li.not-signed-in a {
-    color: #5f9410; }
 
 .friend {
   padding: 8px 4px; }

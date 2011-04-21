@@ -29,6 +29,9 @@ class Views.ListManager extends Views.View
 
     this
 
+  setHint: (hint) ->
+    @currentAlbumsList.setHint(hint)
+
   handleKeypress: (e) ->
     @searchBar.handleKeypress(e)
 

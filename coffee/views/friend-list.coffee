@@ -1,19 +1,19 @@
-class Views.FriendList extends Views.View
-  tagName: 'ul'
+class Views.FriendList extends Views.List
   className: 'friend-list'
 
-  initialize: ->
-    @collection.bind "refresh", => @populate()
+  initialize: (options) ->
+    super(options)
+    @collection.bind "refresh", @populate
 
-  populate: ->
-    $(@el).empty()
+  makeView: (user) ->
+    user.view = new UI.FriendView({model: user, list: this})
 
-    @collection.models.forEach (user) =>
-      view = new UI.FriendView({model: user, list: this})
-      user.view = view
-      $(@el).append(view.render().el)
+  render: ->
+    super()
 
-    @reTab()
+    unless UserInfo?
+      hint = new UI.SignInHint({dismissButton: false})
+      @appendHint(hint)
 
-_.extend Views.FriendList.prototype, Views.Tabbable,
-  getTabbableElements: -> @collection.models.map (m) -> m.view.el
+    this
+

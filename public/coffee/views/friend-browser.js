@@ -14,12 +14,6 @@ Views.FriendBrowser = (function() {
   FriendBrowser.prototype.className = 'friend-browser';
   FriendBrowser.prototype.initialize = function() {
     _.bindAll(this, "loadFriends", "loadFriendsAlbums");
-    this.signInMessage = $('\
-      <div class="not-signed-in">\
-        <a href="/auth/twitter">Connect with Twitter</a>\
-        to share your list with your friends.\
-      </div>\
-    ');
     this.spinner = $('<div class="spinner"/>');
     this.friendList = new UI.FriendList({
       collection: Friends
@@ -28,7 +22,7 @@ Views.FriendBrowser = (function() {
     this.albumList = new UI.FriendsAlbumsList({
       collection: FriendsAlbums
     });
-    this.views = [this.signInMessage, this.spinner, this.friendList, this.albumList];
+    this.views = [this.spinner, this.friendList, this.albumList];
     this.bind("show", this.loadFriends);
     Friends.bind("refresh", __bind(function() {
       return this.switchView("friendList");
@@ -41,7 +35,6 @@ Views.FriendBrowser = (function() {
     }, this));
   };
   FriendBrowser.prototype.render = function() {
-    $(this.el).append(this.signInMessage);
     $(this.el).append(this.spinner);
     $(this.el).append(this.friendList.render().el);
     $(this.el).append(this.albumList.render().el);
@@ -51,15 +44,11 @@ Views.FriendBrowser = (function() {
     return true;
   };
   FriendBrowser.prototype.loadFriends = function() {
-    if (typeof UserInfo != "undefined" && UserInfo !== null) {
-      if (Friends.length > 0) {
-        return this.switchView("friendList");
-      } else {
-        this.switchView("spinner");
-        return Friends.fetch();
-      }
+    if ((typeof UserInfo != "undefined" && UserInfo !== null) && Friends.length === 0) {
+      this.switchView("spinner");
+      return Friends.fetch();
     } else {
-      return this.switchView("signInMessage");
+      return this.switchView("friendList");
     }
   };
   FriendBrowser.prototype.loadFriendsAlbums = function(user) {

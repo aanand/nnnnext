@@ -10,18 +10,8 @@ Views.AlbumList = (function() {
   function AlbumList() {
     AlbumList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumList, Views.View);
-  AlbumList.prototype.tagName = 'ul';
+  __extends(AlbumList, Views.List);
   AlbumList.prototype.className = 'album-list';
-  AlbumList.prototype.initialize = function(options) {
-    return _.bindAll(this, "populate");
-  };
-  AlbumList.prototype.populate = function() {
-    $(this.el).empty();
-    return this.collection.forEach(__bind(function(album) {
-      return $(this.el).append(this.makeView(album).render().el);
-    }, this));
-  };
   AlbumList.prototype.makeView = function(album) {
     return album.view = new UI[this.itemViewClassName]({
       model: album,
@@ -30,13 +20,6 @@ Views.AlbumList = (function() {
   };
   return AlbumList;
 })();
-_.extend(Views.AlbumList.prototype, Views.Tabbable, {
-  getTabbableElements: function() {
-    return this.collection.map(function(album) {
-      return album.view.el;
-    });
-  }
-});
 Views.SavedAlbumsList = (function() {
   function SavedAlbumsList() {
     SavedAlbumsList.__super__.constructor.apply(this, arguments);
