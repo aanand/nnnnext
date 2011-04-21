@@ -39,6 +39,9 @@ class Views.ListManager extends Views.View
       else
         super(name)
 
+  focusSearchBar: ->
+    @searchBar.focus()
+
   startSearch: (query) ->
     return unless query
     @searchBar.showSpinner()
@@ -66,8 +69,7 @@ _.extend Views.ListManager.prototype, Views.Tabbable,
 class Desktop.ListManager extends Views.ListManager
   addAlbum: (album) ->
     super(album)
-    console.log "focusing search bar"
-    @searchBar.focus()
+    @focusSearchBar()
 
 class Touch.ListManager extends Views.ListManager
   finishSearch: ->

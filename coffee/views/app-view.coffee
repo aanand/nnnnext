@@ -105,6 +105,10 @@ class Desktop.AppView extends Views.AppView
     console.log "appending subviews directly to @el"
     @views.forEach (v) => @el.append(v.render().el)
 
+  appendTo: (parent) ->
+    super(parent)
+    @listManager.focusSearchBar()
+
 class Touch.AppView extends Views.AppView
   renderSubviews: ->
     super()

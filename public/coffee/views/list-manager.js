@@ -56,6 +56,9 @@ Views.ListManager = (function() {
         return ListManager.__super__.switchView.call(this, name);
     }
   };
+  ListManager.prototype.focusSearchBar = function() {
+    return this.searchBar.focus();
+  };
   ListManager.prototype.startSearch = function(query) {
     if (!query) {
       return;
@@ -94,8 +97,7 @@ Desktop.ListManager = (function() {
   __extends(ListManager, Views.ListManager);
   ListManager.prototype.addAlbum = function(album) {
     ListManager.__super__.addAlbum.call(this, album);
-    console.log("focusing search bar");
-    return this.searchBar.focus();
+    return this.focusSearchBar();
   };
   return ListManager;
 })();

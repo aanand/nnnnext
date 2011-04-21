@@ -132,6 +132,10 @@ Desktop.AppView = (function() {
       return this.el.append(v.render().el);
     }, this));
   };
+  AppView.prototype.appendTo = function(parent) {
+    AppView.__super__.appendTo.call(this, parent);
+    return this.listManager.focusSearchBar();
+  };
   return AppView;
 })();
 Touch.AppView = (function() {
