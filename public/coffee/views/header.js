@@ -47,3 +47,13 @@ Views.Header = (function() {
   };
   return Header;
 })();
+Desktop.Header = (function() {
+  function Header() {
+    Header.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Header, Views.Header);
+  Header.prototype.show = function() {
+    return $(this.el).slideDown('fast');
+  };
+  return Header;
+})();

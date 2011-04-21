@@ -15,11 +15,11 @@ class Views.AppView extends Views.View
 
     @views = [@listManager, @friendBrowser]
 
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "setHint")
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint")
 
     @navigation.bind  "navigate",        @navigate
     @header.bind      "syncButtonClick", @startSync
-    @listManager.bind "addAlbum",        => @navigation.show()
+    @listManager.bind "addAlbum",        @showNavigation
     LocalSync.bind    "sync",            @startSync
     Sync.bind         "finish",          @finishSync
     CurrentAlbums.bind "add",            @setHint
@@ -28,7 +28,7 @@ class Views.AppView extends Views.View
 
     @renderSubviews()
 
-    @navigation.hide() if @isNewUser()
+    @hideNavigation() if @isNewUser()
 
     @tabIndex = 0
     @navigate(@navigation.href)
@@ -38,6 +38,12 @@ class Views.AppView extends Views.View
   initNavigation: ->
     @navigation = new UI.Navigation
     @navigation.href = "/current"
+
+  hideNavigation: ->
+    @navigation.hide()
+
+  showNavigation: ->
+    @navigation.show()
 
   renderSubviews: ->
     @el.append(@banner.render().el)
@@ -56,7 +62,6 @@ class Views.AppView extends Views.View
 
   finishSync: ->
     window.setTimeout((=> @header.syncing(false)), 500)
-    @navigation.show() if SavedAlbums.length > 0
 
   navigate: (href) ->
     switch href
@@ -127,12 +132,16 @@ _.extend Views.AppView.prototype, Views.Tabbable, {
 class Desktop.AppView extends Views.AppView
   initNavigation: ->
     super()
-    console.log "adding navigation to header"
     @header.addNavigation(@navigation)
+
+  hideNavigation: ->
+    @header.hide()
+
+  showNavigation: ->
+    @header.show()
 
   renderSubviews: ->
     super()
-    console.log "appending subviews directly to @el"
     @views.forEach (v) => @el.append(v.render().el)
 
   appendTo: (parent) ->

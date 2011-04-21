@@ -20,12 +20,10 @@ Views.AppView = (function() {
     this.listManager = new UI.ListManager;
     this.friendBrowser = new UI.FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "setHint");
+    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint");
     this.navigation.bind("navigate", this.navigate);
     this.header.bind("syncButtonClick", this.startSync);
-    this.listManager.bind("addAlbum", __bind(function() {
-      return this.navigation.show();
-    }, this));
+    this.listManager.bind("addAlbum", this.showNavigation);
     LocalSync.bind("sync", this.startSync);
     Sync.bind("finish", this.finishSync);
     CurrentAlbums.bind("add", this.setHint);
@@ -33,7 +31,7 @@ Views.AppView = (function() {
     $(window).bind("keydown", this.handleKeypress);
     this.renderSubviews();
     if (this.isNewUser()) {
-      this.navigation.hide();
+      this.hideNavigation();
     }
     this.tabIndex = 0;
     this.navigate(this.navigation.href);
@@ -42,6 +40,12 @@ Views.AppView = (function() {
   AppView.prototype.initNavigation = function() {
     this.navigation = new UI.Navigation;
     return this.navigation.href = "/current";
+  };
+  AppView.prototype.hideNavigation = function() {
+    return this.navigation.hide();
+  };
+  AppView.prototype.showNavigation = function() {
+    return this.navigation.show();
   };
   AppView.prototype.renderSubviews = function() {
     this.el.append(this.banner.render().el);
@@ -60,12 +64,9 @@ Views.AppView = (function() {
     return Sync.start(SavedAlbums, "/albums/sync");
   };
   AppView.prototype.finishSync = function() {
-    window.setTimeout((__bind(function() {
+    return window.setTimeout((__bind(function() {
       return this.header.syncing(false);
     }, this)), 500);
-    if (SavedAlbums.length > 0) {
-      return this.navigation.show();
-    }
   };
   AppView.prototype.navigate = function(href) {
     switch (href) {
@@ -140,12 +141,16 @@ Desktop.AppView = (function() {
   __extends(AppView, Views.AppView);
   AppView.prototype.initNavigation = function() {
     AppView.__super__.initNavigation.call(this);
-    console.log("adding navigation to header");
     return this.header.addNavigation(this.navigation);
+  };
+  AppView.prototype.hideNavigation = function() {
+    return this.header.hide();
+  };
+  AppView.prototype.showNavigation = function() {
+    return this.header.show();
   };
   AppView.prototype.renderSubviews = function() {
     AppView.__super__.renderSubviews.call(this);
-    console.log("appending subviews directly to @el");
     return this.views.forEach(__bind(function(v) {
       return this.el.append(v.render().el);
     }, this));

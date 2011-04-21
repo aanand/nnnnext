@@ -33,3 +33,7 @@ class Views.Header extends Views.View
       @$(".sync-controls .button").show()
       @$(".sync-controls .spinner").hide()
 
+class Desktop.Header extends Views.Header
+  show: ->
+    $(@el).slideDown('fast')
+
