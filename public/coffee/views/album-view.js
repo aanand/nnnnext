@@ -158,8 +158,10 @@ Views.SearchAlbumView = (function() {
   }
   __extends(SearchAlbumView, Views.AlbumView);
   SearchAlbumView.prototype.template = _.template('\
-    <div class="title"><%= title %></div>\
-    <div class="artist"><%= artist %></div>\
+    <div class="info">\
+      <div class="title"><%= title %></div>\
+      <div class="artist"><%= artist %></div>\
+    </div>\
   ');
   SearchAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     click: "select"

@@ -130,8 +130,10 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
 
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
+    <div class="info">
+      <div class="title"><%= title %></div>
+      <div class="artist"><%= artist %></div>
+    </div>
   ')
 
   events:
