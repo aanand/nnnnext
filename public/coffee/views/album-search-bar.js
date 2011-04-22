@@ -20,15 +20,15 @@ Views.AlbumSearchBar = (function() {
     <div class="cancel" style="display:none"/>\
   ');
   AlbumSearchBar.prototype.events = {
-    "click .cancel": "cancel",
-    "submit": "handleSubmit"
+    submit: "handleSubmit"
   };
   AlbumSearchBar.prototype.initialize = function(options) {
-    _.bindAll(this, "handleKeypress");
+    _.bindAll(this, "handleKeypress", "cancel");
     return this.listManager = options.listManager;
   };
   AlbumSearchBar.prototype.render = function() {
     $(this.el).html(this.template());
+    this.$(".cancel").tappable(this.cancel);
     return this;
   };
   AlbumSearchBar.prototype.handleKeypress = function(e) {

@@ -69,13 +69,32 @@ body {
     display: none; }
 
 .album-search-bar {
+  position: relative;
   padding: 30px; }
   .album-search-bar input {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
     width: 390px;
-    margin-right: 10px;
     font-size: 30px; }
   .album-search-bar button {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: absolute;
+    top: 32px;
+    right: 30px;
+    width: 170px;
+    height: 53px;
     font-size: 26px; }
+  .album-search-bar .cancel {
+    display: block;
+    position: absolute;
+    top: 30px;
+    left: 360px;
+    width: 60px;
+    height: 60px;
+    background: url(/img/cancel-search.png) 15px 15px no-repeat; }
 
 .ui-list, .album-list {
   list-style: none;

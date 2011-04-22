@@ -1,6 +1,8 @@
 @import _colors
 @import _mixins
 
+$viewport-width: 640px
+
 =no-tap-highlight
   -webkit-tap-highlight-color: rgba(0,0,0,0)
 
@@ -86,15 +88,40 @@ body
     display: none
 
 .album-search-bar
-  padding: 30px
+  $padding:      30px
+  $input-width:  390px
+
+  position: relative
+  padding:  $padding
 
   input
-    width:        390px
-    margin-right: 10px
-    font-size:    30px
+    +box-sizing(border-box)
+
+    width:     $input-width
+    font-size: 30px
 
   button
+    +box-sizing(border-box)
+
+    position:  absolute
+    top:       $padding + 2px
+    right:     $padding
+    width:     170px
+    height:    53px
     font-size: 26px
+
+  .cancel
+    $width:      60px
+    $img-width:  30px
+    $img-offset: ($width - $img-width)/2
+
+    display:    block
+    position:   absolute
+    top:        $padding
+    left:       $padding + $input-width - $width
+    width:      $width
+    height:     $width
+    background: url(/img/cancel-search.png) $img-offset $img-offset no-repeat
 
 .ui-list
   list-style: none

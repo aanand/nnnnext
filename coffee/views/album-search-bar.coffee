@@ -10,15 +10,15 @@ class Views.AlbumSearchBar extends Views.View
   ')
 
   events:
-    "click .cancel": "cancel"
-    "submit":        "handleSubmit"
+    submit: "handleSubmit"
 
   initialize: (options) ->
-    _.bindAll(this, "handleKeypress")
+    _.bindAll(this, "handleKeypress", "cancel")
     @listManager = options.listManager
 
   render: ->
     $(@el).html(@template())
+    @$(".cancel").tappable(@cancel)
     this
 
   handleKeypress: (e) ->
