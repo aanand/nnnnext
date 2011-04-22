@@ -93,6 +93,14 @@ body {
     border: none;
     background: none;
     -webkit-appearance: none; }
+  .album-search-bar .cancel {
+    position: absolute;
+    top: 30px;
+    right: 35px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(/img/cancel-search.png); }
 
 .ui-list, .album-list {
   list-style: none;

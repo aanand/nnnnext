@@ -111,6 +111,7 @@ Touch.AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.template = _.template('\
     <div class="inner">\
       <input type="text"/>\
+      <div class="cancel" style="display:none"/>\
     </div>\
   ');
   AlbumSearchBar.prototype.render = function() {

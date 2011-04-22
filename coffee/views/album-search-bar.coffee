@@ -70,6 +70,7 @@ class Touch.AlbumSearchBar extends Views.AlbumSearchBar
   template: _.template('
     <div class="inner">
       <input type="text"/>
+      <div class="cancel" style="display:none"/>
     </div>
   ')
 
