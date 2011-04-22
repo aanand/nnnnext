@@ -94,67 +94,68 @@ body {
     background: none;
     -webkit-appearance: none; }
 
-.album-list {
+.ui-list, .album-list {
   list-style: none;
   margin: 0;
   padding: 0; }
-  .album-list .album {
+
+.ui-list-item, .album {
+  position: relative;
+  border-bottom: 1px solid #cccccc; }
+  .ui-list-item .info, .album .info {
     position: relative;
-    border-bottom: 1px solid #cccccc; }
-    .album-list .album .info {
+    z-index: 2;
+    background: white;
+    color: black;
+    padding: 20px;
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 0.35s; }
+    .ui-list-item .info .primary, .album .info .primary, .ui-list-item .info .album .title, .album .ui-list-item .info .title, .album .info .title {
+      font-size: 36px;
+      font-weight: bold; }
+    .ui-list-item .info .secondary, .album .info .secondary, .ui-list-item .info .album .artist, .album .ui-list-item .info .artist, .album .info .artist {
+      font-size: 30px;
+      color: #666666; }
+  .ui-list-item.touched .info, .touched.album .info {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
+    background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
+    background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%);
+    color: white; }
+  .ui-list-item.open .info, .open.album .info {
+    -webkit-transform: translate3d(100%, 0, 0);
+    -webkit-transition: -webkit-transform 0.35s; }
+  .ui-list-item .controls, .album .controls {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
+    text-align: center; }
+    .ui-list-item .controls .button, .album .controls .button, .ui-list-item .controls .delete, .album .ui-list-item .controls .delete, .ui-list-item .album .controls .delete, .ui-list-item .album .controls .delete, .album .ui-list-item .controls .delete, .album .controls .delete, .ui-list-item .controls .restore, .album .ui-list-item .controls .restore, .ui-list-item .album .controls .restore, .ui-list-item .album .controls .restore, .album .ui-list-item .controls .restore, .album .controls .restore, .ui-list-item .controls .archive, .album .ui-list-item .controls .archive, .ui-list-item .album .controls .archive, .ui-list-item .album .controls .archive, .album .ui-list-item .controls .archive, .album .controls .archive {
+      display: inline-block;
       position: relative;
-      z-index: 2;
-      background: white;
-      color: black;
-      padding: 20px;
-      -webkit-transform: translate3d(0, 0, 0);
-      -webkit-transition: -webkit-transform 0.35s; }
-      .album-list .album .info .title {
-        font-size: 36px;
-        font-weight: bold; }
-      .album-list .album .info .artist {
-        font-size: 30px;
-        color: #666666; }
-    .album-list .album.touched .info {
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
-      background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
-      background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%);
-      color: white; }
-    .album-list .album.open .info {
-      -webkit-transform: translate3d(100%, 0, 0);
-      -webkit-transition: -webkit-transform 0.35s; }
-    .album-list .album .controls {
+      width: 100px;
+      height: 100px;
+      margin-top: 7px; }
+    .ui-list-item .controls .button:after, .album .controls .button:after, .ui-list-item .controls .delete:after, .album .ui-list-item .controls .delete:after, .ui-list-item .album .controls .delete:after, .ui-list-item .album .controls .delete:after, .album .ui-list-item .controls .delete:after, .album .controls .delete:after, .ui-list-item .controls .restore:after, .album .ui-list-item .controls .restore:after, .ui-list-item .album .controls .restore:after, .ui-list-item .album .controls .restore:after, .album .ui-list-item .controls .restore:after, .album .controls .restore:after, .ui-list-item .controls .archive:after, .album .ui-list-item .controls .archive:after, .ui-list-item .album .controls .archive:after, .ui-list-item .album .controls .archive:after, .album .ui-list-item .controls .archive:after, .album .controls .archive:after {
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1;
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
-      text-align: center; }
-      .album-list .album .controls .button, .album-list .album .controls .delete, .album-list .album .controls .restore, .album-list .album .controls .archive {
-        display: inline-block;
-        position: relative;
-        width: 100px;
-        height: 100px;
-        margin-top: 7px; }
-      .album-list .album .controls .button:after, .album-list .album .controls .delete:after, .album-list .album .controls .restore:after, .album-list .album .controls .archive:after {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100px;
-        text-align: center;
-        color: white; }
-      .album-list .album .controls .button.touched:after, .album-list .album .controls .touched.delete:after, .album-list .album .controls .touched.restore:after, .album-list .album .controls .touched.archive:after {
-        color: blue; }
-      .album-list .album .controls .delete:after {
-        font-size: 80px;
-        top: -7px;
-        content: "✕"; }
-      .album-list .album .controls .restore:after {
-        font-size: 70px;
-        content: "↩"; }
-      .album-list .album .controls .archive:after {
-        font-size: 80px;
-        top: -9px;
-        content: "✔"; }
+      width: 100px;
+      text-align: center;
+      color: white; }
+    .ui-list-item .controls .button.touched:after, .album .controls .button.touched:after, .ui-list-item .controls .touched.delete:after, .album .ui-list-item .controls .touched.delete:after, .ui-list-item .album .controls .touched.delete:after, .ui-list-item .album .controls .touched.delete:after, .album .ui-list-item .controls .touched.delete:after, .album .controls .touched.delete:after, .ui-list-item .controls .touched.restore:after, .album .ui-list-item .controls .touched.restore:after, .ui-list-item .album .controls .touched.restore:after, .ui-list-item .album .controls .touched.restore:after, .album .ui-list-item .controls .touched.restore:after, .album .controls .touched.restore:after, .ui-list-item .controls .touched.archive:after, .album .ui-list-item .controls .touched.archive:after, .ui-list-item .album .controls .touched.archive:after, .ui-list-item .album .controls .touched.archive:after, .album .ui-list-item .controls .touched.archive:after, .album .controls .touched.archive:after {
+      color: blue; }
+    .ui-list-item .controls .delete:after, .album .controls .delete:after {
+      font-size: 80px;
+      top: -7px;
+      content: "✕"; }
+    .ui-list-item .controls .restore:after, .album .controls .restore:after {
+      font-size: 70px;
+      content: "↩"; }
+    .ui-list-item .controls .archive:after, .album .controls .archive:after {
+      font-size: 80px;
+      top: -9px;
+      content: "✔"; }

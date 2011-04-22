@@ -103,84 +103,96 @@ $footer-height: 96px
     background: none
     -webkit-appearance: none
 
-.album-list
+.ui-list
   list-style: none
   margin: 0
   padding: 0
 
-  .album
+.ui-list-item
+  position: relative
+  border-bottom: 1px solid #ccc
+
+  .info
     position: relative
-    border-bottom: 1px solid #ccc
+    z-index: 2
+    background: white
+    color: black
+    padding: 20px
+    -webkit-transform: translate3d(0, 0, 0)
+    -webkit-transition: -webkit-transform 0.35s
 
-    .info
-      position: relative
-      z-index: 2
-      background: white
-      color: black
-      padding: 20px
-      -webkit-transform: translate3d(0, 0, 0)
-      -webkit-transition: -webkit-transform 0.35s
+    .primary
+      font-size: 36px
+      font-weight: bold
 
-      .title
-        font-size: 36px
-        font-weight: bold
+    .secondary
+      font-size: 30px
+      color: #666
 
-      .artist
-        font-size: 30px
-        color: #666
-
-    &.touched .info
-      +vertical-gradient(#4286f5, #194fdb)
-      color: white
+  &.touched .info
+    +vertical-gradient(#4286f5, #194fdb)
+    color: white
     
-    &.open .info
-      -webkit-transform: translate3d(100%, 0, 0)
-      -webkit-transition: -webkit-transform 0.35s
+  &.open .info
+    -webkit-transform: translate3d(100%, 0, 0)
+    -webkit-transition: -webkit-transform 0.35s
 
-    .controls
-      position:         absolute
-      top:              0
-      left:             0
-      right:            0
-      bottom:           0
-      z-index:          1
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#333), color-stop(0.33, #444), color-stop(0.67, #444), to(#333))
-      text-align:       center
+  .controls
+    position:         absolute
+    top:              0
+    left:             0
+    right:            0
+    bottom:           0
+    z-index:          1
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#333), color-stop(0.33, #444), color-stop(0.67, #444), to(#333))
+    text-align:       center
 
-      .button
-        display:    inline-block
-        position:   relative
-        width:      100px
-        height:     100px
-        margin-top: 7px
+    .button
+      display:    inline-block
+      position:   relative
+      width:      100px
+      height:     100px
+      margin-top: 7px
 
-        // border: 1px solid white
+      // border: 1px solid white
 
-      .button:after
-        position: absolute
-        top:      0
-        left:     0
-        width:    100px
-        text-align: center
-        color:    white
+    .button:after
+      position: absolute
+      top:      0
+      left:     0
+      width:    100px
+      text-align: center
+      color:    white
 
-      .button.touched:after
-        color: blue
+    .button.touched:after
+      color: blue
 
-      .delete, .restore, .archive
-        @extend .button
+    .delete, .restore, .archive
+      @extend .button
 
-      .delete:after
-        font-size: 80px
-        top: -7px
-        content:   "✕"
+    .delete:after
+      font-size: 80px
+      top: -7px
+      content:   "✕"
 
-      .restore:after
-        font-size: 70px
-        content:   "↩"
+    .restore:after
+      font-size: 70px
+      content:   "↩"
 
-      .archive:after
-        font-size: 80px
-        top: -9px
-        content:   "✔"
+    .archive:after
+      font-size: 80px
+      top: -9px
+      content:   "✔"
+
+.album-list
+  @extend .ui-list
+
+.album
+  @extend .ui-list-item
+
+  .title
+    @extend .primary
+
+  .artist
+    @extend .secondary
 
