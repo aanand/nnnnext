@@ -74,9 +74,14 @@ class Touch.AlbumSearchBar extends Views.AlbumSearchBar
     </div>
   ')
 
+  initialize: (options) ->
+    super(options)
+    _.bindAll(this, "handleChange", "cancel")
+
   render: ->
     super()
-    @$("input").change _.bind(@handleChange, this)
+    @$("input").bind   "change",     @handleChange
+    @$(".cancel").bind "touchstart", @cancel
     this
 
   handleChange: (e) ->

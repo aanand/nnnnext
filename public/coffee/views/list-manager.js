@@ -99,7 +99,7 @@ Views.ListManager = (function() {
   ListManager.prototype.addAlbum = function(album) {
     album.addTo(SavedAlbums);
     this.switchView("current");
-    this.searchBar.clear();
+    this.searchBar.cancel();
     return this.trigger("addAlbum");
   };
   return ListManager;

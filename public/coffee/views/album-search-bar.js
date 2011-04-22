@@ -114,9 +114,14 @@ Touch.AlbumSearchBar = (function() {
       <div class="cancel" style="display:none"/>\
     </div>\
   ');
+  AlbumSearchBar.prototype.initialize = function(options) {
+    AlbumSearchBar.__super__.initialize.call(this, options);
+    return _.bindAll(this, "handleChange", "cancel");
+  };
   AlbumSearchBar.prototype.render = function() {
     AlbumSearchBar.__super__.render.call(this);
-    this.$("input").change(_.bind(this.handleChange, this));
+    this.$("input").bind("change", this.handleChange);
+    this.$(".cancel").bind("touchstart", this.cancel);
     return this;
   };
   AlbumSearchBar.prototype.handleChange = function(e) {

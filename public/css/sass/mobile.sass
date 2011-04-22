@@ -82,16 +82,21 @@ $footer-height: 96px
     display: none
 
 .album-search-bar
-  +vertical-gradient($lightest, $lighter)
+  $height: 88px
+  $vertical-padding: 14px
+
   border-bottom: 1px solid $light
-  padding: 14px 20px
+  padding:       $vertical-padding 20px
+
+  +vertical-gradient($lightest, $lighter)
 
   .inner
-    $height: 60px
+    $inner-height = $height - $vertical-padding*2
 
-    height: $height
-    padding: 0 $height*1 0 $height*0.25
+    height:     $inner-height
+    padding:    0 $inner-height*1 0 $inner-height*0.25
     background: white
+
     +border-radius($height*0.7)
     +box-shadow(inset 0px $height/8 $height/4 rgba(0,0,0,0.35))
 
@@ -104,13 +109,13 @@ $footer-height: 96px
     -webkit-appearance: none
 
   .cancel
-    position:   absolute
-    top:        30px
-    right:      35px
     display:    block
-    width:      30px
-    height:     30px
-    background: url(/img/cancel-search.png)
+    position:   absolute
+    top:        0
+    right:      0
+    width:      $height
+    height:     $height
+    background: url(/img/cancel-search.png) 25px 30px no-repeat
 
 
 .ui-list

@@ -69,7 +69,7 @@ class Views.ListManager extends Views.View
     album.addTo(SavedAlbums)
 
     @switchView("current")
-    @searchBar.clear()
+    @searchBar.cancel()
     @trigger("addAlbum")
 
 _.extend Views.ListManager.prototype, Views.Tabbable,
