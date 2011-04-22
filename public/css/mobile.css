@@ -159,3 +159,16 @@ body {
       font-size: 80px;
       top: -9px;
       content: "✔"; }
+
+.new-album {
+  padding: 20px;
+  font-size: 30px; }
+  .new-album label {
+    color: #666666;
+    display: block;
+    margin-bottom: 20px; }
+  .new-album input {
+    font-size: 30px;
+    width: 200px; }
+  .new-album button {
+    font-size: 26px; }
