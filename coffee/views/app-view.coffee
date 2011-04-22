@@ -40,6 +40,7 @@ class Views.AppView extends Views.View
   initNavigation: ->
     @navigation = new UI.Navigation
     @navigation.href = "/current"
+    @header.addNavigation(@navigation)
 
   hideNavigation: ->
     @navigation.hide()
@@ -50,6 +51,7 @@ class Views.AppView extends Views.View
   renderSubviews: ->
     @el.append(@banner.render().el)
     @el.append(@header.render().el)
+    @views.forEach (v) => @el.append(v.render().el)
 
   refreshScroll: ->
 
@@ -132,42 +134,13 @@ _.extend Views.AppView.prototype, Views.Tabbable, {
 }
 
 class Desktop.AppView extends Views.AppView
-  initNavigation: ->
-    super()
-    @header.addNavigation(@navigation)
-
   hideNavigation: ->
     @header.hide()
 
   showNavigation: ->
     @header.show()
 
-  renderSubviews: ->
-    super()
-    @views.forEach (v) => @el.append(v.render().el)
-
   appendTo: (parent) ->
     super(parent)
     @listManager.focusSearchBar()
-
-class Touch.AppView extends Views.AppView
-  renderSubviews: ->
-    super()
-    console.log "appending navigation directly to @el"
-    @el.append(@navigation.render().el)
-
-    console.log "appending subviews to #scroller"
-    scroller = $("<div id='scroller'/>")
-    @views.forEach (v) -> scroller.append(v.render().el)
-    @scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(@el)
-
-    @iScroll = new iScroll(@scrollWrapper.get(0))
-
-  switchView: (viewName) ->
-    super(viewName)
-    @refreshScroll()
-
-  refreshScroll: ->
-    console.log "refreshing @iScroll"
-    window.setTimeout((=> @iScroll.refresh()), 0)
 

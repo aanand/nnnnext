@@ -6,33 +6,31 @@ body {
   margin: 0;
   -webkit-text-size-adjust: 100%; }
 
-.header {
+.banner {
   height: 84px;
   border-bottom: 2px solid #3a5a0a;
+  position: relative;
+  z-index: 1;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#83c91b), to(#5f9410));
   background-image: -moz-linear-gradient(center top, #83c91b 0%, #5f9410 100%);
   background-image: linear-gradient(center top, #83c91b 0%, #5f9410 100%); }
-  .header:after {
+  .banner:after {
     content: "nnnnext";
     display: block;
     padding-top: 20px;
     text-align: center;
     text-decoration: none;
-    text-shadow: 0px -2px 0px rgba(58, 90, 10, 0.5);
     font-size: 40px;
     font-weight: bold;
-    color: white; }
+    color: white;
+    text-shadow: 0px -2px 0px rgba(58, 90, 10, 0.5); }
 
 .navigation {
-  position: absolute;
-  left: 0;
-  bottom: 0;
+  height: 60px;
   width: 100%;
-  height: 96px;
-  border-top: 2px solid #111111;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#575757), color-stop(0.05, #323232), color-stop(0.5, #151515), color-stop(0.51, black), to(black));
   display: table;
-  border-spacing: 4px; }
+  -webkit-box-shadow: 0 0 10px #3a5a0a;
+  -moz-box-shadow: 0 0 10px #3a5a0a; }
   .navigation .inner {
     display: table-row; }
   .navigation a {
@@ -40,20 +38,18 @@ body {
     vertical-align: middle;
     text-align: center;
     text-decoration: none;
-    color: white;
-    font-size: 20px;
-    font-weight: bold; }
+    background: #a1e143;
+    color: #3a5a0a;
+    font-size: 26px;
+    font-weight: bold;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    text-shadow: 0px 1px 0px white; }
+    .navigation a.touched {
+      background: #5f9410;
+      text-shadow: 0px 1px 0px #83c91b; }
     .navigation a.active {
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#4b4b4b), color-stop(0.5, #363636), color-stop(0.51, #252525), to(#252525));
-      -webkit-border-radius: 6px;
-      -moz-border-radius: 6px; }
-
-#scroll-wrapper {
-  position: absolute;
-  top: 86px;
-  bottom: 96px;
-  left: 0;
-  right: 0; }
+      background: #83c91b;
+      text-shadow: 0px 1px 0px #d7efb4; }
 
 .hint {
   background: #d7efb4;
@@ -73,43 +69,24 @@ body {
     display: none; }
 
 .album-search-bar {
-  border-bottom: 1px solid #83c91b;
-  padding: 14px 20px;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#d7efb4), to(#a1e143));
-  background-image: -moz-linear-gradient(center top, #d7efb4 0%, #a1e143 100%);
-  background-image: linear-gradient(center top, #d7efb4 0%, #a1e143 100%); }
-  .album-search-bar .inner {
-    height: 60px;
-    padding: 0 60px 0 15px;
-    background: white;
-    -webkit-border-radius: 61.6px;
-    -moz-border-radius: 61.6px;
-    -webkit-box-shadow: inset 0px 11px 22px rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: inset 0px 11px 22px rgba(0, 0, 0, 0.35); }
+  padding: 30px; }
   .album-search-bar input {
-    width: 100%;
-    margin-top: 6px;
-    font-size: 30px;
-    border: none;
-    background: none;
-    -webkit-appearance: none; }
-  .album-search-bar .cancel {
-    display: block;
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 88px;
-    height: 88px;
-    background: url(/img/cancel-search.png) 25px 30px no-repeat; }
+    width: 390px;
+    margin-right: 10px;
+    font-size: 30px; }
+  .album-search-bar button {
+    font-size: 26px; }
 
 .ui-list, .album-list {
   list-style: none;
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  border-top: 1px solid #cccccc; }
 
 .ui-list-item, .album {
   position: relative;
-  border-bottom: 1px solid #cccccc; }
+  border-bottom: 1px solid #cccccc;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
   .ui-list-item .info, .album .info {
     position: relative;
     z-index: 2;

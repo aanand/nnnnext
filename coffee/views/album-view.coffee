@@ -77,10 +77,10 @@ class Views.SavedAlbumView extends Views.AlbumView
 
   render: ->
     super()
-    @$(".rate span").tap(@rate)
-    @$(".archive").tap(@archive)
-    @$(".restore").tap(@restore)
-    @$(".delete").tap(@delete)
+    @$(".rate span").tappable(@rate)
+    @$(".archive").tappable(@archive)
+    @$(".restore").tappable(@restore)
+    @$(".delete").tappable(@delete)
     this
 
   showRating: true
@@ -112,7 +112,7 @@ class Views.SavedAlbumView extends Views.AlbumView
 class Touch.SavedAlbumView extends Views.SavedAlbumView
   initialize: (options) ->
     super(options)
-    $(@el).tap => @toggleOpen()
+    $(@el).tappable => @toggleOpen()
     @list.bind "scroll", (isScrolling) => @close() if isScrolling
 
   toggleOpen: ->
@@ -143,7 +143,7 @@ class Views.SearchAlbumView extends Views.AlbumView
 class Touch.SearchAlbumView extends Views.SearchAlbumView
   initialize: (options) ->
     super(options)
-    $(@el).tap => @select()
+    $(@el).tappable => @select()
 
 class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('

@@ -13,6 +13,12 @@ Views.AlbumSearchBar = (function() {
   __extends(AlbumSearchBar, Views.View);
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
+  AlbumSearchBar.prototype.template = _.template('\
+    <input type="text"/>\
+    <button type="submit">Search</button>\
+    <div class="spinner" style="display:none"/>\
+    <div class="cancel" style="display:none"/>\
+  ');
   AlbumSearchBar.prototype.events = {
     "click .cancel": "cancel",
     "submit": "handleSubmit"
@@ -90,46 +96,3 @@ _.extend(Views.AlbumSearchBar.prototype, Views.Tabbable, {
     return this.$('input').get();
   }
 });
-Desktop.AlbumSearchBar = (function() {
-  function AlbumSearchBar() {
-    AlbumSearchBar.__super__.constructor.apply(this, arguments);
-  }
-  __extends(AlbumSearchBar, Views.AlbumSearchBar);
-  AlbumSearchBar.prototype.template = _.template('\
-    <input type="text"/>\
-    <button type="submit">Search</button>\
-    <div class="spinner" style="display:none"/>\
-    <div class="cancel" style="display:none"/>\
-  ');
-  return AlbumSearchBar;
-})();
-Touch.AlbumSearchBar = (function() {
-  function AlbumSearchBar() {
-    AlbumSearchBar.__super__.constructor.apply(this, arguments);
-  }
-  __extends(AlbumSearchBar, Views.AlbumSearchBar);
-  AlbumSearchBar.prototype.template = _.template('\
-    <div class="inner">\
-      <input type="text"/>\
-      <div class="cancel" style="display:none"/>\
-    </div>\
-  ');
-  AlbumSearchBar.prototype.initialize = function(options) {
-    AlbumSearchBar.__super__.initialize.call(this, options);
-    return _.bindAll(this, "handleChange", "cancel");
-  };
-  AlbumSearchBar.prototype.render = function() {
-    AlbumSearchBar.__super__.render.call(this);
-    this.$("input").bind("change", this.handleChange);
-    this.$(".cancel").bind("touchstart", this.cancel);
-    return this;
-  };
-  AlbumSearchBar.prototype.handleChange = function(e) {
-    if (this.val() === "") {
-      return this.cancel();
-    } else {
-      return this.trigger("submit", this.val());
-    }
-  };
-  return AlbumSearchBar;
-})();

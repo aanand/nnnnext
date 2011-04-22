@@ -18,12 +18,6 @@ Views.AlbumList = (function() {
       list: this
     });
   };
-  AlbumList.prototype.initialize = function(options) {
-    AlbumList.__super__.initialize.call(this, options);
-    return $(this.el).isScrollable(__bind(function(isScrolling) {
-      return this.trigger("scroll", isScrolling);
-    }, this));
-  };
   return AlbumList;
 })();
 Views.SavedAlbumsList = (function() {

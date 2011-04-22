@@ -19,11 +19,15 @@ Views.Navigation = (function() {
       <a class="friends" href="/friends">Friends</a>\
     </div>\
   ');
-  Navigation.prototype.events = {
-    "click a": "handleClick"
+  Navigation.prototype.initialize = function() {
+    return _.bindAll(this, "handleClick");
   };
   Navigation.prototype.render = function() {
     $(this.el).html(this.template());
+    this.$("a").tappable({
+      callback: this.handleClick,
+      cancelOnMove: false
+    });
     if (this.href != null) {
       this.navigate(this.href);
     }

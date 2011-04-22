@@ -2,6 +2,13 @@ class Views.AlbumSearchBar extends Views.View
   className: 'album-search-bar'
   tagName: 'form'
 
+  template: _.template('
+    <input type="text"/>
+    <button type="submit">Search</button>
+    <div class="spinner" style="display:none"/>
+    <div class="cancel" style="display:none"/>
+  ')
+
   events:
     "click .cancel": "cancel"
     "submit":        "handleSubmit"
@@ -57,36 +64,4 @@ class Views.AlbumSearchBar extends Views.View
 _.extend Views.AlbumSearchBar.prototype, Views.Tabbable, {
   getTabbableElements: -> @$('input').get()
 }
-
-class Desktop.AlbumSearchBar extends Views.AlbumSearchBar
-  template: _.template('
-    <input type="text"/>
-    <button type="submit">Search</button>
-    <div class="spinner" style="display:none"/>
-    <div class="cancel" style="display:none"/>
-  ')
-
-class Touch.AlbumSearchBar extends Views.AlbumSearchBar
-  template: _.template('
-    <div class="inner">
-      <input type="text"/>
-      <div class="cancel" style="display:none"/>
-    </div>
-  ')
-
-  initialize: (options) ->
-    super(options)
-    _.bindAll(this, "handleChange", "cancel")
-
-  render: ->
-    super()
-    @$("input").bind   "change",     @handleChange
-    @$(".cancel").bind "touchstart", @cancel
-    this
-
-  handleChange: (e) ->
-    if @val() == ""
-      @cancel()
-    else
-      @trigger("submit", @val())
 

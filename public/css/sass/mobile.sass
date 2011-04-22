@@ -1,6 +1,9 @@
 @import _colors
 @import _mixins
 
+=no-tap-highlight
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+
 *, input
   font-family: helvetica, sans-serif
 
@@ -8,13 +11,16 @@ body
   margin: 0
   -webkit-text-size-adjust: 100%
 
-$header-height: 86px
-$footer-height: 96px
-
-.header
+.banner
+  $height:       86px
   $border-width: 2px
-  height: $header-height - $border-width
+
+  height:        $height - $border-width
   border-bottom: $border-width solid $dark
+
+  position: relative
+  z-index:  1
+
   +vertical-gradient($light, $primary)
 
   &:after
@@ -23,21 +29,18 @@ $footer-height: 96px
     padding-top:     20px
     text-align:      center
     text-decoration: none
-    text-shadow:     0px -2px 0px transparentize($dark, 0.5)
     font-size:       40px
     font-weight:     bold
     color:           white
 
+    +text-shadow-top(transparentize($dark, 0.5))
+
 .navigation
-  position:   absolute
-  left:       0
-  bottom:     0
-  width:      100%
-  height:     $footer-height
-  border-top: 2px solid #111
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#575757), color-stop(0.05, #323232), color-stop(0.5, #151515), color-stop(0.51, black), to(black))
-  display:    table
-  border-spacing: 4px
+  height:  60px
+  width:   100%
+  display: table
+
+  +box-shadow(0 0 10px $dark)
 
   .inner
     display: table-row
@@ -47,20 +50,21 @@ $footer-height: 96px
     vertical-align:  middle
     text-align:      center
     text-decoration: none
-    color:           white
-    font-size:       20px
+    background:      $lighter
+    color:           $dark
+    font-size:       26px
     font-weight:     bold
 
-    &.active
-      background-image: -webkit-gradient(linear, left top, left bottom, from(#4b4b4b), color-stop(0.5, #363636), color-stop(0.51, #252525), to(#252525))
-      +border-radius(6px)
+    +no-tap-highlight
+    +text-shadow-bottom(white)
 
-#scroll-wrapper
-  position: absolute
-  top:      $header-height
-  bottom:   $footer-height
-  left:     0
-  right:    0
+    &.touched
+      background: $primary
+      +text-shadow-bottom($light)
+
+    &.active
+      background: $light
+      +text-shadow-bottom($lightest)
 
 .hint
   background: $lightest
@@ -82,50 +86,27 @@ $footer-height: 96px
     display: none
 
 .album-search-bar
-  $height: 88px
-  $vertical-padding: 14px
-
-  border-bottom: 1px solid $light
-  padding:       $vertical-padding 20px
-
-  +vertical-gradient($lightest, $lighter)
-
-  .inner
-    $inner-height = $height - $vertical-padding*2
-
-    height:     $inner-height
-    padding:    0 $inner-height*1 0 $inner-height*0.25
-    background: white
-
-    +border-radius($height*0.7)
-    +box-shadow(inset 0px $height/8 $height/4 rgba(0,0,0,0.35))
+  padding: 30px
 
   input
-    width: 100%
-    margin-top: 6px
-    font-size: 30px
-    border: none
-    background: none
-    -webkit-appearance: none
+    width:        390px
+    margin-right: 10px
+    font-size:    30px
 
-  .cancel
-    display:    block
-    position:   absolute
-    top:        0
-    right:      0
-    width:      $height
-    height:     $height
-    background: url(/img/cancel-search.png) 25px 30px no-repeat
-
+  button
+    font-size: 26px
 
 .ui-list
   list-style: none
   margin: 0
   padding: 0
+  border-top: 1px solid #ccc
 
 .ui-list-item
   position: relative
   border-bottom: 1px solid #ccc
+
+  +no-tap-highlight
 
   .info
     position: relative

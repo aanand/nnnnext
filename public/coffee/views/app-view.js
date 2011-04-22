@@ -45,7 +45,8 @@ Views.AppView = (function() {
   };
   AppView.prototype.initNavigation = function() {
     this.navigation = new UI.Navigation;
-    return this.navigation.href = "/current";
+    this.navigation.href = "/current";
+    return this.header.addNavigation(this.navigation);
   };
   AppView.prototype.hideNavigation = function() {
     return this.navigation.hide();
@@ -55,7 +56,10 @@ Views.AppView = (function() {
   };
   AppView.prototype.renderSubviews = function() {
     this.el.append(this.banner.render().el);
-    return this.el.append(this.header.render().el);
+    this.el.append(this.header.render().el);
+    return this.views.forEach(__bind(function(v) {
+      return this.el.append(v.render().el);
+    }, this));
   };
   AppView.prototype.refreshScroll = function() {};
   AppView.prototype.appendTo = function(parent) {
@@ -145,55 +149,15 @@ Desktop.AppView = (function() {
     AppView.__super__.constructor.apply(this, arguments);
   }
   __extends(AppView, Views.AppView);
-  AppView.prototype.initNavigation = function() {
-    AppView.__super__.initNavigation.call(this);
-    return this.header.addNavigation(this.navigation);
-  };
   AppView.prototype.hideNavigation = function() {
     return this.header.hide();
   };
   AppView.prototype.showNavigation = function() {
     return this.header.show();
   };
-  AppView.prototype.renderSubviews = function() {
-    AppView.__super__.renderSubviews.call(this);
-    return this.views.forEach(__bind(function(v) {
-      return this.el.append(v.render().el);
-    }, this));
-  };
   AppView.prototype.appendTo = function(parent) {
     AppView.__super__.appendTo.call(this, parent);
     return this.listManager.focusSearchBar();
-  };
-  return AppView;
-})();
-Touch.AppView = (function() {
-  function AppView() {
-    AppView.__super__.constructor.apply(this, arguments);
-  }
-  __extends(AppView, Views.AppView);
-  AppView.prototype.renderSubviews = function() {
-    var scroller;
-    AppView.__super__.renderSubviews.call(this);
-    console.log("appending navigation directly to @el");
-    this.el.append(this.navigation.render().el);
-    console.log("appending subviews to #scroller");
-    scroller = $("<div id='scroller'/>");
-    this.views.forEach(function(v) {
-      return scroller.append(v.render().el);
-    });
-    this.scrollWrapper = $("<div id='scroll-wrapper'/>").append(scroller).appendTo(this.el);
-    return this.iScroll = new iScroll(this.scrollWrapper.get(0));
-  };
-  AppView.prototype.switchView = function(viewName) {
-    AppView.__super__.switchView.call(this, viewName);
-    return this.refreshScroll();
-  };
-  AppView.prototype.refreshScroll = function() {
-    console.log("refreshing @iScroll");
-    return window.setTimeout((__bind(function() {
-      return this.iScroll.refresh();
-    }, this)), 0);
   };
   return AppView;
 })();

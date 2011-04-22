@@ -1,56 +1,58 @@
 (function($) {
   var touchSupported = ('ontouchstart' in window)
 
-  $.fn.tap = function(callback) {
-    var el = $(this)
+  $.fn.tappable = function(options) {
+    var cancelOnMove = true,
+        callback
 
-    if (arguments.length) {
-      if (touchSupported) {
-        el
-          .bind('touchstart', function() {
-            el.addClass('touched')
-            return true
-          })
-          .bind('touchend', function(event) {
-            if (el.hasClass('touched')) {
-              el.removeClass('touched')
-              callback.call(this, event)
-            }
+    switch(typeof options) {
+      case 'function':
+        callback = options
+        break;
+      case 'object':
+        callback = options.callback
 
-            return true
-          })
-      } else {
-        el.bind('click', callback)
-      }
-    } else {
-      callback.call(this)
+        if (typeof options.cancelOnMove != 'undefined') {
+          cancelOnMove = options.cancelOnMove
+        }
+
+        break;
     }
-  }
 
-  $.fn.isScrollable = function(callback) {
-    var el = $(this)
-
-    el
-      .bind('touchstart', function() {
-        el.data('isScrolling', false)
-        callback.call(this, false)
+    if (touchSupported) {
+      this.bind('touchstart', function() {
+        $(this).addClass('touched')
+        return true
       })
-      .bind('touchmove', function() {
-        if (!el.data('isScrolling')) {
-          el
-            .data('isScrolling', true)
-            .find('.touched').removeClass('touched')
 
-          callback.call(this, true)
-        }
-      })
-      .bind('touchend', function() {
-        if (el.data('isScrolling')) {
-          el.data('isScrolling', false)
+      this.bind('touchend', function(event) {
+        if ($(this).hasClass('touched')) {
+          $(this).removeClass('touched')
+
+          if (typeof callback == 'function') {
+            callback.call(this, event)
+          }
         }
 
-        callback.call(this, false)
+        return true
       })
+
+      this.bind('click', function(event) {
+        event.preventDefault()
+      })
+
+      if (cancelOnMove) {
+        this.bind('touchmove', function() {
+          if ($(this).hasClass('touched')) {
+            $(this).removeClass('touched')
+          }
+        })
+      }
+    } else if (typeof callback == 'function') {
+      this.bind('click', callback)
+    }
+
+    return this
   }
 })(jQuery);
 

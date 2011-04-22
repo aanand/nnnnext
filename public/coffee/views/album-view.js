@@ -90,10 +90,10 @@ Views.SavedAlbumView = (function() {
   };
   SavedAlbumView.prototype.render = function() {
     SavedAlbumView.__super__.render.call(this);
-    this.$(".rate span").tap(this.rate);
-    this.$(".archive").tap(this.archive);
-    this.$(".restore").tap(this.restore);
-    this.$(".delete").tap(this["delete"]);
+    this.$(".rate span").tappable(this.rate);
+    this.$(".archive").tappable(this.archive);
+    this.$(".restore").tappable(this.restore);
+    this.$(".delete").tappable(this["delete"]);
     return this;
   };
   SavedAlbumView.prototype.showRating = true;
@@ -127,7 +127,7 @@ Touch.SavedAlbumView = (function() {
   __extends(SavedAlbumView, Views.SavedAlbumView);
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
-    $(this.el).tap(__bind(function() {
+    $(this.el).tappable(__bind(function() {
       return this.toggleOpen();
     }, this));
     return this.list.bind("scroll", __bind(function(isScrolling) {
@@ -175,7 +175,7 @@ Touch.SearchAlbumView = (function() {
   __extends(SearchAlbumView, Views.SearchAlbumView);
   SearchAlbumView.prototype.initialize = function(options) {
     SearchAlbumView.__super__.initialize.call(this, options);
-    return $(this.el).tap(__bind(function() {
+    return $(this.el).tappable(__bind(function() {
       return this.select();
     }, this));
   };

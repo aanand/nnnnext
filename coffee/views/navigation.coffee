@@ -9,12 +9,18 @@ class Views.Navigation extends Views.View
     </div>
   ')
 
-  events:
-    "click a": "handleClick"
-    
+  initialize: ->
+    _.bindAll(this, "handleClick")
+
   render: ->
     $(@el).html(@template())
+
+    @$("a").tappable
+      callback:     @handleClick
+      cancelOnMove: false
+
     @navigate(@href) if @href?
+
     this
 
   handleClick: (e) ->
