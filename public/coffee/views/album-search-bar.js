@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AlbumSearchBar = (function() {
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
@@ -14,40 +14,53 @@ Views.AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.events = {
-    "change input": "handleChange",
+    "click .cancel": "cancel",
     "submit": "handleSubmit"
   };
-  AlbumSearchBar.prototype.initialize = function() {
-    return _.bindAll(this, "handleKeypress");
+  AlbumSearchBar.prototype.initialize = function(options) {
+    _.bindAll(this, "handleKeypress");
+    return this.listManager = options.listManager;
   };
   AlbumSearchBar.prototype.render = function() {
     $(this.el).html(this.template());
     return this;
   };
   AlbumSearchBar.prototype.handleKeypress = function(e) {
+    window.setTimeout((__bind(function() {
+      return this.showOrHideCancel();
+    }, this)), 0);
     if (!this.$("input").is(":focus")) {
       return;
     }
     switch (e.keyCode) {
       case 27:
         e.preventDefault();
-        this.clear();
-        return this.trigger("clear");
-    }
-  };
-  AlbumSearchBar.prototype.handleChange = function(e) {
-    if (this.val() === "") {
-      return this.trigger("clear");
+        return this.cancel();
     }
   };
   AlbumSearchBar.prototype.handleSubmit = function(e) {
     e.preventDefault();
     if (this.val() === "") {
-      this.clear();
-      return this.trigger("clear");
+      return this.cancel();
     } else {
       return this.trigger("submit", this.val());
     }
+  };
+  AlbumSearchBar.prototype.showOrHideCancel = function() {
+    if (this.val() !== "" || this.listManager.isSearching()) {
+      return this.$(".cancel").show();
+    } else {
+      return this.$(".cancel").hide();
+    }
+  };
+  AlbumSearchBar.prototype.cancel = function(e) {
+    if (e) {
+      e.preventDefault();
+    }
+    this.clear();
+    this.focus();
+    this.trigger("clear");
+    return this.showOrHideCancel();
   };
   AlbumSearchBar.prototype.val = function() {
     return this.$("input").val();
@@ -86,6 +99,7 @@ Desktop.AlbumSearchBar = (function() {
     <input type="text"/>\
     <button type="submit">Search</button>\
     <div class="spinner" style="display:none"/>\
+    <div class="cancel" style="display:none"/>\
   ');
   return AlbumSearchBar;
 })();

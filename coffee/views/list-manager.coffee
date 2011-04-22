@@ -4,7 +4,7 @@ class Views.ListManager extends Views.View
 
     @albumSearchResults = new AlbumCollection
 
-    @searchBar          = new UI.AlbumSearchBar({collection: @albumSearchResults})
+    @searchBar          = new UI.AlbumSearchBar({collection: @albumSearchResults, listManager: this})
     @searchResultsList  = new UI.AlbumSearchList({collection: @albumSearchResults})
     @currentAlbumsList  = new UI.SavedAlbumsList({collection: CurrentAlbums})
     @archivedAlbumsList = new UI.SavedAlbumsList({collection: ArchivedAlbums})
@@ -21,6 +21,8 @@ class Views.ListManager extends Views.View
         coll.bind event, => @trigger("update")
 
     @bind "show", => @searchBar.focus()
+
+  isSearching: -> @currentView == @searchResultsList
 
   render: ->
     $(@el).append(@searchBar.render().el)

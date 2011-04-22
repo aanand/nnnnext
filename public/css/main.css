@@ -189,6 +189,15 @@ textarea:-moz-placeholder {
     width: 32px;
     height: 32px;
     background: url(/img/spinner.gif); }
+  .album-search-bar .cancel {
+    position: absolute;
+    top: 5px;
+    right: 85px;
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: url(/img/cancel-search.png);
+    cursor: pointer; }
 
 .ui-list, .album-list, .friend-list {
   list-style: none;

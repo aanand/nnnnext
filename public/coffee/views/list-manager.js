@@ -16,7 +16,8 @@ Views.ListManager = (function() {
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
     this.albumSearchResults = new AlbumCollection;
     this.searchBar = new UI.AlbumSearchBar({
-      collection: this.albumSearchResults
+      collection: this.albumSearchResults,
+      listManager: this
     });
     this.searchResultsList = new UI.AlbumSearchList({
       collection: this.albumSearchResults
@@ -46,6 +47,9 @@ Views.ListManager = (function() {
     return this.bind("show", __bind(function() {
       return this.searchBar.focus();
     }, this));
+  };
+  ListManager.prototype.isSearching = function() {
+    return this.currentView === this.searchResultsList;
   };
   ListManager.prototype.render = function() {
     $(this.el).append(this.searchBar.render().el);

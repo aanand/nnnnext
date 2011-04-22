@@ -3,38 +3,48 @@ class Views.AlbumSearchBar extends Views.View
   tagName: 'form'
 
   events:
-    "change input": "handleChange"
-    "submit": "handleSubmit"
+    "click .cancel": "cancel"
+    "submit":        "handleSubmit"
 
-  initialize: ->
+  initialize: (options) ->
     _.bindAll(this, "handleKeypress")
+    @listManager = options.listManager
 
   render: ->
     $(@el).html(@template())
     this
 
   handleKeypress: (e) ->
+    window.setTimeout((=>@showOrHideCancel()), 0)
+
     return unless @$("input").is(":focus")
 
     switch e.keyCode
       when 27
         e.preventDefault()
-
-        @clear()
-        @trigger("clear")
-
-  handleChange: (e) ->
-    if @val() == ""
-      @trigger("clear")
+        @cancel()
 
   handleSubmit: (e) ->
     e.preventDefault()
 
     if @val() == ""
-      @clear()
-      @trigger("clear")
+      @cancel()
     else
       @trigger("submit", @val())
+
+  showOrHideCancel: ->
+    if @val() != "" or @listManager.isSearching()
+      @$(".cancel").show()
+    else
+      @$(".cancel").hide()
+
+  cancel: (e) ->
+    e.preventDefault() if e
+
+    @clear()
+    @focus()
+    @trigger("clear")
+    @showOrHideCancel()
 
   val:   -> @$("input").val()
   clear: -> @$('input').val(''); this
@@ -53,6 +63,7 @@ class Desktop.AlbumSearchBar extends Views.AlbumSearchBar
     <input type="text"/>
     <button type="submit">Search</button>
     <div class="spinner" style="display:none"/>
+    <div class="cancel" style="display:none"/>
   ')
 
 class Touch.AlbumSearchBar extends Views.AlbumSearchBar
