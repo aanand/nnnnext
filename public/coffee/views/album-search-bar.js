@@ -113,9 +113,15 @@ Touch.AlbumSearchBar = (function() {
       <input type="text"/>\
     </div>\
   ');
+  AlbumSearchBar.prototype.render = function() {
+    AlbumSearchBar.__super__.render.call(this);
+    this.$("input").change(_.bind(this.handleChange, this));
+    return this;
+  };
   AlbumSearchBar.prototype.handleChange = function(e) {
-    AlbumSearchBar.__super__.handleChange.call(this, e);
-    if (this.val() !== "") {
+    if (this.val() === "") {
+      return this.cancel();
+    } else {
       return this.trigger("submit", this.val());
     }
   };
