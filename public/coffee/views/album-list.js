@@ -18,6 +18,12 @@ Views.AlbumList = (function() {
       list: this
     });
   };
+  AlbumList.prototype.initialize = function(options) {
+    AlbumList.__super__.initialize.call(this, options);
+    return $(this.el).isScrollable(__bind(function(isScrolling) {
+      return this.trigger("scroll", isScrolling);
+    }, this));
+  };
   return AlbumList;
 })();
 Views.SavedAlbumsList = (function() {
@@ -33,10 +39,7 @@ Views.SavedAlbumsList = (function() {
     this.collection.bind("add", this.add);
     this.collection.bind("refresh", this.populate);
     this.collection.bind("remove", this.remove);
-    this.collection.bind("change", this.change);
-    return $(this.el).isScrollable(__bind(function(isScrolling) {
-      return this.trigger("scroll", isScrolling);
-    }, this));
+    return this.collection.bind("change", this.change);
   };
   SavedAlbumsList.prototype.add = function(album) {
     if ((album.view != null) && album.view.el.parentNode !== this.el) {

@@ -4,6 +4,12 @@ class Views.AlbumList extends Views.List
   makeView: (album) ->
     album.view = new UI[@itemViewClassName]({model: album, list: this})
 
+  initialize: (options) ->
+    super(options)
+
+    $(@el).isScrollable (isScrolling) =>
+      @trigger("scroll", isScrolling)
+
 class Views.SavedAlbumsList extends Views.AlbumList
   itemViewClassName: 'SavedAlbumView'
   className: "#{Views.AlbumList.prototype.className} saved-albums-list"
@@ -17,9 +23,6 @@ class Views.SavedAlbumsList extends Views.AlbumList
     @collection.bind "refresh", @populate
     @collection.bind "remove",  @remove
     @collection.bind "change",  @change
-
-    $(@el).isScrollable (isScrolling) =>
-      @trigger("scroll", isScrolling)
 
   add: (album) ->
     album.removeView() if album.view? and album.view.el.parentNode != @el

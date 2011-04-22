@@ -140,6 +140,11 @@ class Views.SearchAlbumView extends Views.AlbumView
     _.extend _.clone(Views.AlbumView.prototype.events),
       click: "select"
 
+class Touch.SearchAlbumView extends Views.SearchAlbumView
+  initialize: (options) ->
+    super(options)
+    $(@el).tap => @select()
+
 class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('
     <div class="controls">

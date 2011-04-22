@@ -168,6 +168,19 @@ Views.SearchAlbumView = (function() {
   });
   return SearchAlbumView;
 })();
+Touch.SearchAlbumView = (function() {
+  function SearchAlbumView() {
+    SearchAlbumView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(SearchAlbumView, Views.SearchAlbumView);
+  SearchAlbumView.prototype.initialize = function(options) {
+    SearchAlbumView.__super__.initialize.call(this, options);
+    return $(this.el).tap(__bind(function() {
+      return this.select();
+    }, this));
+  };
+  return SearchAlbumView;
+})();
 Views.FriendsAlbumView = (function() {
   function FriendsAlbumView() {
     FriendsAlbumView.__super__.constructor.apply(this, arguments);
