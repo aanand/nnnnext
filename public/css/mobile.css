@@ -105,65 +105,113 @@ body {
 .ui-list-item, .album {
   position: relative;
   border-bottom: 1px solid #cccccc;
+  overflow: hidden;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0); }
+  .ui-list-item .info, .album .info, .ui-list-item .controls, .album .controls, .ui-list-item .controls .actions, .album .controls .actions, .ui-list-item .controls .rate, .album .controls .rate {
+    -webkit-transform: translate3d(0, 0, 0);
+    -webkit-transition: -webkit-transform 0.35s; }
+  .ui-list-item .controls .rate, .album .controls .rate {
+    -webkit-transform: translate3d(100%, 0, 0); }
+  .ui-list-item.open .info, .open.album .info {
+    -webkit-transform: translate3d(100%, 0, 0); }
+  .ui-list-item.open.showing-rate-controls .controls .actions, .open.showing-rate-controls.album .controls .actions {
+    -webkit-transform: translate3d(-100%, 0, 0); }
+  .ui-list-item.open.showing-rate-controls .controls .rate, .open.showing-rate-controls.album .controls .rate {
+    -webkit-transform: translate3d(0, 0, 0); }
   .ui-list-item .info, .album .info {
     position: relative;
     z-index: 2;
     background: white;
     color: black;
-    padding: 20px;
-    -webkit-transform: translate3d(0, 0, 0);
-    -webkit-transition: -webkit-transform 0.35s; }
+    padding: 20px; }
     .ui-list-item .info .primary, .album .info .primary, .ui-list-item .info .album .title, .album .ui-list-item .info .title, .album .info .title {
       font-size: 36px;
       font-weight: bold; }
     .ui-list-item .info .secondary, .album .info .secondary, .ui-list-item .info .album .artist, .album .ui-list-item .info .artist, .album .info .artist {
       font-size: 30px;
       color: #666666; }
+    .ui-list-item .info .rate, .album .info .rate {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 20px; }
+      .ui-list-item .info .rate span:before, .album .info .rate span:before {
+        font-size: 30px;
+        content: "★";
+        color: #dddddd; }
+      .ui-list-item .info .rate span.rated:before, .album .info .rate span.rated:before {
+        color: #ddaa44; }
   .ui-list-item.touched .info, .touched.album .info {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
     background-image: -moz-linear-gradient(center top, #4286f5 0%, #194fdb 100%);
     background-image: linear-gradient(center top, #4286f5 0%, #194fdb 100%); }
     .ui-list-item.touched .info .primary, .touched.album .info .primary, .ui-list-item.touched .info .album .title, .album .ui-list-item.touched .info .title, .touched.album .info .title, .ui-list-item.touched .info .secondary, .touched.album .info .secondary, .ui-list-item.touched .info .album .artist, .album .ui-list-item.touched .info .artist, .touched.album .info .artist {
       color: white; }
-  .ui-list-item.open .info, .open.album .info {
-    -webkit-transform: translate3d(100%, 0, 0);
-    -webkit-transition: -webkit-transform 0.35s; }
   .ui-list-item .controls, .album .controls {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
     z-index: 1;
+    text-align: center;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
-    text-align: center; }
-    .ui-list-item .controls .button, .album .controls .button, .ui-list-item .controls .delete, .album .ui-list-item .controls .delete, .ui-list-item .album .controls .delete, .ui-list-item .album .controls .delete, .album .ui-list-item .controls .delete, .album .controls .delete, .ui-list-item .controls .restore, .album .ui-list-item .controls .restore, .ui-list-item .album .controls .restore, .ui-list-item .album .controls .restore, .album .ui-list-item .controls .restore, .album .controls .restore, .ui-list-item .controls .archive, .album .ui-list-item .controls .archive, .ui-list-item .album .controls .archive, .ui-list-item .album .controls .archive, .album .ui-list-item .controls .archive, .album .controls .archive {
+    color: white;
+    text-shadow: 0 0 30px #191919; }
+    .ui-list-item .controls .actions, .album .controls .actions, .ui-list-item .controls .rate, .album .controls .rate {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0; }
+    .ui-list-item .controls .button, .album .controls .button, .ui-list-item .controls .delete, .album .ui-list-item .controls .delete, .ui-list-item .album .controls .delete, .ui-list-item .album .controls .delete, .album .ui-list-item .controls .delete, .album .controls .delete, .ui-list-item .controls .restore, .album .ui-list-item .controls .restore, .ui-list-item .album .controls .restore, .ui-list-item .album .controls .restore, .album .ui-list-item .controls .restore, .album .controls .restore, .ui-list-item .controls .archive, .album .ui-list-item .controls .archive, .ui-list-item .album .controls .archive, .ui-list-item .album .controls .archive, .album .ui-list-item .controls .archive, .album .controls .archive, .ui-list-item .controls .show-rate-controls, .album .ui-list-item .controls .show-rate-controls, .ui-list-item .album .controls .show-rate-controls, .ui-list-item .album .controls .show-rate-controls, .album .ui-list-item .controls .show-rate-controls, .album .controls .show-rate-controls, .ui-list-item .controls .rate span, .album .ui-list-item .controls .rate span, .ui-list-item .album .controls .rate span, .ui-list-item .album .controls .rate span, .album .ui-list-item .controls .rate span, .album .controls .rate span {
       display: inline-block;
       position: relative;
       width: 100px;
-      height: 100px;
-      margin-top: 7px; }
-    .ui-list-item .controls .button:after, .album .controls .button:after, .ui-list-item .controls .delete:after, .album .ui-list-item .controls .delete:after, .ui-list-item .album .controls .delete:after, .ui-list-item .album .controls .delete:after, .album .ui-list-item .controls .delete:after, .album .controls .delete:after, .ui-list-item .controls .restore:after, .album .ui-list-item .controls .restore:after, .ui-list-item .album .controls .restore:after, .ui-list-item .album .controls .restore:after, .album .ui-list-item .controls .restore:after, .album .controls .restore:after, .ui-list-item .controls .archive:after, .album .ui-list-item .controls .archive:after, .ui-list-item .album .controls .archive:after, .ui-list-item .album .controls .archive:after, .album .ui-list-item .controls .archive:after, .album .controls .archive:after {
+      height: 100px; }
+    .ui-list-item .controls .button:before, .album .controls .button:before, .ui-list-item .controls .delete:before, .album .ui-list-item .controls .delete:before, .ui-list-item .album .controls .delete:before, .ui-list-item .album .controls .delete:before, .album .ui-list-item .controls .delete:before, .album .controls .delete:before, .ui-list-item .controls .restore:before, .album .ui-list-item .controls .restore:before, .ui-list-item .album .controls .restore:before, .ui-list-item .album .controls .restore:before, .album .ui-list-item .controls .restore:before, .album .controls .restore:before, .ui-list-item .controls .archive:before, .album .ui-list-item .controls .archive:before, .ui-list-item .album .controls .archive:before, .ui-list-item .album .controls .archive:before, .album .ui-list-item .controls .archive:before, .album .controls .archive:before, .ui-list-item .controls .show-rate-controls:before, .album .ui-list-item .controls .show-rate-controls:before, .ui-list-item .album .controls .show-rate-controls:before, .ui-list-item .album .controls .show-rate-controls:before, .album .ui-list-item .controls .show-rate-controls:before, .album .controls .show-rate-controls:before, .ui-list-item .controls .rate span:before, .album .ui-list-item .controls .rate span:before, .ui-list-item .album .controls .rate span:before, .ui-list-item .album .controls .rate span:before, .album .ui-list-item .controls .rate span:before, .album .controls .rate span:before {
       position: absolute;
       top: 0;
       left: 0;
+      width: 100px; }
+    .ui-list-item .controls .button:after, .album .controls .button:after, .ui-list-item .controls .delete:after, .album .ui-list-item .controls .delete:after, .ui-list-item .album .controls .delete:after, .ui-list-item .album .controls .delete:after, .album .ui-list-item .controls .delete:after, .album .controls .delete:after, .ui-list-item .controls .restore:after, .album .ui-list-item .controls .restore:after, .ui-list-item .album .controls .restore:after, .ui-list-item .album .controls .restore:after, .album .ui-list-item .controls .restore:after, .album .controls .restore:after, .ui-list-item .controls .archive:after, .album .ui-list-item .controls .archive:after, .ui-list-item .album .controls .archive:after, .ui-list-item .album .controls .archive:after, .album .ui-list-item .controls .archive:after, .album .controls .archive:after, .ui-list-item .controls .show-rate-controls:after, .album .ui-list-item .controls .show-rate-controls:after, .ui-list-item .album .controls .show-rate-controls:after, .ui-list-item .album .controls .show-rate-controls:after, .album .ui-list-item .controls .show-rate-controls:after, .album .controls .show-rate-controls:after, .ui-list-item .controls .rate span:after, .album .ui-list-item .controls .rate span:after, .ui-list-item .album .controls .rate span:after, .ui-list-item .album .controls .rate span:after, .album .ui-list-item .controls .rate span:after, .album .controls .rate span:after {
+      position: absolute;
+      top: 80px;
+      left: 0;
       width: 100px;
-      text-align: center;
-      color: white; }
-    .ui-list-item .controls .button.touched:after, .album .controls .button.touched:after, .ui-list-item .controls .touched.delete:after, .album .ui-list-item .controls .touched.delete:after, .ui-list-item .album .controls .touched.delete:after, .ui-list-item .album .controls .touched.delete:after, .album .ui-list-item .controls .touched.delete:after, .album .controls .touched.delete:after, .ui-list-item .controls .touched.restore:after, .album .ui-list-item .controls .touched.restore:after, .ui-list-item .album .controls .touched.restore:after, .ui-list-item .album .controls .touched.restore:after, .album .ui-list-item .controls .touched.restore:after, .album .controls .touched.restore:after, .ui-list-item .controls .touched.archive:after, .album .ui-list-item .controls .touched.archive:after, .ui-list-item .album .controls .touched.archive:after, .ui-list-item .album .controls .touched.archive:after, .album .ui-list-item .controls .touched.archive:after, .album .controls .touched.archive:after {
+      font-weight: bold;
+      font-size: 20px; }
+    .ui-list-item .controls .button.touched, .album .controls .button.touched, .ui-list-item .controls .touched.delete, .album .ui-list-item .controls .touched.delete, .ui-list-item .album .controls .touched.delete, .ui-list-item .album .controls .touched.delete, .album .ui-list-item .controls .touched.delete, .album .controls .touched.delete, .ui-list-item .controls .touched.restore, .album .ui-list-item .controls .touched.restore, .ui-list-item .album .controls .touched.restore, .ui-list-item .album .controls .touched.restore, .album .ui-list-item .controls .touched.restore, .album .controls .touched.restore, .ui-list-item .controls .touched.archive, .album .ui-list-item .controls .touched.archive, .ui-list-item .album .controls .touched.archive, .ui-list-item .album .controls .touched.archive, .album .ui-list-item .controls .touched.archive, .album .controls .touched.archive, .ui-list-item .controls .touched.show-rate-controls, .album .ui-list-item .controls .touched.show-rate-controls, .ui-list-item .album .controls .touched.show-rate-controls, .ui-list-item .album .controls .touched.show-rate-controls, .album .ui-list-item .controls .touched.show-rate-controls, .album .controls .touched.show-rate-controls, .ui-list-item .controls .rate span.touched, .album .ui-list-item .controls .rate span.touched, .ui-list-item .album .controls .rate span.touched, .ui-list-item .album .controls .rate span.touched, .album .ui-list-item .controls .rate span.touched, .album .controls .rate span.touched {
       color: blue; }
-    .ui-list-item .controls .delete:after, .album .controls .delete:after {
+    .ui-list-item .controls .delete:before, .album .controls .delete:before {
       font-size: 80px;
       top: -7px;
       content: "✕"; }
-    .ui-list-item .controls .restore:after, .album .controls .restore:after {
+    .ui-list-item .controls .delete:after, .album .controls .delete:after {
+      content: "Delete"; }
+    .ui-list-item .controls .restore:before, .album .controls .restore:before {
       font-size: 70px;
       content: "↩"; }
-    .ui-list-item .controls .archive:after, .album .controls .archive:after {
+    .ui-list-item .controls .restore:after, .album .controls .restore:after {
+      content: "Restore"; }
+    .ui-list-item .controls .archive:before, .album .controls .archive:before {
       font-size: 80px;
       top: -9px;
       content: "✔"; }
+    .ui-list-item .controls .archive:after, .album .controls .archive:after {
+      content: "Archive"; }
+    .ui-list-item .controls .show-rate-controls:before, .album .controls .show-rate-controls:before {
+      font-size: 60px;
+      top: 5px;
+      content: "★"; }
+    .ui-list-item .controls .show-rate-controls:after, .album .controls .show-rate-controls:after {
+      content: "Rate"; }
+    .ui-list-item .controls .rate span:before, .album .controls .rate span:before {
+      font-size: 80px;
+      content: "☆"; }
+    .ui-list-item .controls .rate span.rated:before, .album .controls .rate span.rated:before {
+      font-size: 80px;
+      content: "★"; }
 
 .new-album {
   padding: 20px;

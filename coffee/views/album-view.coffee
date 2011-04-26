@@ -4,11 +4,15 @@ class Views.AlbumView extends Views.View
 
   events:
     keypress:  "select"
-    mouseover: "showOrHideRating"
-    mouseout:  "showOrHideRating"
 
   initialize: (options) ->
     @list = options.list
+
+  ratingTemplate: _.template('
+    <div class="rate">
+      <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
+    </div>
+  ')
 
   showRating: false
   allowRate: false
@@ -18,34 +22,26 @@ class Views.AlbumView extends Views.View
   render: ->
     $(@el).html(@template(@templateVars()))
 
-    if @showRating
-      @$('.controls').append('
-        <div class="rate">
-          <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>
-        </div>
-      ')
+    rating = @model.get("rating")
 
-      rating = @model.get("rating")
-
-      if rating?
-        stars = @$(".rate span").get()
-        $(stars.slice(0, rating)).addClass("rated")
-
-      @showOrHideRating()
+    if @showRating and rating > 0
+      @appendRatingTo('.info', rating)
 
     if @allowRate
-      $(@el).addClass("allow-rate")
+      @appendRatingTo('.controls', rating)
 
     if state = @model.get("state")
       $(@el).attr("data-state", state)
 
     this
 
-  showOrHideRating: (e) ->
-    if @showRating and (@model.get("rating") or ($(@el).is(":hover") and @allowRate))
-      @$('.rate').addClass('visible')
-    else
-      @$('.rate').removeClass('visible')
+  appendRatingTo: (selector, rating) ->
+    e = @$(selector)
+    e.append(@ratingTemplate())
+
+    if rating?
+      stars = e.find(".rate span").get()
+      $(stars.slice(0, rating)).addClass("rated")
 
   focus: (e) ->
     $(@el).focus()
@@ -60,16 +56,18 @@ class Views.SavedAlbumView extends Views.AlbumView
     </div>
 
     <div class="controls">
-      <div class="delete"></div>
-      <% if (state == "archived") { %><div class="restore"></div><% } %>
-      <% if (state == "current")  { %><div class="archive"></div><% } %>
+      <div class="actions">
+        <div class="delete"></div>
+        <% if (state == "archived") { %><div class="restore"></div><% } %>
+        <% if (state == "current")  { %><div class="archive"></div><% } %>
+      </div>
     </div>
   ')
 
   events:
     _.extend _.clone(Views.AlbumView.prototype.events),
-      "mouseover .rate span": "highlightStars"
-      "mouseout .rate":       "clearStars"
+      "mouseover .controls .rate span": "highlightStars"
+      "mouseout .controls .rate":       "clearStars"
 
   initialize: (options) ->
     super(options)
@@ -112,21 +110,34 @@ class Views.SavedAlbumView extends Views.AlbumView
 class Touch.SavedAlbumView extends Views.SavedAlbumView
   initialize: (options) ->
     super(options)
-    $(@el).tappable => @toggleOpen()
-    @list.bind "scroll", (isScrolling) => @close() if isScrolling
+    _.bindAll(this, "toggleOpen", "showRateControls")
+    $(@el).tappable(@toggleOpen)
 
-  toggleOpen: ->
+  render: (options) ->
+    super(options)
+    rateButton = $("<div class='show-rate-controls'/>")
+    rateButton.tappable(@showRateControls)
+    @$(".actions").append(rateButton)
+    this
+
+  toggleOpen: (e) ->
     if $(@el).hasClass('open')
       @close()
     else
       @open()
 
   open: ->
-    $(@el).addClass('open')
-    @list.albumOpened(this.model)
+    unless $(@el).hasClass('open')
+      $(@el).addClass('open')
+      @list.albumOpened(this.model)
 
   close: ->
-    $(@el).removeClass('open')
+    $(@el).removeClass('open').removeClass('showing-rate-controls')
+
+  showRateControls: (e) ->
+    e.stopPropagation()
+    @open()
+    $(@el).addClass('showing-rate-controls')
 
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('
@@ -147,12 +158,16 @@ class Touch.SearchAlbumView extends Views.SearchAlbumView
 
 class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('
-    <div class="controls">
-      <div class="add <% if (!inMyList) { %>visible<% } %>"></div>
+    <div class="info">
+      <div class="title"><%= title %></div>
+      <div class="artist"><%= artist %></div>
     </div>
 
-    <div class="title"><%= title %></div>
-    <div class="artist"><%= artist %></div>
+    <div class="controls">
+      <div class="actions">
+        <% if (!inMyList) { %><div class="add"/><% } %>
+      </div>
+    </div>
   ')
 
   templateVars: ->

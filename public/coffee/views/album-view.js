@@ -14,47 +14,43 @@ Views.AlbumView = (function() {
   AlbumView.prototype.tagName = 'li';
   AlbumView.prototype.className = 'album';
   AlbumView.prototype.events = {
-    keypress: "select",
-    mouseover: "showOrHideRating",
-    mouseout: "showOrHideRating"
+    keypress: "select"
   };
   AlbumView.prototype.initialize = function(options) {
     return this.list = options.list;
   };
+  AlbumView.prototype.ratingTemplate = _.template('\
+    <div class="rate">\
+      <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
+    </div>\
+  ');
   AlbumView.prototype.showRating = false;
   AlbumView.prototype.allowRate = false;
   AlbumView.prototype.templateVars = function() {
     return this.model.toJSON();
   };
   AlbumView.prototype.render = function() {
-    var rating, stars, state;
+    var rating, state;
     $(this.el).html(this.template(this.templateVars()));
-    if (this.showRating) {
-      this.$('.controls').append('\
-        <div class="rate">\
-          <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
-        </div>\
-      ');
-      rating = this.model.get("rating");
-      if (rating != null) {
-        stars = this.$(".rate span").get();
-        $(stars.slice(0, rating)).addClass("rated");
-      }
-      this.showOrHideRating();
+    rating = this.model.get("rating");
+    if (this.showRating && rating > 0) {
+      this.appendRatingTo('.info', rating);
     }
     if (this.allowRate) {
-      $(this.el).addClass("allow-rate");
+      this.appendRatingTo('.controls', rating);
     }
     if (state = this.model.get("state")) {
       $(this.el).attr("data-state", state);
     }
     return this;
   };
-  AlbumView.prototype.showOrHideRating = function(e) {
-    if (this.showRating && (this.model.get("rating") || ($(this.el).is(":hover") && this.allowRate))) {
-      return this.$('.rate').addClass('visible');
-    } else {
-      return this.$('.rate').removeClass('visible');
+  AlbumView.prototype.appendRatingTo = function(selector, rating) {
+    var e, stars;
+    e = this.$(selector);
+    e.append(this.ratingTemplate());
+    if (rating != null) {
+      stars = e.find(".rate span").get();
+      return $(stars.slice(0, rating)).addClass("rated");
     }
   };
   AlbumView.prototype.focus = function(e) {
@@ -75,14 +71,16 @@ Views.SavedAlbumView = (function() {
     </div>\
 \
     <div class="controls">\
-      <div class="delete"></div>\
-      <% if (state == "archived") { %><div class="restore"></div><% } %>\
-      <% if (state == "current")  { %><div class="archive"></div><% } %>\
+      <div class="actions">\
+        <div class="delete"></div>\
+        <% if (state == "archived") { %><div class="restore"></div><% } %>\
+        <% if (state == "current")  { %><div class="archive"></div><% } %>\
+      </div>\
     </div>\
   ');
   SavedAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
-    "mouseover .rate span": "highlightStars",
-    "mouseout .rate": "clearStars"
+    "mouseover .controls .rate span": "highlightStars",
+    "mouseout .controls .rate": "clearStars"
   });
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
@@ -127,16 +125,18 @@ Touch.SavedAlbumView = (function() {
   __extends(SavedAlbumView, Views.SavedAlbumView);
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
-    $(this.el).tappable(__bind(function() {
-      return this.toggleOpen();
-    }, this));
-    return this.list.bind("scroll", __bind(function(isScrolling) {
-      if (isScrolling) {
-        return this.close();
-      }
-    }, this));
+    _.bindAll(this, "toggleOpen", "showRateControls");
+    return $(this.el).tappable(this.toggleOpen);
   };
-  SavedAlbumView.prototype.toggleOpen = function() {
+  SavedAlbumView.prototype.render = function(options) {
+    var rateButton;
+    SavedAlbumView.__super__.render.call(this, options);
+    rateButton = $("<div class='show-rate-controls'/>");
+    rateButton.tappable(this.showRateControls);
+    this.$(".actions").append(rateButton);
+    return this;
+  };
+  SavedAlbumView.prototype.toggleOpen = function(e) {
     if ($(this.el).hasClass('open')) {
       return this.close();
     } else {
@@ -144,11 +144,18 @@ Touch.SavedAlbumView = (function() {
     }
   };
   SavedAlbumView.prototype.open = function() {
-    $(this.el).addClass('open');
-    return this.list.albumOpened(this.model);
+    if (!$(this.el).hasClass('open')) {
+      $(this.el).addClass('open');
+      return this.list.albumOpened(this.model);
+    }
   };
   SavedAlbumView.prototype.close = function() {
-    return $(this.el).removeClass('open');
+    return $(this.el).removeClass('open').removeClass('showing-rate-controls');
+  };
+  SavedAlbumView.prototype.showRateControls = function(e) {
+    e.stopPropagation();
+    this.open();
+    return $(this.el).addClass('showing-rate-controls');
   };
   return SavedAlbumView;
 })();
@@ -187,12 +194,16 @@ Views.FriendsAlbumView = (function() {
   }
   __extends(FriendsAlbumView, Views.AlbumView);
   FriendsAlbumView.prototype.template = _.template('\
-    <div class="controls">\
-      <div class="add <% if (!inMyList) { %>visible<% } %>"></div>\
+    <div class="info">\
+      <div class="title"><%= title %></div>\
+      <div class="artist"><%= artist %></div>\
     </div>\
 \
-    <div class="title"><%= title %></div>\
-    <div class="artist"><%= artist %></div>\
+    <div class="controls">\
+      <div class="actions">\
+        <% if (!inMyList) { %><div class="add"/><% } %>\
+      </div>\
+    </div>\
   ');
   FriendsAlbumView.prototype.templateVars = function() {
     var vars;

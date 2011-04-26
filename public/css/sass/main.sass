@@ -281,39 +281,46 @@ textarea:-moz-placeholder
 .album
   @extend .ui-list-item
 
-  .title
-    @extend .primary
-
-  .artist
-    @extend .secondary
-
-  .controls
-    position: absolute
-    top:      10px
-    right:    8px
-
   .control
     display:     block
-    float:       right
     width:       22px
     height:      36px
     margin-left: 10px
-    visibility:  hidden
     color:       $control-normal
 
-    &.visible
-      visibility: visible
+  .info
+    .title
+      @extend .primary
 
-  .hover-control
-    @extend .control
+    .artist
+      @extend .secondary
+
+    .rate
+      @extend .control
+
+  .controls
+    .control
+      visibility: hidden
+
+    .actions
+      position: absolute
+      top:      10px
+      right:    8px
+
+      .control
+        float: right
 
   &:hover, &:focus
-    .hover-control
+    .controls .control
       visibility: visible
 
   .rate
     @extend .control
-    width: auto
+
+    width:    auto !important
+    position: absolute
+    top:      10px
+    right:    80px
 
     span:after
       font-size:      20px
@@ -323,7 +330,7 @@ textarea:-moz-placeholder
     span.rated:after
       color: $control-rated
 
-  &.allow-rate .rate
+  .controls .rate
     span
       cursor: pointer
 
@@ -334,7 +341,7 @@ textarea:-moz-placeholder
         color: $control-normal
 
   .archive
-    @extend .hover-control
+    @extend .control
     cursor: pointer
 
     &:after
@@ -345,7 +352,7 @@ textarea:-moz-placeholder
       color: $control-green
 
   .restore
-    @extend .hover-control
+    @extend .control
     cursor: pointer
 
     &:after
@@ -359,7 +366,7 @@ textarea:-moz-placeholder
       color: $control-green
 
   .delete
-    @extend .hover-control
+    @extend .control
     cursor: pointer
     width:  30px
 
@@ -411,6 +418,12 @@ textarea:-moz-placeholder
   &[data-state="archived"]
     .title
       color: #666
+
+  .rate
+    right: 40px
+
+  .control
+    visibility: visible
 
 .friend-browser
   .spinner

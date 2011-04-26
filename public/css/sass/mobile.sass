@@ -132,17 +132,35 @@ body
 .ui-list-item
   position: relative
   border-bottom: 1px solid #ccc
+  overflow: hidden
 
   +no-tap-highlight
 
+  .info, .controls, .controls .actions, .controls .rate
+    -webkit-transform: translate3d(0, 0, 0)
+    -webkit-transition: -webkit-transform 0.35s
+
+  .controls .rate
+    -webkit-transform: translate3d(100%, 0, 0)
+
+  &.open
+    .info
+      -webkit-transform: translate3d(100%, 0, 0)
+
+    &.showing-rate-controls
+      .controls
+        .actions
+          -webkit-transform: translate3d(-100%, 0, 0)
+
+        .rate
+          -webkit-transform: translate3d(0, 0, 0)
+
   .info
     position: relative
-    z-index: 2
+    z-index:  2
     background: white
     color: black
     padding: 20px
-    -webkit-transform: translate3d(0, 0, 0)
-    -webkit-transition: -webkit-transform 0.35s
 
     .primary
       font-size: 36px
@@ -152,62 +170,117 @@ body
       font-size: 30px
       color: #666
 
+    .rate
+      position: absolute
+      top: 0
+      right: 0
+      padding: 20px
+
+      span:before
+        font-size: 30px
+        content:   "★"
+        color: $control-normal
+
+      span.rated:before
+        color: $control-yellow
+
   &.touched .info
     +vertical-gradient(#4286f5, #194fdb)
 
     .primary, .secondary
       color: white
-    
-  &.open .info
-    -webkit-transform: translate3d(100%, 0, 0)
-    -webkit-transition: -webkit-transform 0.35s
 
   .controls
-    position:         absolute
-    top:              0
-    left:             0
-    right:            0
-    bottom:           0
-    z-index:          1
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#333), color-stop(0.33, #444), color-stop(0.67, #444), to(#333))
-    text-align:       center
+    position:   absolute
+    top:        0
+    bottom:     0
+    left:       0
+    right:      0
+    z-index:    1
+    text-align: center
+
+    .actions, .rate
+      position: absolute
+      top:      0
+      bottom:   0
+      left:     0
+      right:    0
+
+    $dark:  #333
+    $light: #444
+
+    background-image: -webkit-gradient(linear, left top, left bottom, from($dark), color-stop(0.33, $light), color-stop(0.67, $light), to($dark))
+    color:            white
+    text-shadow:      0 0 30px $dark/2
 
     .button
       display:    inline-block
       position:   relative
       width:      100px
       height:     100px
-      margin-top: 7px
 
-      // border: 1px solid white
+    .button:before
+      position:    absolute
+      top:         0
+      left:        0
+      width:       100px
 
     .button:after
-      position: absolute
-      top:      0
-      left:     0
-      width:    100px
-      text-align: center
-      color:    white
+      position:    absolute
+      top:         80px
+      left:        0
+      width:       100px
+      font-weight: bold
+      font-size:   20px
 
-    .button.touched:after
+    .button.touched
       color: blue
-
-    .delete, .restore, .archive
+  
+    .delete, .restore, .archive, .show-rate-controls
       @extend .button
 
-    .delete:after
+    .delete:before
       font-size: 80px
-      top: -7px
+      top:       -7px
       content:   "✕"
 
-    .restore:after
+    .delete:after
+      content: "Delete"
+
+    .restore:before
       font-size: 70px
       content:   "↩"
 
-    .archive:after
+    .restore:after
+      content: "Restore"
+
+    .archive:before
       font-size: 80px
-      top: -9px
+      top:       -9px
       content:   "✔"
+
+    .archive:after
+      content: "Archive"
+
+    .show-rate-controls:before
+      font-size: 60px
+      top:       5px
+      content:   "★"
+
+    .show-rate-controls:after
+      content: "Rate"
+
+    .rate
+      span
+        @extend .button
+
+      span:before
+        font-size: 80px
+        content:   "☆"
+
+      span.rated:before
+        font-size: 80px
+        content:   "★"
 
 .album-list
   @extend .ui-list
