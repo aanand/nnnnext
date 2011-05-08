@@ -24,6 +24,7 @@ body
   z-index:  1
 
   +vertical-gradient($light, $primary)
+  +text-shadow-top(transparentize($dark, 0.5))
 
   &:after
     content:         "nnnnext"
@@ -35,7 +36,30 @@ body
     font-weight:     bold
     color:           white
 
-    +text-shadow-top(transparentize($dark, 0.5))
+  .button a
+    $offset: 12px
+    $border: 2px
+
+    display:  block
+    position: absolute
+    top:      $offset
+    bottom:   $offset
+    right:    $offset
+    border:   $border solid $dark
+
+    +border-radius(10px)
+    +vertical-gradient($light, $dark)
+
+    &:after
+      display:     inline-block
+      content:     "Sign In"
+      color:       white
+      font-size:   24px
+      font-weight: bold
+      margin:      (27px - $offset - $border) 20px
+
+  .signin, .signout
+    @extend .button
 
 .navigation
   height:  60px
