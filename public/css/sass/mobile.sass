@@ -341,3 +341,24 @@ a
   button
     font-size: 26px
 
+.friend-list
+  @extend .ui-list
+
+.friend
+  overflow: hidden
+  @extend .ui-list-item
+
+  img
+    float:  left
+    width:  120px
+    height: 120px
+
+  .info
+    overflow: hidden
+
+    .name
+      @extend .primary
+
+    .nickname
+      @extend .secondary
+

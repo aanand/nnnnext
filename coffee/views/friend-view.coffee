@@ -33,3 +33,9 @@ class Views.FriendView extends Views.View
   back: ->
     @trigger("back")
 
+class Touch.FriendView extends Views.FriendView
+  render: ->
+    super()
+    $(@el).tappable()
+    this
+

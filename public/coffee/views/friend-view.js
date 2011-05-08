@@ -47,3 +47,15 @@ Views.FriendView = (function() {
   };
   return FriendView;
 })();
+Touch.FriendView = (function() {
+  function FriendView() {
+    FriendView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FriendView, Views.FriendView);
+  FriendView.prototype.render = function() {
+    FriendView.__super__.render.call(this);
+    $(this.el).tappable();
+    return this;
+  };
+  return FriendView;
+})();
