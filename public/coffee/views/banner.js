@@ -29,16 +29,6 @@ Views.Banner = (function() {
     $(this.el).html(this.template({
       signedIn: typeof UserInfo != "undefined" && UserInfo !== null
     }));
-    this.$('.signout a').click(function(e) {
-      e.preventDefault();
-      return $.get(this.href, function() {
-        if (confirm("OK, you're signed out of nnnnext. Sign out of Twitter too?")) {
-          return window.location.href = "http://twitter.com/logout";
-        } else {
-          return window.location.reload();
-        }
-      });
-    });
     return this;
   };
   return Banner;
@@ -51,6 +41,12 @@ Touch.Banner = (function() {
   Banner.prototype.render = function() {
     Banner.__super__.render.call(this);
     this.$('.signin a').sitDownMan();
+    this.$('.signout a').click(function(e) {
+      e.preventDefault();
+      if (confirm("Are you sure you want to sign out?")) {
+        return window.location = this.href;
+      }
+    });
     return this;
   };
   return Banner;

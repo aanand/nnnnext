@@ -48,7 +48,7 @@ module Nnnnext::Controllers
   class Signout
     def get
       @state[:user_id] = nil
-      ""
+      redirect '/'
     end
   end
 

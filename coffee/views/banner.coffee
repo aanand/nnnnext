@@ -17,20 +17,18 @@ class Views.Banner extends Views.View
 
   render: ->
     $(@el).html(@template({signedIn: UserInfo?}))
-
-    @$('.signout a').click (e) ->
-      e.preventDefault()
-
-      $.get this.href, ->
-        if confirm("OK, you're signed out of nnnnext. Sign out of Twitter too?")
-          window.location.href = "http://twitter.com/logout"
-        else
-          window.location.reload()
-
     this
 
 class Touch.Banner extends Views.Banner
   render: ->
     super()
+
     @$('.signin a').sitDownMan()
+
+    @$('.signout a').click (e) ->
+      e.preventDefault()
+
+      if confirm("Are you sure you want to sign out?")
+        window.location = this.href
+
     this
