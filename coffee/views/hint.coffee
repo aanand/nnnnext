@@ -36,6 +36,11 @@ class Views.FirstAlbumHint extends Views.Hint
     <p>Hover over an album in your list to rate it, check it off or delete it.</p>
   "
 
+class Touch.FirstAlbumHint extends Views.FirstAlbumHint
+  getMessage: -> "
+    <p>Tap an album in your list to rate it, check it off or delete it.</p>
+  "
+
 class Views.SignInHint extends Views.Hint
   getMessage: -> "
     <p>If you <a href='/auth/twitter'>connect with Twitter</a>, you can:</p>

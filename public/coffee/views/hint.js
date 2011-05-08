@@ -58,6 +58,16 @@ Views.FirstAlbumHint = (function() {
   };
   return FirstAlbumHint;
 })();
+Touch.FirstAlbumHint = (function() {
+  function FirstAlbumHint() {
+    FirstAlbumHint.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FirstAlbumHint, Views.FirstAlbumHint);
+  FirstAlbumHint.prototype.getMessage = function() {
+    return "    <p>Tap an album in your list to rate it, check it off or delete it.</p>  ";
+  };
+  return FirstAlbumHint;
+})();
 Views.SignInHint = (function() {
   function SignInHint() {
     SignInHint.__super__.constructor.apply(this, arguments);
