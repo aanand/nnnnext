@@ -9,7 +9,7 @@
     :javascript
       Mobile = navigator.userAgent.match(/iPhone/);
       (function() {
-        var cssHref = Mobile ? '/css/mobile.css' : '/css/main.css';
+        var cssHref = Mobile ? '/css/mobile.css' : '/css/desktop.css';
         document.write("<link rel='stylesheet' type='text/css' href='"+cssHref+"?"+CacheBuster+"'/>");
       })()
   %body
