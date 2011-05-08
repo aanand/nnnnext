@@ -43,3 +43,18 @@ Views.Banner = (function() {
   };
   return Banner;
 })();
+Touch.Banner = (function() {
+  function Banner() {
+    Banner.__super__.constructor.apply(this, arguments);
+  }
+  __extends(Banner, Views.Banner);
+  Banner.prototype.render = function() {
+    Banner.__super__.render.call(this);
+    this.$('.signin a').click(function(e) {
+      e.preventDefault();
+      return window.location = this.href;
+    });
+    return this;
+  };
+  return Banner;
+})();
