@@ -50,10 +50,7 @@ Touch.Banner = (function() {
   __extends(Banner, Views.Banner);
   Banner.prototype.render = function() {
     Banner.__super__.render.call(this);
-    this.$('.signin a').click(function(e) {
-      e.preventDefault();
-      return window.location = this.href;
-    });
+    this.$('.signin a').sitDownMan();
     return this;
   };
   return Banner;

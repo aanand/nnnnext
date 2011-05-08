@@ -78,3 +78,15 @@ Views.SignInHint = (function() {
   };
   return SignInHint;
 })();
+Touch.SignInHint = (function() {
+  function SignInHint() {
+    SignInHint.__super__.constructor.apply(this, arguments);
+  }
+  __extends(SignInHint, Views.SignInHint);
+  SignInHint.prototype.render = function() {
+    SignInHint.__super__.render.call(this);
+    this.$('a').sitDownMan();
+    return this;
+  };
+  return SignInHint;
+})();

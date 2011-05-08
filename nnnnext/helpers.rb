@@ -23,6 +23,7 @@ module Nnnnext::Helpers
   def js_files
     js = %w(jquery
             jquery.insertAt
+            jquery.sitDownMan
             json2
             ontap
             underscore

@@ -53,3 +53,9 @@ class Views.SignInHint extends Views.Hint
 
     <p><strong>nnnnext</strong> will never tweet anything on your behalf.</p>
   "
+
+class Touch.SignInHint extends Views.SignInHint
+  render: ->
+    super()
+    @$('a').sitDownMan()
+    this

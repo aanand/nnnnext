@@ -32,9 +32,5 @@ class Views.Banner extends Views.View
 class Touch.Banner extends Views.Banner
   render: ->
     super()
-
-    @$('.signin a').click (e) ->
-      e.preventDefault()
-      window.location = this.href
-
+    @$('.signin a').sitDownMan()
     this
