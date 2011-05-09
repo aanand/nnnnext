@@ -26,7 +26,8 @@ module Nnnnext
     omniauth[:consumer_secret]
 
   use Rack::Session::Cookie,
-    secret: session_secret
+    secret: session_secret,
+    expire_after: 60*60*24*30
 
   unless ENV["RACK_ENV"] == "production"
     Sass::Plugin.options[:css_location] = root + "public/css"
