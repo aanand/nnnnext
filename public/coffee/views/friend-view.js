@@ -26,14 +26,17 @@ Views.FriendView = (function() {
     </div>\
   ');
   FriendView.prototype.events = {
-    click: "select",
     keypress: "select",
     "click .back": "back"
   };
   FriendView.prototype.initialize = function(options) {
     var _ref;
+    _.bindAll(this, "select");
     this.list = options.list;
-    return this.backButton = (_ref = options.backButton) != null ? _ref : false;
+    this.backButton = (_ref = options.backButton) != null ? _ref : false;
+    if (this.list != null) {
+      return $(this.el).tappable(this.select);
+    }
   };
   FriendView.prototype.render = function() {
     var vars;
@@ -44,18 +47,6 @@ Views.FriendView = (function() {
   };
   FriendView.prototype.back = function() {
     return this.trigger("back");
-  };
-  return FriendView;
-})();
-Touch.FriendView = (function() {
-  function FriendView() {
-    FriendView.__super__.constructor.apply(this, arguments);
-  }
-  __extends(FriendView, Views.FriendView);
-  FriendView.prototype.render = function() {
-    FriendView.__super__.render.call(this);
-    $(this.el).tappable();
-    return this;
   };
   return FriendView;
 })();
