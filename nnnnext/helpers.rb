@@ -40,6 +40,7 @@ module Nnnnext::Helpers
              views/view-shop
              views/view
              views/list
+             views/openable
              views/banner
              views/header
              views/navigation

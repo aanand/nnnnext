@@ -125,8 +125,10 @@ Touch.SavedAlbumView = (function() {
   __extends(SavedAlbumView, Views.SavedAlbumView);
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
-    _.bindAll(this, "toggleOpen", "showRateControls");
-    return $(this.el).tappable(this.toggleOpen);
+    _.bindAll(this, "showRateControls");
+    return $(this.el).tappable(__bind(function() {
+      return this.toggleOpen();
+    }, this));
   };
   SavedAlbumView.prototype.render = function(options) {
     var rateButton;
@@ -136,29 +138,21 @@ Touch.SavedAlbumView = (function() {
     this.$(".actions").append(rateButton);
     return this;
   };
-  SavedAlbumView.prototype.toggleOpen = function(e) {
-    if ($(this.el).hasClass('open')) {
-      return this.close();
-    } else {
-      return this.open();
-    }
-  };
-  SavedAlbumView.prototype.open = function() {
-    if (!$(this.el).hasClass('open')) {
-      $(this.el).addClass('open');
-      return this.list.albumOpened(this.model);
-    }
-  };
-  SavedAlbumView.prototype.close = function() {
-    return $(this.el).removeClass('open').removeClass('showing-rate-controls');
-  };
   SavedAlbumView.prototype.showRateControls = function(e) {
     e.stopPropagation();
     this.open();
     return $(this.el).addClass('showing-rate-controls');
   };
+  SavedAlbumView.prototype.hideRateControls = function() {
+    return $(this.el).removeClass('showing-rate-controls');
+  };
   return SavedAlbumView;
 })();
+_.extend(Touch.SavedAlbumView.prototype, Views.Openable, {
+  onClose: function() {
+    return this.hideRateControls();
+  }
+});
 Views.SearchAlbumView = (function() {
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);

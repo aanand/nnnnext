@@ -110,8 +110,8 @@ class Views.SavedAlbumView extends Views.AlbumView
 class Touch.SavedAlbumView extends Views.SavedAlbumView
   initialize: (options) ->
     super(options)
-    _.bindAll(this, "toggleOpen", "showRateControls")
-    $(@el).tappable(@toggleOpen)
+    _.bindAll(this, "showRateControls")
+    $(@el).tappable => @toggleOpen()
 
   render: (options) ->
     super(options)
@@ -120,24 +120,16 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
     @$(".actions").append(rateButton)
     this
 
-  toggleOpen: (e) ->
-    if $(@el).hasClass('open')
-      @close()
-    else
-      @open()
-
-  open: ->
-    unless $(@el).hasClass('open')
-      $(@el).addClass('open')
-      @list.albumOpened(this.model)
-
-  close: ->
-    $(@el).removeClass('open').removeClass('showing-rate-controls')
-
   showRateControls: (e) ->
     e.stopPropagation()
     @open()
     $(@el).addClass('showing-rate-controls')
+
+  hideRateControls: ->
+    $(@el).removeClass('showing-rate-controls')
+
+_.extend Touch.SavedAlbumView.prototype, Views.Openable,
+  onClose: -> @hideRateControls()
 
 class Views.SearchAlbumView extends Views.AlbumView
   template: _.template('
