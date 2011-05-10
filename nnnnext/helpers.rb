@@ -24,8 +24,8 @@ module Nnnnext::Helpers
     js = %w(jquery
             jquery.insertAt
             jquery.sitDownMan
+            jquery.tappable
             json2
-            ontap
             underscore
             backbone
             backbone.localStorage
