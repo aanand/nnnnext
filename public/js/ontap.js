@@ -56,7 +56,11 @@
         })
       }
     } else if (typeof callback == 'function') {
-      this.bind('click', callback)
+      this.bind('click', function() {
+        if (typeof callback == 'function' && onlyIf(this)) {
+          callback.call(this, event)
+        }
+      })
     }
 
     return this

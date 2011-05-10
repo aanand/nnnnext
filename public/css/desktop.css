@@ -314,6 +314,12 @@ textarea:-moz-placeholder {
     top: -2px; }
   .album .add:hover:after {
     color: #44aa44; }
+.album.in-my-list .add {
+  opacity: 0;
+  -webkit-transition: opacity 0.5s;
+  cursor: auto; }
+  .album.in-my-list .add:hover:after {
+    color: #cccccc; }
 
 .album-search-list .album:hover, .album-search-list .album:focus {
   background: rgba(95, 148, 16, 0.2);

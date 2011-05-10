@@ -399,6 +399,14 @@ textarea:-moz-placeholder
     &:hover:after
       color: $control-green
 
+  &.in-my-list .add
+    opacity: 0
+    -webkit-transition: opacity 0.5s
+    cursor: auto
+
+    &:hover:after
+      color: $control-normal
+
 .album-search-list
   .album
     &:hover, &:focus
