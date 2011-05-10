@@ -18,6 +18,16 @@ Views.AlbumList = (function() {
       list: this
     });
   };
+  AlbumList.prototype.albumOpened = function(album) {
+    var a, _i, _len, _ref, _results;
+    _ref = this.collection.models;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      a = _ref[_i];
+      _results.push(a !== album ? a.view.close() : void 0);
+    }
+    return _results;
+  };
   return AlbumList;
 })();
 Views.SavedAlbumsList = (function() {
@@ -51,23 +61,6 @@ Views.SavedAlbumsList = (function() {
     if (album.view != null) {
       return album.view.render();
     }
-  };
-  return SavedAlbumsList;
-})();
-Touch.SavedAlbumsList = (function() {
-  function SavedAlbumsList() {
-    SavedAlbumsList.__super__.constructor.apply(this, arguments);
-  }
-  __extends(SavedAlbumsList, Views.SavedAlbumsList);
-  SavedAlbumsList.prototype.albumOpened = function(album) {
-    var a, _i, _len, _ref, _results;
-    _ref = this.collection.models;
-    _results = [];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      a = _ref[_i];
-      _results.push(a !== album ? a.view.close() : void 0);
-    }
-    return _results;
   };
   return SavedAlbumsList;
 })();

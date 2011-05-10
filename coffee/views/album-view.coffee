@@ -157,25 +157,36 @@ class Views.FriendsAlbumView extends Views.AlbumView
 
     <div class="controls">
       <div class="actions">
-        <% if (!inMyList) { %><div class="add"/><% } %>
+        <div class="add"/>
       </div>
     </div>
   ')
 
-  templateVars: ->
-    vars = super()
-    vars.inMyList = SavedAlbums.any (album) =>
+  initialize: (options) ->
+    super(options)
+    @inMyListCheck()
+
+  inMyListCheck: ->
+    @inMyList = SavedAlbums.any (album) =>
       album.id == @model.id and album.get("state") == "current"
 
-    vars
+    if @inMyList
+      $(@el).addClass("in-my-list")
+    else
+      $(@el).removeClass("in-my-list")
 
-  events:
-    _.extend _.clone(Views.AlbumView.prototype.events),
-      "click .add": "add"
+  render: ->
+    super()
+
+    @$(".add").tappable
+      callback: => @add()
+      onlyIf:   => !@inMyList
+
+    this
 
   showRating: true
 
-  add: (e) ->
+  add: ->
     album = new Album({
       id:     @model.id
       artist: @model.get("artist")
@@ -184,4 +195,12 @@ class Views.FriendsAlbumView extends Views.AlbumView
 
     album.addTo(SavedAlbums)
 
-    @$('.add').animate({opacity: 0})
+    @inMyListCheck()
+
+class Touch.FriendsAlbumView extends Views.FriendsAlbumView
+  initialize: (options) ->
+    super(options)
+    $(@el).tappable => @toggleOpen()
+
+_.extend Touch.FriendsAlbumView.prototype, Views.Openable
+

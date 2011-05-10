@@ -195,23 +195,38 @@ Views.FriendsAlbumView = (function() {
 \
     <div class="controls">\
       <div class="actions">\
-        <% if (!inMyList) { %><div class="add"/><% } %>\
+        <div class="add"/>\
       </div>\
     </div>\
   ');
-  FriendsAlbumView.prototype.templateVars = function() {
-    var vars;
-    vars = FriendsAlbumView.__super__.templateVars.call(this);
-    vars.inMyList = SavedAlbums.any(__bind(function(album) {
+  FriendsAlbumView.prototype.initialize = function(options) {
+    FriendsAlbumView.__super__.initialize.call(this, options);
+    return this.inMyListCheck();
+  };
+  FriendsAlbumView.prototype.inMyListCheck = function() {
+    this.inMyList = SavedAlbums.any(__bind(function(album) {
       return album.id === this.model.id && album.get("state") === "current";
     }, this));
-    return vars;
+    if (this.inMyList) {
+      return $(this.el).addClass("in-my-list");
+    } else {
+      return $(this.el).removeClass("in-my-list");
+    }
   };
-  FriendsAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
-    "click .add": "add"
-  });
+  FriendsAlbumView.prototype.render = function() {
+    FriendsAlbumView.__super__.render.call(this);
+    this.$(".add").tappable({
+      callback: __bind(function() {
+        return this.add();
+      }, this),
+      onlyIf: __bind(function() {
+        return !this.inMyList;
+      }, this)
+    });
+    return this;
+  };
   FriendsAlbumView.prototype.showRating = true;
-  FriendsAlbumView.prototype.add = function(e) {
+  FriendsAlbumView.prototype.add = function() {
     var album;
     album = new Album({
       id: this.model.id,
@@ -219,9 +234,21 @@ Views.FriendsAlbumView = (function() {
       title: this.model.get("title")
     });
     album.addTo(SavedAlbums);
-    return this.$('.add').animate({
-      opacity: 0
-    });
+    return this.inMyListCheck();
   };
   return FriendsAlbumView;
 })();
+Touch.FriendsAlbumView = (function() {
+  function FriendsAlbumView() {
+    FriendsAlbumView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(FriendsAlbumView, Views.FriendsAlbumView);
+  FriendsAlbumView.prototype.initialize = function(options) {
+    FriendsAlbumView.__super__.initialize.call(this, options);
+    return $(this.el).tappable(__bind(function() {
+      return this.toggleOpen();
+    }, this));
+  };
+  return FriendsAlbumView;
+})();
+_.extend(Touch.FriendsAlbumView.prototype, Views.Openable);

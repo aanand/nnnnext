@@ -4,6 +4,11 @@ class Views.AlbumList extends Views.List
   makeView: (album) ->
     album.view = new UI[@itemViewClassName]({model: album, list: this})
 
+  albumOpened: (album) ->
+    for a in @collection.models
+      if a != album
+        a.view.close()
+
 class Views.SavedAlbumsList extends Views.AlbumList
   itemViewClassName: 'SavedAlbumView'
   className: "#{Views.AlbumList.prototype.className} saved-albums-list"
@@ -28,12 +33,6 @@ class Views.SavedAlbumsList extends Views.AlbumList
 
   change: (album) ->
     album.view.render() if album.view?
-
-class Touch.SavedAlbumsList extends Views.SavedAlbumsList
-  albumOpened: (album) ->
-    for a in @collection.models
-      if a != album
-        a.view.close()
 
 class Views.AlbumSearchList extends Views.AlbumList
   itemViewClassName: 'SearchAlbumView'

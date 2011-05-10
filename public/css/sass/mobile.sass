@@ -270,7 +270,7 @@ a
     .button.touched
       color: blue
   
-    .delete, .restore, .archive, .show-rate-controls
+    .delete, .restore, .archive, .show-rate-controls, .add
       @extend .button
 
     .delete:before
@@ -304,6 +304,14 @@ a
     .show-rate-controls:after
       content: "Rate"
 
+    .add:before
+      font-size: 80px
+      top:       -7px
+      content:   "+"
+
+    .add:after
+      content: "Add"
+
     .rate
       span
         @extend .button
@@ -315,6 +323,9 @@ a
       span.rated:before
         font-size: 80px
         content:   "★"
+
+  &.in-my-list .add
+    opacity: 0.5
 
 .album-list
   @extend .ui-list

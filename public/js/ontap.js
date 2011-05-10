@@ -3,6 +3,7 @@
 
   $.fn.tappable = function(options) {
     var cancelOnMove = true,
+        onlyIf = function() { return true },
         callback
 
     switch(typeof options) {
@@ -16,12 +17,18 @@
           cancelOnMove = options.cancelOnMove
         }
 
+        if (typeof options.onlyIf != 'undefined') {
+          onlyIf = options.onlyIf
+        }
+
         break;
     }
 
     if (touchSupported) {
       this.bind('touchstart', function() {
-        $(this).addClass('touched')
+        if (onlyIf(this)) {
+          $(this).addClass('touched')
+        }
         return true
       })
 
@@ -29,7 +36,7 @@
         if ($(this).hasClass('touched')) {
           $(this).removeClass('touched')
 
-          if (typeof callback == 'function') {
+          if (typeof callback == 'function' && onlyIf(this)) {
             callback.call(this, event)
           }
         }
