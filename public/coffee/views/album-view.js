@@ -34,11 +34,13 @@ Views.AlbumView = (function() {
     $(this.el).html(this.template(this.templateVars()));
     rating = this.model.get("rating");
     if (this.showRating && rating > 0) {
-      this.addRatingTo('.info', rating, 'prepend');
+      this.addRatingTo('.info', rating);
     }
     if (this.allowRate) {
-      this.addRatingTo('.controls', rating, 'append');
+      this.addRatingTo('.controls', rating);
     }
+    $(this.el).toggleClass('has-rating', (this.showRating && rating > 0) || this.allowRate);
+    $(this.el).toggleClass('has-controls', this.$('.controls').length > 0);
     if (state = this.model.get("state")) {
       $(this.el).attr("data-state", state);
     }
@@ -47,7 +49,7 @@ Views.AlbumView = (function() {
   AlbumView.prototype.addRatingTo = function(selector, rating, method) {
     var e, stars;
     e = this.$(selector);
-    e[method](this.ratingTemplate());
+    e.prepend(this.ratingTemplate());
     if (rating != null) {
       stars = e.find(".rate span").get();
       return $(stars.slice(0, rating)).addClass("rated");
@@ -72,9 +74,9 @@ Views.SavedAlbumView = (function() {
 \
     <div class="controls">\
       <div class="actions">\
-        <div class="delete"></div>\
         <% if (state == "archived") { %><div class="restore"></div><% } %>\
         <% if (state == "current")  { %><div class="archive"></div><% } %>\
+        <div class="delete"></div>\
       </div>\
     </div>\
   ');
@@ -135,7 +137,7 @@ Touch.SavedAlbumView = (function() {
     SavedAlbumView.__super__.render.call(this, options);
     rateButton = $("<div class='show-rate-controls'/>");
     rateButton.tappable(this.showRateControls);
-    this.$(".actions").append(rateButton);
+    this.$(".actions").prepend(rateButton);
     return this;
   };
   SavedAlbumView.prototype.showRateControls = function(e) {

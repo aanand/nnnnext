@@ -25,10 +25,13 @@ class Views.AlbumView extends Views.View
     rating = @model.get("rating")
 
     if @showRating and rating > 0
-      @addRatingTo('.info', rating, 'prepend')
+      @addRatingTo('.info', rating)
 
     if @allowRate
-      @addRatingTo('.controls', rating, 'append')
+      @addRatingTo('.controls', rating)
+
+    $(@el).toggleClass('has-rating', (@showRating and rating > 0) or @allowRate)
+    $(@el).toggleClass('has-controls', @$('.controls').length > 0)
 
     if state = @model.get("state")
       $(@el).attr("data-state", state)
@@ -37,7 +40,7 @@ class Views.AlbumView extends Views.View
 
   addRatingTo: (selector, rating, method) ->
     e = @$(selector)
-    e[method](@ratingTemplate())
+    e.prepend(@ratingTemplate())
 
     if rating?
       stars = e.find(".rate span").get()
@@ -57,9 +60,9 @@ class Views.SavedAlbumView extends Views.AlbumView
 
     <div class="controls">
       <div class="actions">
-        <div class="delete"></div>
         <% if (state == "archived") { %><div class="restore"></div><% } %>
         <% if (state == "current")  { %><div class="archive"></div><% } %>
+        <div class="delete"></div>
       </div>
     </div>
   ')
@@ -117,7 +120,7 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
     super(options)
     rateButton = $("<div class='show-rate-controls'/>")
     rateButton.tappable(@showRateControls)
-    @$(".actions").append(rateButton)
+    @$(".actions").prepend(rateButton)
     this
 
   showRateControls: (e) ->

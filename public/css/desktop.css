@@ -207,9 +207,6 @@ textarea:-moz-placeholder {
   padding: 0 5px; }
 
 .ui-list-item, .album, .album-search-list .new-album, .friend {
-  padding: 4px;
-  border: 1px solid #cccccc;
-  border-width: 1px 0 0 0;
   position: relative; }
   .ui-list-item:after, .album:after, .album-search-list .new-album:after, .friend:after {
     content: "\0020";
@@ -217,12 +214,17 @@ textarea:-moz-placeholder {
     height: 0;
     clear: both;
     visibility: hidden; }
-  .ui-list-item:first-child, .album:first-child, .album-search-list .new-album:first-child, .friend:first-child {
+  .ui-list-item .info, .album .info, .album-search-list .new-album .info, .friend .info {
+    padding: 4px;
+    border: 1px solid #cccccc;
+    border-width: 1px 0 0 0; }
+  .ui-list-item:first-child .info, .album:first-child .info, .album-search-list .new-album:first-child .info, .friend:first-child .info {
     border-width: 0; }
   .ui-list-item:focus, .album:focus, .album-search-list .new-album:focus, .friend:focus {
-    border-left: 3px solid #5f9410;
-    margin-left: -3px;
     outline: none; }
+    .ui-list-item:focus .info, .album:focus .info, .album-search-list .new-album:focus .info, .friend:focus .info {
+      border-left: 3px solid #5f9410;
+      margin-left: -3px; }
   .ui-list-item .primary, .album .primary, .album-search-list .new-album .primary, .friend .primary, .ui-list-item .album .info .title, .album .info .ui-list-item .title, .album .info .title, .album-search-list .new-album .album .info .title, .album .info .album-search-list .new-album .title, .friend .album .info .title, .album .info .friend .title, .ui-list-item .friend .info .name, .friend .info .ui-list-item .name, .album .friend .info .name, .friend .info .album .name, .album-search-list .new-album .friend .info .name, .friend .info .album-search-list .new-album .name, .friend .info .name {
     font-size: 18px;
     margin-bottom: 2px; }
@@ -240,39 +242,45 @@ textarea:-moz-placeholder {
   padding-top: 16px;
   color: #888888; }
 
-.album .control, .album .info .rate, .album .rate, .album .archive, .album .restore, .album .delete, .album .add {
+.album .control, .album .rate, .album .archive, .album .restore, .album .delete, .album .add {
   display: block;
   width: 22px;
   height: 36px;
-  margin-left: 10px;
-  color: #dddddd; }
-.album .controls .control, .album .controls .info .rate, .album .info .controls .rate, .album .controls .rate, .album .controls .archive, .album .controls .restore, .album .controls .delete, .album .controls .add {
+  color: #cccccc; }
+.album.has-rating .info .title {
+  margin-right: 130px; }
+.album.has-controls {
+  margin-right: -80px;
+  padding-right: 80px; }
+.album .controls .control, .album .controls .rate, .album .controls .archive, .album .controls .restore, .album .controls .delete, .album .controls .add {
   visibility: hidden; }
 .album .controls .actions {
   position: absolute;
   top: 10px;
-  right: 8px; }
-  .album .controls .actions .control, .album .controls .actions .info .rate, .album .info .controls .actions .rate, .album .controls .actions .rate, .album .controls .actions .archive, .album .controls .actions .restore, .album .controls .actions .delete, .album .controls .actions .add {
-    float: right; }
-.album:hover .controls .control, .album:hover .controls .info .rate, .album:hover .info .controls .rate, .album:hover .controls .rate, .album:hover .controls .archive, .album:hover .controls .restore, .album:hover .controls .delete, .album:hover .controls .add, .album:focus .controls .control, .album:focus .controls .info .rate, .album:focus .info .controls .rate, .album:focus .controls .rate, .album:focus .controls .archive, .album:focus .controls .restore, .album:focus .controls .delete, .album:focus .controls .add {
+  right: 0;
+  width: 70px; }
+  .album .controls .actions .control, .album .controls .actions .rate, .album .controls .actions .archive, .album .controls .actions .restore, .album .controls .actions .delete, .album .controls .actions .add {
+    display: inline-block;
+    margin-right: 6px; }
+.album:hover .controls .control, .album:hover .controls .rate, .album:hover .controls .archive, .album:hover .controls .restore, .album:hover .controls .delete, .album:hover .controls .add, .album:focus .controls .control, .album:focus .controls .rate, .album:focus .controls .archive, .album:focus .controls .restore, .album:focus .controls .delete, .album:focus .controls .add {
   visibility: visible; }
 .album .rate {
   width: auto !important;
   position: absolute;
   top: 10px;
-  right: 80px; }
+  right: 90px; }
   .album .rate span:after {
     font-size: 20px;
     content: "★";
     vertical-align: 2px; }
   .album .rate span.rated:after {
-    color: #aaaaaa; }
+    color: #999999; }
 .album .controls .rate span {
   cursor: pointer; }
   .album .controls .rate span.selected:after {
     color: #ddaa44; }
   .album .controls .rate span.not-selected:after {
-    color: #dddddd; }
+    color: #cccccc; }
 .album .archive {
   cursor: pointer; }
   .album .archive:after {
@@ -291,8 +299,7 @@ textarea:-moz-placeholder {
   .album .restore:hover:after {
     color: #44aa44; }
 .album .delete {
-  cursor: pointer;
-  width: 30px; }
+  cursor: pointer; }
   .album .delete:after {
     font-size: 26px;
     content: "✕"; }
@@ -325,9 +332,7 @@ textarea:-moz-placeholder {
 
 .friends-albums-list .album[data-state="archived"] .title {
   color: #666666; }
-.friends-albums-list .album .rate {
-  right: 40px; }
-.friends-albums-list .album .control, .friends-albums-list .album .info .rate, .friends-albums-list .album .rate, .friends-albums-list .album .archive, .friends-albums-list .album .restore, .friends-albums-list .album .delete, .friends-albums-list .album .add {
+.friends-albums-list .album .control, .friends-albums-list .album .rate, .friends-albums-list .album .archive, .friends-albums-list .album .restore, .friends-albums-list .album .delete, .friends-albums-list .album .add {
   visibility: visible; }
 
 .friend-browser .spinner {
@@ -340,25 +345,25 @@ textarea:-moz-placeholder {
   background: rgba(95, 148, 16, 0.2);
   cursor: pointer; }
 
-.friend {
+.friend .info {
   padding: 8px 4px; }
-  .friend .back {
-    position: absolute;
-    right: 100%;
-    font-size: 18px;
-    color: #aaaaaa;
-    padding-top: 10px;
-    cursor: pointer; }
-    .friend .back:hover {
-      color: #5f9410; }
-    .friend .back:after {
-      content: "◀"; }
-  .friend img {
-    float: left;
-    width: 48px;
-    height: 48px;
-    margin-right: 8px; }
-  .friend .info {
-    overflow: hidden; }
-    .friend .info .name {
-      margin-bottom: 4px; }
+.friend .back {
+  position: absolute;
+  right: 100%;
+  font-size: 18px;
+  color: #aaaaaa;
+  padding-top: 18px;
+  cursor: pointer; }
+  .friend .back:hover {
+    color: #5f9410; }
+  .friend .back:after {
+    content: "◀"; }
+.friend img {
+  float: left;
+  width: 48px;
+  height: 48px;
+  margin-right: 8px; }
+.friend .info {
+  overflow: hidden; }
+  .friend .info .name {
+    margin-bottom: 4px; }

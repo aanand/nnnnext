@@ -240,20 +240,24 @@ textarea:-moz-placeholder
   padding:    0 5px
 
 .ui-list-item
-  padding:      4px
-  border:       1px solid #ccc
-  border-width: 1px 0 0 0
-  position:     relative
+  position: relative
   +clearfix
 
-  &:first-child
+  .info
+    padding:      4px
+    border:       1px solid #ccc
+    border-width: 1px 0 0 0
+
+  &:first-child .info
     border-width: 0
 
   &:focus
-    $border-width: 3px
-    border-left: $border-width solid $primary
-    margin-left: -$border-width
     outline: none
+
+    .info
+      $border-width: 3px
+      border-left: $border-width solid $primary
+      margin-left: -$border-width
 
   .primary
     font-size:     18px
@@ -280,12 +284,12 @@ textarea:-moz-placeholder
 
 .album
   @extend .ui-list-item
+  $controls-width: 80px
 
   .control
     display:     block
     width:       22px
     height:      36px
-    margin-left: 10px
     color:       $control-normal
 
   .info
@@ -295,8 +299,12 @@ textarea:-moz-placeholder
     .artist
       @extend .secondary
 
-    .rate
-      @extend .control
+  &.has-rating .info .title
+    margin-right: 130px
+
+  &.has-controls
+    margin-right: -$controls-width
+    padding-right: $controls-width
 
   .controls
     .control
@@ -305,10 +313,12 @@ textarea:-moz-placeholder
     .actions
       position: absolute
       top:      10px
-      right:    8px
+      right:    0
+      width:    $controls-width - 10px
 
       .control
-        float: right
+        display: inline-block
+        margin-right: 6px
 
   &:hover, &:focus
     .controls .control
@@ -320,7 +330,7 @@ textarea:-moz-placeholder
     width:    auto !important
     position: absolute
     top:      10px
-    right:    80px
+    right:    $controls-width + 10px
 
     span:after
       font-size:      20px
@@ -368,7 +378,6 @@ textarea:-moz-placeholder
   .delete
     @extend .control
     cursor: pointer
-    width:  30px
 
     &:after
       font-size: 26px
@@ -419,9 +428,6 @@ textarea:-moz-placeholder
     .title
       color: #666
 
-  .rate
-    right: 40px
-
   .control
     visibility: visible
 
@@ -443,14 +449,15 @@ textarea:-moz-placeholder
 .friend
   @extend .ui-list-item
 
-  padding: 8px 4px
+  .info
+    padding: 8px 4px
 
   .back
     position: absolute
     right: 100%
     font-size: 18px
     color: #aaa
-    padding-top: 10px
+    padding-top: 18px
     cursor: pointer
 
     &:hover

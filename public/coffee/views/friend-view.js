@@ -18,9 +18,9 @@ Views.FriendView = (function() {
       <div class="back"/>\
     <% } %>\
 \
-    <img src="<%= image %>"/>\
-\
     <div class="info">\
+      <img src="<%= image %>"/>\
+\
       <div class="name"><%= name %></div>\
       <div class="nickname"><%= nickname %></div>\
     </div>\

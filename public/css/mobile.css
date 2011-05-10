@@ -179,7 +179,7 @@ a {
       .ui-list-item .info .rate span:before, .album .info .rate span:before, .friend .info .rate span:before {
         font-size: 30px;
         content: "★";
-        color: #dddddd; }
+        color: #cccccc; }
       .ui-list-item .info .rate span.rated:before, .album .info .rate span.rated:before, .friend .info .rate span.rated:before {
         color: #ddaa44; }
   .ui-list-item.touched .info, .touched.album .info, .touched.friend .info {
@@ -280,6 +280,10 @@ a {
   .friend img {
     float: left;
     width: 120px;
-    height: 120px; }
+    height: 120px;
+    margin-right: 20px; }
   .friend .info {
-    overflow: hidden; }
+    overflow: hidden;
+    padding: 0; }
+    .friend .info .name {
+      margin-top: 20px; }
