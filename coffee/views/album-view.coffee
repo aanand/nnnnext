@@ -25,19 +25,19 @@ class Views.AlbumView extends Views.View
     rating = @model.get("rating")
 
     if @showRating and rating > 0
-      @appendRatingTo('.info', rating)
+      @addRatingTo('.info', rating, 'prepend')
 
     if @allowRate
-      @appendRatingTo('.controls', rating)
+      @addRatingTo('.controls', rating, 'append')
 
     if state = @model.get("state")
       $(@el).attr("data-state", state)
 
     this
 
-  appendRatingTo: (selector, rating) ->
+  addRatingTo: (selector, rating, method) ->
     e = @$(selector)
-    e.append(@ratingTemplate())
+    e[method](@ratingTemplate())
 
     if rating?
       stars = e.find(".rate span").get()

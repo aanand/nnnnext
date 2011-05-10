@@ -174,10 +174,8 @@ a {
       font-size: 30px;
       color: #666666; }
     .ui-list-item .info .rate, .album .info .rate, .friend .info .rate {
-      position: absolute;
-      top: 0;
-      right: 0;
-      padding: 20px; }
+      float: right;
+      margin-left: 20px; }
       .ui-list-item .info .rate span:before, .album .info .rate span:before, .friend .info .rate span:before {
         font-size: 30px;
         content: "★";

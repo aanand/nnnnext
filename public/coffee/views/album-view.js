@@ -34,20 +34,20 @@ Views.AlbumView = (function() {
     $(this.el).html(this.template(this.templateVars()));
     rating = this.model.get("rating");
     if (this.showRating && rating > 0) {
-      this.appendRatingTo('.info', rating);
+      this.addRatingTo('.info', rating, 'prepend');
     }
     if (this.allowRate) {
-      this.appendRatingTo('.controls', rating);
+      this.addRatingTo('.controls', rating, 'append');
     }
     if (state = this.model.get("state")) {
       $(this.el).attr("data-state", state);
     }
     return this;
   };
-  AlbumView.prototype.appendRatingTo = function(selector, rating) {
+  AlbumView.prototype.addRatingTo = function(selector, rating, method) {
     var e, stars;
     e = this.$(selector);
-    e.append(this.ratingTemplate());
+    e[method](this.ratingTemplate());
     if (rating != null) {
       stars = e.find(".rate span").get();
       return $(stars.slice(0, rating)).addClass("rated");
