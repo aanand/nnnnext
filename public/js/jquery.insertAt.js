@@ -1,4 +1,4 @@
-(function($) {
+;(function($) {
   $.fn.insertAt = function(el, index) {
     el = $(el)
 

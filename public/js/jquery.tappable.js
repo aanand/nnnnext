@@ -1,4 +1,4 @@
-(function($) {
+;(function($) {
   var touchSupported = ('ontouchstart' in window)
 
   $.fn.tappable = function(options) {

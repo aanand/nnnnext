@@ -5,5 +5,5 @@
       window.location = this.href
     })
   }
-})(jQuery)
+})(jQuery);
 
