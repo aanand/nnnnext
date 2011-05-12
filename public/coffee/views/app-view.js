@@ -13,7 +13,6 @@ Views.AppView = (function() {
   __extends(AppView, Views.View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
-    var v, _i, _len, _ref;
     SavedAlbums.fetch();
     $(this.el).html(this.template());
     if (this.isNewUser()) {
@@ -40,7 +39,7 @@ Views.AppView = (function() {
     this.views.forEach(__bind(function(v) {
       return this.$(".views").append(v.render().el);
     }, this));
-    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint", "refreshScroll");
+    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint");
     this.navigation.bind("navigate", this.navigate);
     this.links.bind("aboutClick", this.showAboutPage);
     this.aboutPage.bind("dismiss", this.hideAboutPage);
@@ -51,11 +50,6 @@ Views.AppView = (function() {
     CurrentAlbums.bind("add", this.setHint);
     CurrentAlbums.bind("remove", this.setHint);
     $(window).bind("keydown", this.handleKeypress);
-    _ref = this.views;
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      v = _ref[_i];
-      v.bind("update", this.refreshScroll);
-    }
     this.tabIndex = 0;
     this.navigate(this.navigation.href);
     this.startSync();
@@ -67,7 +61,6 @@ Views.AppView = (function() {
   AppView.prototype.showHeader = function() {
     return this.$(".header").show();
   };
-  AppView.prototype.refreshScroll = function() {};
   AppView.prototype.startSync = function() {
     if (typeof UserInfo == "undefined" || UserInfo === null) {
       return;

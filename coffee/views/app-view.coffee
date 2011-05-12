@@ -26,7 +26,7 @@ class Views.AppView extends Views.View
     @aboutPage.render()
     @views.forEach (v) => @$(".views").append(v.render().el)
 
-    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint", "refreshScroll")
+    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint")
 
     @navigation.bind  "navigate",        @navigate
     @links.bind       "aboutClick",      @showAboutPage
@@ -39,8 +39,6 @@ class Views.AppView extends Views.View
     CurrentAlbums.bind "remove",         @setHint
     $(window).bind    "keydown",         @handleKeypress
 
-    v.bind "update", @refreshScroll for v in @views
-
     @tabIndex = 0
     @navigate(@navigation.href)
 
@@ -52,8 +50,6 @@ class Views.AppView extends Views.View
 
   showHeader: ->
     @$(".header").show()
-
-  refreshScroll: ->
 
   startSync: ->
     return unless UserInfo?
