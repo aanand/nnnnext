@@ -64,5 +64,9 @@ module Nnnnext::Helpers
   def cachebuster
     File.mtime(__FILE__).to_i.to_s
   end
+
+  def google_analytics_account
+    ENV["GOOGLE_ANALYTICS_ACCOUNT"]
+  end
 end
 
