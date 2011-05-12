@@ -45,7 +45,7 @@ Views.AppView = (function() {
     this.aboutPage.bind("dismiss", this.hideAboutPage);
     this.header.bind("syncButtonClick", this.startSync);
     this.listManager.bind("addAlbum", this.showHeader);
-    LocalSync.bind("sync", this.startSync);
+    SavedAlbums.bind("update", this.startSync);
     Sync.bind("finish", this.finishSync);
     CurrentAlbums.bind("add", this.setHint);
     CurrentAlbums.bind("remove", this.setHint);

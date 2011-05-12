@@ -46,7 +46,10 @@ Album = (function() {
       attrs.stateChanged = attrs.updated;
     }
     this.set(attrs);
-    return this.save();
+    this.save();
+    if (this.collection) {
+      return this.collection.trigger("update");
+    }
   };
   Album.prototype.removeView = function() {
     this.view.remove();

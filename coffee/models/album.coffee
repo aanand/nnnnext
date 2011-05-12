@@ -22,6 +22,7 @@ class Album extends Backbone.Model
 
     @set(attrs)
     @save()
+    @collection.trigger("update") if @collection
 
   removeView: ->
     @view.remove()

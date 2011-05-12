@@ -33,7 +33,7 @@ class Views.AppView extends Views.View
     @aboutPage.bind   "dismiss",         @hideAboutPage
     @header.bind      "syncButtonClick", @startSync
     @listManager.bind "addAlbum",        @showHeader
-    LocalSync.bind    "sync",            @startSync
+    SavedAlbums.bind  "update",          @startSync
     Sync.bind         "finish",          @finishSync
     CurrentAlbums.bind "add",            @setHint
     CurrentAlbums.bind "remove",         @setHint
