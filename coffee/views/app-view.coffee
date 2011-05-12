@@ -4,22 +4,35 @@ class Views.AppView extends Views.View
   initialize: ->
     SavedAlbums.fetch()
 
-    @banner = new UI.Banner
+    $(@el).html(@template())
 
-    @header = new UI.Header
+    @hideHeader() if @isNewUser()
+    @hideAboutPage()
 
-    @initNavigation()
+    @links     = new UI.Links({el: @$(".links")})
+    @header    = new UI.Header({el: @$(".header")})
+    @aboutPage = new UI.AboutPage({el: @$(".about-page")})
+
+    @navigation = @header.navigation
+    @navigation.href = "/current"
 
     @listManager   = new UI.ListManager
     @friendBrowser = new UI.FriendBrowser
 
     @views = [@listManager, @friendBrowser]
 
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint", "refreshScroll")
+    @links.render()
+    @header.render()
+    @aboutPage.render()
+    @views.forEach (v) => @$(".views").append(v.render().el)
+
+    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint", "refreshScroll")
 
     @navigation.bind  "navigate",        @navigate
+    @links.bind       "aboutClick",      @showAboutPage
+    @aboutPage.bind   "dismiss",         @hideAboutPage
     @header.bind      "syncButtonClick", @startSync
-    @listManager.bind "addAlbum",        @showNavigation
+    @listManager.bind "addAlbum",        @showHeader
     LocalSync.bind    "sync",            @startSync
     Sync.bind         "finish",          @finishSync
     CurrentAlbums.bind "add",            @setHint
@@ -28,36 +41,19 @@ class Views.AppView extends Views.View
 
     v.bind "update", @refreshScroll for v in @views
 
-    @renderSubviews()
-
-    @hideNavigation() if @isNewUser()
-
     @tabIndex = 0
     @navigate(@navigation.href)
 
     @startSync()
+    @setHint()
 
-  initNavigation: ->
-    @navigation = new UI.Navigation
-    @navigation.href = "/current"
-    @header.addNavigation(@navigation)
+  hideHeader: ->
+    @$(".header").hide()
 
-  hideNavigation: ->
-    @navigation.hide()
-
-  showNavigation: ->
-    @navigation.show()
-
-  renderSubviews: ->
-    @el.append(@banner.render().el)
-    @el.append(@header.render().el)
-    @views.forEach (v) => @el.append(v.render().el)
+  showHeader: ->
+    @$(".header").show()
 
   refreshScroll: ->
-
-  appendTo: (parent) ->
-    $(parent).append(@render().el)
-    @setHint()
 
   startSync: ->
     return unless UserInfo?
@@ -79,6 +75,14 @@ class Views.AppView extends Views.View
         @switchView("friendBrowser")
 
     @setHint()
+
+  showAboutPage: ->
+    @$(".ui").hide()
+    @$(".about-page").show()
+
+  hideAboutPage: ->
+    @$(".about-page").hide()
+    @$(".ui").show()
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -137,13 +141,51 @@ _.extend Views.AppView.prototype, Views.Tabbable, {
 }
 
 class Desktop.AppView extends Views.AppView
-  hideNavigation: ->
-    @header.hide()
+  template: _.template('
+    <div class="banner">
+      <div class="title"/>
+      <div class="links"/>
+    </div>
 
-  showNavigation: ->
-    @header.show()
+    <div class="main">
+      <div class="about-page"/>
+      <div class="ui">
+        <div class="header"/>
+        <div class="views"/>
+      </div>
+    </div>
+  ')
 
-  appendTo: (parent) ->
-    super(parent)
+  initialize: (options) ->
+    super(options)
     @listManager.focusSearchBar()
+
+class Touch.AppView extends Views.AppView
+  template: _.template('
+    <div class="main">
+      <div class="banner">
+        <div class="title"/>
+      </div>
+
+      <div class="ui">
+        <div class="header"/>
+        <div class="views"/>
+      </div>
+
+      <div class="about-page"/>
+
+      <div class="links"/>
+    </div>
+  ')
+
+  initialize: (options) ->
+    super(options)
+
+    bannerHeight   = @$(".banner").outerHeight()
+    linksHeight    = @$(".links").outerHeight()
+    viewportHeight = $(window).height()
+
+    minHeight = viewportHeight - bannerHeight - linksHeight
+
+    @$(".ui, .about-page").css({minHeight: "#{minHeight}px"})
 

@@ -15,16 +15,37 @@ Views.AppView = (function() {
   AppView.prototype.initialize = function() {
     var v, _i, _len, _ref;
     SavedAlbums.fetch();
-    this.banner = new UI.Banner;
-    this.header = new UI.Header;
-    this.initNavigation();
+    $(this.el).html(this.template());
+    if (this.isNewUser()) {
+      this.hideHeader();
+    }
+    this.hideAboutPage();
+    this.links = new UI.Links({
+      el: this.$(".links")
+    });
+    this.header = new UI.Header({
+      el: this.$(".header")
+    });
+    this.aboutPage = new UI.AboutPage({
+      el: this.$(".about-page")
+    });
+    this.navigation = this.header.navigation;
+    this.navigation.href = "/current";
     this.listManager = new UI.ListManager;
     this.friendBrowser = new UI.FriendBrowser;
     this.views = [this.listManager, this.friendBrowser];
-    _.bindAll(this, "navigate", "startSync", "finishSync", "handleKeypress", "showNavigation", "setHint", "refreshScroll");
+    this.links.render();
+    this.header.render();
+    this.aboutPage.render();
+    this.views.forEach(__bind(function(v) {
+      return this.$(".views").append(v.render().el);
+    }, this));
+    _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint", "refreshScroll");
     this.navigation.bind("navigate", this.navigate);
+    this.links.bind("aboutClick", this.showAboutPage);
+    this.aboutPage.bind("dismiss", this.hideAboutPage);
     this.header.bind("syncButtonClick", this.startSync);
-    this.listManager.bind("addAlbum", this.showNavigation);
+    this.listManager.bind("addAlbum", this.showHeader);
     LocalSync.bind("sync", this.startSync);
     Sync.bind("finish", this.finishSync);
     CurrentAlbums.bind("add", this.setHint);
@@ -35,37 +56,18 @@ Views.AppView = (function() {
       v = _ref[_i];
       v.bind("update", this.refreshScroll);
     }
-    this.renderSubviews();
-    if (this.isNewUser()) {
-      this.hideNavigation();
-    }
     this.tabIndex = 0;
     this.navigate(this.navigation.href);
-    return this.startSync();
-  };
-  AppView.prototype.initNavigation = function() {
-    this.navigation = new UI.Navigation;
-    this.navigation.href = "/current";
-    return this.header.addNavigation(this.navigation);
-  };
-  AppView.prototype.hideNavigation = function() {
-    return this.navigation.hide();
-  };
-  AppView.prototype.showNavigation = function() {
-    return this.navigation.show();
-  };
-  AppView.prototype.renderSubviews = function() {
-    this.el.append(this.banner.render().el);
-    this.el.append(this.header.render().el);
-    return this.views.forEach(__bind(function(v) {
-      return this.el.append(v.render().el);
-    }, this));
-  };
-  AppView.prototype.refreshScroll = function() {};
-  AppView.prototype.appendTo = function(parent) {
-    $(parent).append(this.render().el);
+    this.startSync();
     return this.setHint();
   };
+  AppView.prototype.hideHeader = function() {
+    return this.$(".header").hide();
+  };
+  AppView.prototype.showHeader = function() {
+    return this.$(".header").show();
+  };
+  AppView.prototype.refreshScroll = function() {};
   AppView.prototype.startSync = function() {
     if (typeof UserInfo == "undefined" || UserInfo === null) {
       return;
@@ -92,6 +94,14 @@ Views.AppView = (function() {
         this.switchView("friendBrowser");
     }
     return this.setHint();
+  };
+  AppView.prototype.showAboutPage = function() {
+    this.$(".ui").hide();
+    return this.$(".about-page").show();
+  };
+  AppView.prototype.hideAboutPage = function() {
+    this.$(".about-page").hide();
+    return this.$(".ui").show();
   };
   AppView.prototype.handleKeypress = function(e) {
     switch (e.keyCode) {
@@ -149,15 +159,57 @@ Desktop.AppView = (function() {
     AppView.__super__.constructor.apply(this, arguments);
   }
   __extends(AppView, Views.AppView);
-  AppView.prototype.hideNavigation = function() {
-    return this.header.hide();
-  };
-  AppView.prototype.showNavigation = function() {
-    return this.header.show();
-  };
-  AppView.prototype.appendTo = function(parent) {
-    AppView.__super__.appendTo.call(this, parent);
+  AppView.prototype.template = _.template('\
+    <div class="banner">\
+      <div class="title"/>\
+      <div class="links"/>\
+    </div>\
+\
+    <div class="main">\
+      <div class="about-page"/>\
+      <div class="ui">\
+        <div class="header"/>\
+        <div class="views"/>\
+      </div>\
+    </div>\
+  ');
+  AppView.prototype.initialize = function(options) {
+    AppView.__super__.initialize.call(this, options);
     return this.listManager.focusSearchBar();
+  };
+  return AppView;
+})();
+Touch.AppView = (function() {
+  function AppView() {
+    AppView.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AppView, Views.AppView);
+  AppView.prototype.template = _.template('\
+    <div class="main">\
+      <div class="banner">\
+        <div class="title"/>\
+      </div>\
+\
+      <div class="ui">\
+        <div class="header"/>\
+        <div class="views"/>\
+      </div>\
+\
+      <div class="about-page"/>\
+\
+      <div class="links"/>\
+    </div>\
+  ');
+  AppView.prototype.initialize = function(options) {
+    var bannerHeight, linksHeight, minHeight, viewportHeight;
+    AppView.__super__.initialize.call(this, options);
+    bannerHeight = this.$(".banner").outerHeight();
+    linksHeight = this.$(".links").outerHeight();
+    viewportHeight = $(window).height();
+    minHeight = viewportHeight - bannerHeight - linksHeight;
+    return this.$(".ui, .about-page").css({
+      minHeight: "" + minHeight + "px"
+    });
   };
   return AppView;
 })();

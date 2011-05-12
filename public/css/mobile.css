@@ -94,10 +94,13 @@ a {
       background: #83c91b;
       text-shadow: 0px 1px 0px #d7efb4; }
 
+.hint-container {
+  padding: 30px; }
+
 .hint {
   background: #d7efb4;
   color: #3a5a0a;
-  margin: 30px;
+  margin: 0;
   padding: 1px;
   position: relative;
   font-size: 30px;
@@ -110,6 +113,44 @@ a {
       padding-left: 1.5em; }
   .hint .dismiss {
     display: none; }
+
+.links {
+  background: #d7efb4;
+  color: #5f9410;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 26px;
+  opacity: 0.5; }
+  .links div {
+    display: inline-block; }
+    .links div:before {
+      content: "• "; }
+    .links div:first-child:before {
+      display: none; }
+  .links a {
+    color: inherit;
+    text-decoration: none; }
+
+.about-page {
+  padding: 20px;
+  font-size: 30px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  .about-page h2 {
+    margin: 0;
+    padding-top: 4px;
+    font-size: 36px; }
+  .about-page p {
+    margin: 20px 0; }
+  .about-page .dismiss {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 26px; }
+    .about-page .dismiss:after {
+      content: "Back"; }
 
 .album-search-bar {
   position: relative;

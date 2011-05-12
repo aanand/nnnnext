@@ -66,36 +66,38 @@ textarea:-moz-placeholder {
   padding-right: 42.5px;
   padding-top: 40px;
   padding-bottom: 80px;
-  background: url(/img/banner.png) 0 bottom; }
+  background: url(/img/banner.png) 0 bottom;
+  text-align: center; }
   .banner .title {
     width: 115px;
     height: 275px;
     background: url(/img/title.png); }
-  .banner .signin {
-    background: rgba(0, 0, 0, 0.35);
-    padding: 5px;
-    margin: 30px -5px 0;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px; }
-    .banner .signin a {
-      display: block;
-      width: 115px;
-      height: 43px;
-      background: url(/img/signin.png);
-      opacity: 0.9; }
-      .banner .signin a:hover {
-        opacity: 1; }
-  .banner .signout {
-    margin-top: 30px;
-    text-align: center; }
-    .banner .signout a {
-      display: inline-block;
-      width: 50px;
-      height: 10px;
-      background: url(/img/signout.png);
-      opacity: 0.5; }
-      .banner .signout a:hover {
-        opacity: 1; }
+  .banner .links {
+    margin: 20px -10px 0; }
+    .banner .links div {
+      display: inline-block; }
+      .banner .links div:before {
+        content: "• "; }
+      .banner .links div:first-child:before {
+        display: none; }
+    .banner .links a {
+      color: #3a5a0a;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: bold;
+      text-shadow: 0px 1px 0px #83c91b; }
+      .banner .links a:hover {
+        color: #d7efb4;
+        text-shadow: none;
+        cursor: pointer; }
+
+.about-page h2 {
+  font-size: 20px; }
+.about-page .dismiss {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #3a5a0a; }
 
 .header {
   font-size: 20px;
@@ -144,16 +146,23 @@ textarea:-moz-placeholder {
     position: absolute;
     top: 8px;
     right: 8px;
-    cursor: pointer; }
-    .hint .dismiss:after {
-      content: "✕";
-      color: #83c91b;
-      padding: 1px 3px 0 3px;
-      -webkit-border-radius: 2px;
-      -moz-border-radius: 2px; }
-    .hint .dismiss:hover:after {
-      background: #5f9410;
-      color: #d7efb4; }
+    color: #83c91b; }
+
+.dismiss {
+  cursor: pointer;
+  border: none;
+  background: none;
+  width: 18px;
+  height: 19px;
+  padding: 0;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px; }
+  .dismiss:hover {
+    background: #5f9410;
+    color: #d7efb4; }
+  .dismiss:after {
+    font-size: 16px;
+    content: "✕"; }
 
 .album-search-bar {
   width: 510px;

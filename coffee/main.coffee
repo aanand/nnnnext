@@ -10,5 +10,4 @@ else
   UI = Desktop
 
 App = new UI.AppView
-App.appendTo(document.body)
 

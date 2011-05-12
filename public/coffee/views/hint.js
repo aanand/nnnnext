@@ -23,7 +23,7 @@ Views.Hint = (function() {
   Hint.prototype.render = function() {
     $(this.el).empty().append($("<div class='text'/>").html(this.getMessage()));
     if (this.dismissButton) {
-      $(this.el).append("<div class='dismiss'/>");
+      $(this.el).append("<button class='dismiss'/>");
     }
     return this;
   };

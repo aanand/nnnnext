@@ -13,7 +13,7 @@ class Views.Hint extends Views.View
       .empty()
       .append($("<div class='text'/>").html(@getMessage()))
 
-    $(@el).append("<div class='dismiss'/>") if @dismissButton
+    $(@el).append("<button class='dismiss'/>") if @dismissButton
 
     this
 

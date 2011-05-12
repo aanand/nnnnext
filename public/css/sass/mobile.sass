@@ -102,10 +102,13 @@ a
       background: $light
       +text-shadow-bottom($lightest)
 
+.hint-container
+  padding: 30px
+
 .hint
   background: $lightest
   color:      $dark
-  margin:     30px
+  margin:     0
   padding:    1px
   position:   relative
   font-size:  30px
@@ -120,6 +123,53 @@ a
 
   .dismiss
     display: none
+
+.links
+  background: $lightest
+  color:      $primary
+  text-align: center
+  padding:    15px 0
+  font-size:  26px
+  opacity:    0.5
+
+  div
+    display: inline-block
+
+    &:before
+      content: "• "
+
+    &:first-child:before
+      display: none
+
+  a
+    color: inherit
+    text-decoration: none
+
+.about-page
+  $padding: 20px
+
+  padding:   $padding
+  font-size: 30px
+  position:  relative
+
+  +box-sizing(border-box)
+
+  h2
+    margin: 0
+    padding-top: 4px
+    font-size: 36px
+
+  p
+    margin: 20px 0
+
+  .dismiss
+    position:  absolute
+    top:       $padding
+    right:     $padding
+    font-size: 26px
+
+    &:after
+      content: "Back"
 
 .album-search-bar
   $padding:      30px

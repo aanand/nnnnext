@@ -11,8 +11,9 @@ Views.Header = (function() {
     Header.__super__.constructor.apply(this, arguments);
   }
   __extends(Header, Views.View);
-  Header.prototype.className = 'header';
   Header.prototype.template = _.template('\
+    <div class="navigation"/>\
+\
     <div class="sync-controls" style="display:none">\
       <div class="button"/>\
       <div class="spinner" style="display: none"/>\
@@ -21,19 +22,17 @@ Views.Header = (function() {
   Header.prototype.events = {
     "click .sync-controls .button": "syncClick"
   };
+  Header.prototype.initialize = function() {
+    return this.navigation = new UI.Navigation;
+  };
   Header.prototype.render = function() {
     $(this.el).html(this.template());
-    if (this.navigation != null) {
-      $(this.el).append(this.navigation.render().el);
-    }
+    this.navigation.el = this.$(".navigation");
+    this.navigation.render();
     return this;
   };
   Header.prototype.syncClick = function(e) {
     return this.trigger("syncButtonClick");
-  };
-  Header.prototype.addNavigation = function(navigation) {
-    this.navigation = navigation;
-    return navigation.header = this;
   };
   Header.prototype.syncing = function(inProgress) {
     this.$(".sync-controls").show();

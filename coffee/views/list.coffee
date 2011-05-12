@@ -13,12 +13,15 @@ class Views.List extends Views.View
     @reTab()
 
   setHint: (hint) ->
-    @hint.remove() if @hint?
+    if @hint?
+      @hint.remove()
+      @$(".hint-container").remove()
+
     @hint = hint
     @appendHint(@hint) if @hint?
 
   appendHint: (hint) ->
-    $("<li/>").append(hint.render().el).appendTo(@el)
+    $('<li class="hint-container"/>').append(hint.render().el).appendTo(@el)
 
 _.extend Views.List.prototype, Views.Tabbable,
   getTabbableElements: -> @collection.models.map (m) -> m.view.el

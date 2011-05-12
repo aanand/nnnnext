@@ -41,7 +41,8 @@ module Nnnnext::Helpers
              views/view
              views/list
              views/openable
-             views/banner
+             views/links
+             views/about-page
              views/header
              views/navigation
              views/hint

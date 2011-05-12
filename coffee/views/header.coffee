@@ -1,7 +1,7 @@
 class Views.Header extends Views.View
-  className: 'header'
-
   template: _.template('
+    <div class="navigation"/>
+
     <div class="sync-controls" style="display:none">
       <div class="button"/>
       <div class="spinner" style="display: none"/>
@@ -11,17 +11,17 @@ class Views.Header extends Views.View
   events:
     "click .sync-controls .button": "syncClick"
 
+  initialize: ->
+    @navigation = new UI.Navigation
+
   render: ->
     $(@el).html(@template())
-    $(@el).append(@navigation.render().el) if @navigation?
+    @navigation.el = @$(".navigation")
+    @navigation.render()
     this
 
   syncClick: (e) ->
     @trigger("syncButtonClick")
-
-  addNavigation: (navigation) ->
-    @navigation = navigation
-    navigation.header = this
 
   syncing: (inProgress) ->
     @$(".sync-controls").show()

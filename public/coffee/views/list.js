@@ -25,6 +25,7 @@ Views.List = (function() {
   List.prototype.setHint = function(hint) {
     if (this.hint != null) {
       this.hint.remove();
+      this.$(".hint-container").remove();
     }
     this.hint = hint;
     if (this.hint != null) {
@@ -32,7 +33,7 @@ Views.List = (function() {
     }
   };
   List.prototype.appendHint = function(hint) {
-    return $("<li/>").append(hint.render().el).appendTo(this.el);
+    return $('<li class="hint-container"/>').append(hint.render().el).appendTo(this.el);
   };
   return List;
 })();
