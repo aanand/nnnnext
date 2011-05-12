@@ -7,7 +7,7 @@
       = "CacheBuster = #{cachebuster.inspect};\n"
       = "UserInfo = #{user.to_json};\n"
     :javascript
-      Mobile = navigator.userAgent.match(/iPhone/);
+      Mobile = navigator.userAgent.match(/\bMobile\b/);
       (function() {
         var cssHref = Mobile ? '/css/mobile.css' : '/css/desktop.css';
         document.write("<link rel='stylesheet' type='text/css' href='"+cssHref+"?"+CacheBuster+"'/>");
