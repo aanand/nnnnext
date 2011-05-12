@@ -59,3 +59,30 @@ class Touch.SignInHint extends Views.SignInHint
     super()
     @$('a').sitDownMan()
     this
+
+class Desktop.AppHint extends Views.Hint
+  getMessage: -> "
+    <p>
+      <strong>nnnnext</strong> has a mobile interface too&mdash;visit
+      <strong>nnnnext.com</strong> on your phone to use it. You can even
+      install it as an app for quick access.
+    </p>
+  "
+
+class Touch.AppHint extends Views.Hint
+  getMessage: ->
+    message = "
+      <p>
+        You can install <strong>nnnnext</strong> as stand-alone app for quick
+        access and a less cluttered interface.
+      </p>
+    "
+
+    if window.navigator.userAgent.match(/iPhone/)
+      message += "
+        <p>
+          Tap the middle button at the bottom of your screen and then tap
+          &ldquo;Add to Home Screen&rdquo;.
+        </p>
+      "
+

@@ -107,7 +107,10 @@ class Views.AppView extends Views.View
 
   setHint: ->
     hintClass = if UserInfo?
-      null
+      if window.navigator.standalone
+        null
+      else
+        'AppHint'
     else if @isNewUser()
       'IntroHint'
     else if @hasOneAlbum()

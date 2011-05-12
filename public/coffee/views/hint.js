@@ -90,3 +90,27 @@ Touch.SignInHint = (function() {
   };
   return SignInHint;
 })();
+Desktop.AppHint = (function() {
+  function AppHint() {
+    AppHint.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AppHint, Views.Hint);
+  AppHint.prototype.getMessage = function() {
+    return "    <p>      <strong>nnnnext</strong> has a mobile interface too&mdash;visit      <strong>nnnnext.com</strong> on your phone to use it. You can even      install it as an app for quick access.    </p>  ";
+  };
+  return AppHint;
+})();
+Touch.AppHint = (function() {
+  function AppHint() {
+    AppHint.__super__.constructor.apply(this, arguments);
+  }
+  __extends(AppHint, Views.Hint);
+  AppHint.prototype.getMessage = function() {
+    var message;
+    message = "      <p>        You can install <strong>nnnnext</strong> as stand-alone app for quick        access and a less cluttered interface.      </p>    ";
+    if (window.navigator.userAgent.match(/iPhone/)) {
+      return message += "        <p>          Tap the middle button at the bottom of your screen and then tap          &ldquo;Add to Home Screen&rdquo;.        </p>      ";
+    }
+  };
+  return AppHint;
+})();

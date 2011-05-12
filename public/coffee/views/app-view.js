@@ -127,7 +127,7 @@ Views.AppView = (function() {
   };
   AppView.prototype.setHint = function() {
     var hint, hintClass;
-    hintClass = typeof UserInfo != "undefined" && UserInfo !== null ? null : this.isNewUser() ? 'IntroHint' : this.hasOneAlbum() ? 'FirstAlbumHint' : 'SignInHint';
+    hintClass = typeof UserInfo != "undefined" && UserInfo !== null ? window.navigator.standalone ? null : 'AppHint' : this.isNewUser() ? 'IntroHint' : this.hasOneAlbum() ? 'FirstAlbumHint' : 'SignInHint';
     hint = hintClass != null ? Hint.isDismissed(hintClass) ? null : new UI[hintClass] : void 0;
     return this.listManager.setHint(hint);
   };
