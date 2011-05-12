@@ -1,4 +1,13 @@
 module Nnnnext
+  if ENV.has_key?("NEW_RELIC_APPNAME")
+    require "newrelic_rpm"
+    require "new_relic/agent/instrumentation/rack"
+
+    class << self
+      include NewRelic::Agent::Instrumentation::Rack
+    end
+  end
+
   def self.omniauth
     @omniauth ||= Hash.new { |hsh, key| ENV["OMNIAUTH_#{key.upcase}"] }.tap do |omniauth|
       omniauth_file = root + "config/omniauth.yml"
