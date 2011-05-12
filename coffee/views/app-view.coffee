@@ -109,11 +109,11 @@ class Views.AppView extends Views.View
     hintClass = if UserInfo?
       null
     else if @isNewUser()
-      hintClass = 'IntroHint'
+      'IntroHint'
     else if @hasOneAlbum()
-      hintClass = 'FirstAlbumHint'
+      'FirstAlbumHint'
     else
-      hintClass = 'SignInHint'
+      'SignInHint'
 
     hint = if hintClass?
       if Hint.isDismissed(hintClass)
