@@ -18,8 +18,8 @@ a
   color: $primary
 
 .banner
-  $height:       86px
-  $border-width: 2px
+  $height:       43px
+  $border-width: 1px
 
   height:        $height - $border-width
   border-bottom: $border-width solid $dark
@@ -33,22 +33,22 @@ a
   &:after
     content:         "nnnnext"
     display:         block
-    padding-top:     20px
+    padding-top:     10px
     text-align:      center
     text-decoration: none
-    font-size:       40px
+    font-size:       20px
     font-weight:     bold
     color:           white
 
 .navigation
-  height:  60px
+  height:  30px
   width:   100%
   display: table
 
   position: relative
   z-index:  3
 
-  +box-shadow(0 0 10px $dark)
+  +box-shadow(0 0 5px $dark)
 
   .inner
     display: table-row
@@ -60,7 +60,7 @@ a
     text-decoration: none
     background:      $lighter
     color:           $dark
-    font-size:       26px
+    font-size:       13px
     font-weight:     bold
 
     +no-tap-highlight
@@ -75,7 +75,7 @@ a
       +text-shadow-bottom($lightest)
 
 .hint-container
-  padding: 30px
+  padding: 15px
 
 .hint
   background: $lightest
@@ -83,11 +83,11 @@ a
   margin:     0
   padding:    1px
   position:   relative
-  font-size:  30px
-  +border-radius(30px)
+  font-size:  15px
+  +border-radius(15px)
 
   .text
-    margin: 29px 30px
+    margin: 14px 15px
 
     ul
       list-style:   disc
@@ -100,8 +100,8 @@ a
   background: $lightest
   color:      $primary
   text-align: center
-  padding:    15px 0
-  font-size:  26px
+  padding:    8px 0
+  font-size:  13px
   opacity:    0.5
 
   div
@@ -118,66 +118,74 @@ a
     text-decoration: none
 
 .about-page
-  $padding: 20px
+  $padding: 10px
 
   padding:   $padding
-  font-size: 30px
+  font-size: 15px
   position:  relative
 
   +box-sizing(border-box)
 
   h2
     margin: 0
-    padding-top: 4px
-    font-size: 36px
+    padding-top: 2px
+    font-size: 18px
 
   p
-    margin: 20px 0
+    margin: 10px 0
 
   .dismiss
     position:  absolute
     top:       $padding
     right:     $padding
-    font-size: 26px
+    font-size: 13px
 
     &:after
       content: "Back"
 
 .album-search-bar
-  $padding:      30px
-  $input-width:  390px
+  $padding:      15px
+  $button-width: 85px
+  $spacing:      15px
 
   position: relative
-  padding:  $padding
+  height:   60px
 
-  input
-    +box-sizing(border-box)
+  .input
+    position: absolute
+    top:      $padding
+    left:     $padding
+    right:    $padding + $button-width + $spacing
 
-    width:     $input-width
-    font-size: 30px
+    input
+      +box-sizing(border-box)
+
+      width:     100%
+      font-size: 15px
 
   button
     +box-sizing(border-box)
 
     position:  absolute
-    top:       $padding + 2px
+    top:       $padding + 3px
     right:     $padding
-    width:     170px
-    height:    53px
-    font-size: 26px
+    width:     85px
+    height:    27px
+    font-size: 13px
 
   .cancel
-    $width:      60px
-    $img-width:  30px
+    $width:      30px
+    $img-width:  15px
     $img-offset: ($width - $img-width)/2
 
     display:    block
     position:   absolute
-    top:        $padding
-    left:       $padding + $input-width - $width
+    top:        $padding + 2px
+    right:      $padding + $button-width + $spacing
     width:      $width
     height:     $width
     background: url(/img/cancel-search.png) $img-offset $img-offset no-repeat
+    -webkit-background-size: $img-width $img-width
 
 .ui-list
   list-style: none
@@ -216,22 +224,22 @@ a
     z-index:  2
     background: white
     color: black
-    padding: 20px
+    padding: 10px
 
     .primary
-      font-size: 36px
+      font-size: 18px
       font-weight: bold
 
     .secondary
-      font-size: 30px
+      font-size: 15px
       color: #666
 
     .rate
       float: right
-      margin-left: 20px
+      margin-left: 10px
 
       span:before
-        font-size: 30px
+        font-size: 15px
         content:   "★"
         color: $control-normal
 
@@ -265,27 +273,27 @@ a
 
     background-image: -webkit-gradient(linear, left top, left bottom, from($dark), color-stop(0.33, $light), color-stop(0.67, $light), to($dark))
     color:            white
-    text-shadow:      0 0 30px $dark/2
+    text-shadow:      0 0 15px $dark/2
 
     .button
       display:    inline-block
       position:   relative
-      width:      100px
-      height:     100px
+      width:      50px
+      height:     50px
 
     .button:before
       position:    absolute
       top:         0
       left:        0
-      width:       100px
+      width:       50px
 
     .button:after
       position:    absolute
-      top:         80px
+      top:         40px
       left:        0
-      width:       100px
+      width:       50px
       font-weight: bold
-      font-size:   20px
+      font-size:   10px
 
     .button.touched
       color: blue
@@ -294,39 +302,39 @@ a
       @extend .button
 
     .delete:before
-      font-size: 80px
-      top:       -7px
+      font-size: 40px
+      top:       -4px
       content:   "✕"
 
     .delete:after
       content: "Delete"
 
     .restore:before
-      font-size: 70px
+      font-size: 35px
       content:   "↩"
 
     .restore:after
       content: "Restore"
 
     .archive:before
-      font-size: 80px
-      top:       -9px
+      font-size: 40px
+      top:       -5px
       content:   "✔"
 
     .archive:after
       content: "Archive"
 
     .show-rate-controls:before
-      font-size: 60px
-      top:       5px
+      font-size: 30px
+      top:       3px
       content:   "★"
 
     .show-rate-controls:after
       content: "Rate"
 
     .add:before
-      font-size: 80px
-      top:       -7px
+      font-size: 40px
+      top:       -4px
       content:   "+"
 
     .add:after
@@ -337,11 +345,11 @@ a
         @extend .button
 
       span:before
-        font-size: 80px
+        font-size: 40px
         content:   "☆"
 
       span.rated:before
-        font-size: 80px
+        font-size: 40px
         content:   "★"
 
   &.in-my-list .add
@@ -360,20 +368,20 @@ a
     @extend .secondary
 
 .new-album
-  padding: 20px
-  font-size: 30px
+  padding: 10px
+  font-size: 15px
 
   label
     color: #666
     display: block
-    margin-bottom: 20px
+    margin-bottom: 10px
 
   input
-    font-size: 30px
-    width: 200px
+    font-size: 15px
+    width: 100px
 
   button
-    font-size: 26px
+    font-size: 13px
 
 .friend-list
   @extend .ui-list
@@ -384,9 +392,9 @@ a
 
   img
     float:  left
-    width:  120px
-    height: 120px
-    margin-right: 20px
+    width:  60px
+    height: 60px
+    margin-right: 10px
 
   .info
     overflow: hidden
@@ -394,7 +402,7 @@ a
 
     .name
       @extend .primary
-      margin-top: 20px
+      margin-top: 10px
 
     .nickname
       @extend .secondary

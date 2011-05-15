@@ -8,10 +8,10 @@
   box-sizing:         $args
 
 =text-shadow-top($color)
-  text-shadow: 0px -2px 0px $color
+  text-shadow: 0px -1px 0px $color
 
 =text-shadow-bottom($color)
-  text-shadow: 0px 1px 0px $color
+  text-shadow: 0px 1px 0px transparentize($color, 0.5)
 
 =border-radius($x)
   -webkit-border-radius: $x

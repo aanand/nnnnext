@@ -14,7 +14,7 @@ Views.AlbumSearchBar = (function() {
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.template = _.template('\
-    <input type="text"/>\
+    <div class="input"><input type="text"/></div>\
     <button type="submit">Search</button>\
     <div class="spinner" style="display:none"/>\
     <div class="cancel" style="display:none"/>\

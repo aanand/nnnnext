@@ -10,32 +10,32 @@ a {
   color: #5f9410; }
 
 .banner {
-  height: 84px;
-  border-bottom: 2px solid #3a5a0a;
+  height: 42px;
+  border-bottom: 1px solid #3a5a0a;
   position: relative;
   z-index: 4;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#83c91b), to(#5f9410));
   background-image: -moz-linear-gradient(center top, #83c91b 0%, #5f9410 100%);
   background-image: linear-gradient(center top, #83c91b 0%, #5f9410 100%);
-  text-shadow: 0px -2px 0px rgba(58, 90, 10, 0.5); }
+  text-shadow: 0px -1px 0px rgba(58, 90, 10, 0.5); }
   .banner:after {
     content: "nnnnext";
     display: block;
-    padding-top: 20px;
+    padding-top: 10px;
     text-align: center;
     text-decoration: none;
-    font-size: 40px;
+    font-size: 20px;
     font-weight: bold;
     color: white; }
 
 .navigation {
-  height: 60px;
+  height: 30px;
   width: 100%;
   display: table;
   position: relative;
   z-index: 3;
-  -webkit-box-shadow: 0 0 10px #3a5a0a;
-  -moz-box-shadow: 0 0 10px #3a5a0a; }
+  -webkit-box-shadow: 0 0 5px #3a5a0a;
+  -moz-box-shadow: 0 0 5px #3a5a0a; }
   .navigation .inner {
     display: table-row; }
   .navigation a {
@@ -45,19 +45,19 @@ a {
     text-decoration: none;
     background: #a1e143;
     color: #3a5a0a;
-    font-size: 26px;
+    font-size: 13px;
     font-weight: bold;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    text-shadow: 0px 1px 0px white; }
+    text-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5); }
     .navigation a.touched {
       background: #5f9410;
-      text-shadow: 0px 1px 0px #83c91b; }
+      text-shadow: 0px 1px 0px rgba(131, 201, 27, 0.5); }
     .navigation a.active {
       background: #83c91b;
-      text-shadow: 0px 1px 0px #d7efb4; }
+      text-shadow: 0px 1px 0px rgba(215, 239, 180, 0.5); }
 
 .hint-container {
-  padding: 30px; }
+  padding: 15px; }
 
 .hint {
   background: #d7efb4;
@@ -65,11 +65,11 @@ a {
   margin: 0;
   padding: 1px;
   position: relative;
-  font-size: 30px;
-  -webkit-border-radius: 30px;
-  -moz-border-radius: 30px; }
+  font-size: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px; }
   .hint .text {
-    margin: 29px 30px; }
+    margin: 14px 15px; }
     .hint .text ul {
       list-style: disc;
       padding-left: 1.5em; }
@@ -80,8 +80,8 @@ a {
   background: #d7efb4;
   color: #5f9410;
   text-align: center;
-  padding: 15px 0;
-  font-size: 26px;
+  padding: 8px 0;
+  font-size: 13px;
   opacity: 0.5; }
   .links div {
     display: inline-block; }
@@ -94,53 +94,59 @@ a {
     text-decoration: none; }
 
 .about-page {
-  padding: 20px;
-  font-size: 30px;
+  padding: 10px;
+  font-size: 15px;
   position: relative;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
   .about-page h2 {
     margin: 0;
-    padding-top: 4px;
-    font-size: 36px; }
+    padding-top: 2px;
+    font-size: 18px; }
   .about-page p {
-    margin: 20px 0; }
+    margin: 10px 0; }
   .about-page .dismiss {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 26px; }
+    top: 10px;
+    right: 10px;
+    font-size: 13px; }
     .about-page .dismiss:after {
       content: "Back"; }
 
 .album-search-bar {
   position: relative;
-  padding: 30px; }
-  .album-search-bar input {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 390px;
-    font-size: 30px; }
+  height: 60px; }
+  .album-search-bar .input {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 115px; }
+    .album-search-bar .input input {
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      width: 100%;
+      font-size: 15px; }
   .album-search-bar button {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: absolute;
-    top: 32px;
-    right: 30px;
-    width: 170px;
-    height: 53px;
-    font-size: 26px; }
+    top: 18px;
+    right: 15px;
+    width: 85px;
+    height: 27px;
+    font-size: 13px; }
   .album-search-bar .cancel {
     display: block;
     position: absolute;
-    top: 30px;
-    left: 360px;
-    width: 60px;
-    height: 60px;
-    background: url(/img/cancel-search.png) 15px 15px no-repeat; }
+    top: 17px;
+    right: 115px;
+    width: 30px;
+    height: 30px;
+    background: url(/img/cancel-search.png) 7.5px 7.5px no-repeat;
+    -webkit-background-size: 15px 15px; }
 
 .ui-list, .album-list, .friend-list {
   list-style: none;
@@ -169,18 +175,18 @@ a {
     z-index: 2;
     background: white;
     color: black;
-    padding: 20px; }
+    padding: 10px; }
     .ui-list-item .info .primary, .album .info .primary, .friend .info .primary, .ui-list-item .info .album .title, .album .ui-list-item .info .title, .album .info .title, .friend .info .album .title, .album .friend .info .title, .ui-list-item .friend .info .name, .friend .ui-list-item .info .name, .album .friend .info .name, .friend .album .info .name, .friend .info .name {
-      font-size: 36px;
+      font-size: 18px;
       font-weight: bold; }
     .ui-list-item .info .secondary, .album .info .secondary, .friend .info .secondary, .ui-list-item .info .album .artist, .album .ui-list-item .info .artist, .album .info .artist, .friend .info .album .artist, .album .friend .info .artist, .ui-list-item .friend .info .nickname, .friend .ui-list-item .info .nickname, .album .friend .info .nickname, .friend .album .info .nickname, .friend .info .nickname {
-      font-size: 30px;
+      font-size: 15px;
       color: #666666; }
     .ui-list-item .info .rate, .album .info .rate, .friend .info .rate {
       float: right;
-      margin-left: 20px; }
+      margin-left: 10px; }
       .ui-list-item .info .rate span:before, .album .info .rate span:before, .friend .info .rate span:before {
-        font-size: 30px;
+        font-size: 15px;
         content: "★";
         color: #cccccc; }
       .ui-list-item .info .rate span.rated:before, .album .info .rate span.rated:before, .friend .info .rate span.rated:before {
@@ -201,7 +207,7 @@ a {
     text-align: center;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#333333), color-stop(0.33, #444444), color-stop(0.67, #444444), to(#333333));
     color: white;
-    text-shadow: 0 0 30px #191919; }
+    text-shadow: 0 0 15px #191919; }
     .ui-list-item .controls .actions, .album .controls .actions, .friend .controls .actions, .ui-list-item .controls .rate, .album .controls .rate, .friend .controls .rate {
       position: absolute;
       top: 0;
@@ -211,82 +217,82 @@ a {
     .ui-list-item .controls .button, .album .controls .button, .friend .controls .button, .ui-list-item .controls .delete, .album .ui-list-item .controls .delete, .ui-list-item .album .controls .delete, .friend .ui-list-item .controls .delete, .ui-list-item .friend .controls .delete, .ui-list-item .album .controls .delete, .album .ui-list-item .controls .delete, .album .controls .delete, .friend .album .controls .delete, .album .friend .controls .delete, .ui-list-item .friend .controls .delete, .friend .ui-list-item .controls .delete, .album .friend .controls .delete, .friend .album .controls .delete, .friend .controls .delete, .ui-list-item .controls .restore, .album .ui-list-item .controls .restore, .ui-list-item .album .controls .restore, .friend .ui-list-item .controls .restore, .ui-list-item .friend .controls .restore, .ui-list-item .album .controls .restore, .album .ui-list-item .controls .restore, .album .controls .restore, .friend .album .controls .restore, .album .friend .controls .restore, .ui-list-item .friend .controls .restore, .friend .ui-list-item .controls .restore, .album .friend .controls .restore, .friend .album .controls .restore, .friend .controls .restore, .ui-list-item .controls .archive, .album .ui-list-item .controls .archive, .ui-list-item .album .controls .archive, .friend .ui-list-item .controls .archive, .ui-list-item .friend .controls .archive, .ui-list-item .album .controls .archive, .album .ui-list-item .controls .archive, .album .controls .archive, .friend .album .controls .archive, .album .friend .controls .archive, .ui-list-item .friend .controls .archive, .friend .ui-list-item .controls .archive, .album .friend .controls .archive, .friend .album .controls .archive, .friend .controls .archive, .ui-list-item .controls .show-rate-controls, .album .ui-list-item .controls .show-rate-controls, .ui-list-item .album .controls .show-rate-controls, .friend .ui-list-item .controls .show-rate-controls, .ui-list-item .friend .controls .show-rate-controls, .ui-list-item .album .controls .show-rate-controls, .album .ui-list-item .controls .show-rate-controls, .album .controls .show-rate-controls, .friend .album .controls .show-rate-controls, .album .friend .controls .show-rate-controls, .ui-list-item .friend .controls .show-rate-controls, .friend .ui-list-item .controls .show-rate-controls, .album .friend .controls .show-rate-controls, .friend .album .controls .show-rate-controls, .friend .controls .show-rate-controls, .ui-list-item .controls .add, .album .ui-list-item .controls .add, .ui-list-item .album .controls .add, .friend .ui-list-item .controls .add, .ui-list-item .friend .controls .add, .ui-list-item .album .controls .add, .album .ui-list-item .controls .add, .album .controls .add, .friend .album .controls .add, .album .friend .controls .add, .ui-list-item .friend .controls .add, .friend .ui-list-item .controls .add, .album .friend .controls .add, .friend .album .controls .add, .friend .controls .add, .ui-list-item .controls .rate span, .album .ui-list-item .controls .rate span, .ui-list-item .album .controls .rate span, .friend .ui-list-item .controls .rate span, .ui-list-item .friend .controls .rate span, .ui-list-item .album .controls .rate span, .album .ui-list-item .controls .rate span, .album .controls .rate span, .friend .album .controls .rate span, .album .friend .controls .rate span, .ui-list-item .friend .controls .rate span, .friend .ui-list-item .controls .rate span, .album .friend .controls .rate span, .friend .album .controls .rate span, .friend .controls .rate span {
       display: inline-block;
       position: relative;
-      width: 100px;
-      height: 100px; }
+      width: 50px;
+      height: 50px; }
     .ui-list-item .controls .button:before, .album .controls .button:before, .friend .controls .button:before, .ui-list-item .controls .delete:before, .album .ui-list-item .controls .delete:before, .ui-list-item .album .controls .delete:before, .friend .ui-list-item .controls .delete:before, .ui-list-item .friend .controls .delete:before, .ui-list-item .album .controls .delete:before, .album .ui-list-item .controls .delete:before, .album .controls .delete:before, .friend .album .controls .delete:before, .album .friend .controls .delete:before, .ui-list-item .friend .controls .delete:before, .friend .ui-list-item .controls .delete:before, .album .friend .controls .delete:before, .friend .album .controls .delete:before, .friend .controls .delete:before, .ui-list-item .controls .restore:before, .album .ui-list-item .controls .restore:before, .ui-list-item .album .controls .restore:before, .friend .ui-list-item .controls .restore:before, .ui-list-item .friend .controls .restore:before, .ui-list-item .album .controls .restore:before, .album .ui-list-item .controls .restore:before, .album .controls .restore:before, .friend .album .controls .restore:before, .album .friend .controls .restore:before, .ui-list-item .friend .controls .restore:before, .friend .ui-list-item .controls .restore:before, .album .friend .controls .restore:before, .friend .album .controls .restore:before, .friend .controls .restore:before, .ui-list-item .controls .archive:before, .album .ui-list-item .controls .archive:before, .ui-list-item .album .controls .archive:before, .friend .ui-list-item .controls .archive:before, .ui-list-item .friend .controls .archive:before, .ui-list-item .album .controls .archive:before, .album .ui-list-item .controls .archive:before, .album .controls .archive:before, .friend .album .controls .archive:before, .album .friend .controls .archive:before, .ui-list-item .friend .controls .archive:before, .friend .ui-list-item .controls .archive:before, .album .friend .controls .archive:before, .friend .album .controls .archive:before, .friend .controls .archive:before, .ui-list-item .controls .show-rate-controls:before, .album .ui-list-item .controls .show-rate-controls:before, .ui-list-item .album .controls .show-rate-controls:before, .friend .ui-list-item .controls .show-rate-controls:before, .ui-list-item .friend .controls .show-rate-controls:before, .ui-list-item .album .controls .show-rate-controls:before, .album .ui-list-item .controls .show-rate-controls:before, .album .controls .show-rate-controls:before, .friend .album .controls .show-rate-controls:before, .album .friend .controls .show-rate-controls:before, .ui-list-item .friend .controls .show-rate-controls:before, .friend .ui-list-item .controls .show-rate-controls:before, .album .friend .controls .show-rate-controls:before, .friend .album .controls .show-rate-controls:before, .friend .controls .show-rate-controls:before, .ui-list-item .controls .add:before, .album .ui-list-item .controls .add:before, .ui-list-item .album .controls .add:before, .friend .ui-list-item .controls .add:before, .ui-list-item .friend .controls .add:before, .ui-list-item .album .controls .add:before, .album .ui-list-item .controls .add:before, .album .controls .add:before, .friend .album .controls .add:before, .album .friend .controls .add:before, .ui-list-item .friend .controls .add:before, .friend .ui-list-item .controls .add:before, .album .friend .controls .add:before, .friend .album .controls .add:before, .friend .controls .add:before, .ui-list-item .controls .rate span:before, .album .ui-list-item .controls .rate span:before, .ui-list-item .album .controls .rate span:before, .friend .ui-list-item .controls .rate span:before, .ui-list-item .friend .controls .rate span:before, .ui-list-item .album .controls .rate span:before, .album .ui-list-item .controls .rate span:before, .album .controls .rate span:before, .friend .album .controls .rate span:before, .album .friend .controls .rate span:before, .ui-list-item .friend .controls .rate span:before, .friend .ui-list-item .controls .rate span:before, .album .friend .controls .rate span:before, .friend .album .controls .rate span:before, .friend .controls .rate span:before {
       position: absolute;
       top: 0;
       left: 0;
-      width: 100px; }
+      width: 50px; }
     .ui-list-item .controls .button:after, .album .controls .button:after, .friend .controls .button:after, .ui-list-item .controls .delete:after, .album .ui-list-item .controls .delete:after, .ui-list-item .album .controls .delete:after, .friend .ui-list-item .controls .delete:after, .ui-list-item .friend .controls .delete:after, .ui-list-item .album .controls .delete:after, .album .ui-list-item .controls .delete:after, .album .controls .delete:after, .friend .album .controls .delete:after, .album .friend .controls .delete:after, .ui-list-item .friend .controls .delete:after, .friend .ui-list-item .controls .delete:after, .album .friend .controls .delete:after, .friend .album .controls .delete:after, .friend .controls .delete:after, .ui-list-item .controls .restore:after, .album .ui-list-item .controls .restore:after, .ui-list-item .album .controls .restore:after, .friend .ui-list-item .controls .restore:after, .ui-list-item .friend .controls .restore:after, .ui-list-item .album .controls .restore:after, .album .ui-list-item .controls .restore:after, .album .controls .restore:after, .friend .album .controls .restore:after, .album .friend .controls .restore:after, .ui-list-item .friend .controls .restore:after, .friend .ui-list-item .controls .restore:after, .album .friend .controls .restore:after, .friend .album .controls .restore:after, .friend .controls .restore:after, .ui-list-item .controls .archive:after, .album .ui-list-item .controls .archive:after, .ui-list-item .album .controls .archive:after, .friend .ui-list-item .controls .archive:after, .ui-list-item .friend .controls .archive:after, .ui-list-item .album .controls .archive:after, .album .ui-list-item .controls .archive:after, .album .controls .archive:after, .friend .album .controls .archive:after, .album .friend .controls .archive:after, .ui-list-item .friend .controls .archive:after, .friend .ui-list-item .controls .archive:after, .album .friend .controls .archive:after, .friend .album .controls .archive:after, .friend .controls .archive:after, .ui-list-item .controls .show-rate-controls:after, .album .ui-list-item .controls .show-rate-controls:after, .ui-list-item .album .controls .show-rate-controls:after, .friend .ui-list-item .controls .show-rate-controls:after, .ui-list-item .friend .controls .show-rate-controls:after, .ui-list-item .album .controls .show-rate-controls:after, .album .ui-list-item .controls .show-rate-controls:after, .album .controls .show-rate-controls:after, .friend .album .controls .show-rate-controls:after, .album .friend .controls .show-rate-controls:after, .ui-list-item .friend .controls .show-rate-controls:after, .friend .ui-list-item .controls .show-rate-controls:after, .album .friend .controls .show-rate-controls:after, .friend .album .controls .show-rate-controls:after, .friend .controls .show-rate-controls:after, .ui-list-item .controls .add:after, .album .ui-list-item .controls .add:after, .ui-list-item .album .controls .add:after, .friend .ui-list-item .controls .add:after, .ui-list-item .friend .controls .add:after, .ui-list-item .album .controls .add:after, .album .ui-list-item .controls .add:after, .album .controls .add:after, .friend .album .controls .add:after, .album .friend .controls .add:after, .ui-list-item .friend .controls .add:after, .friend .ui-list-item .controls .add:after, .album .friend .controls .add:after, .friend .album .controls .add:after, .friend .controls .add:after, .ui-list-item .controls .rate span:after, .album .ui-list-item .controls .rate span:after, .ui-list-item .album .controls .rate span:after, .friend .ui-list-item .controls .rate span:after, .ui-list-item .friend .controls .rate span:after, .ui-list-item .album .controls .rate span:after, .album .ui-list-item .controls .rate span:after, .album .controls .rate span:after, .friend .album .controls .rate span:after, .album .friend .controls .rate span:after, .ui-list-item .friend .controls .rate span:after, .friend .ui-list-item .controls .rate span:after, .album .friend .controls .rate span:after, .friend .album .controls .rate span:after, .friend .controls .rate span:after {
       position: absolute;
-      top: 80px;
+      top: 40px;
       left: 0;
-      width: 100px;
+      width: 50px;
       font-weight: bold;
-      font-size: 20px; }
+      font-size: 10px; }
     .ui-list-item .controls .button.touched, .album .controls .button.touched, .friend .controls .button.touched, .ui-list-item .controls .touched.delete, .album .ui-list-item .controls .touched.delete, .ui-list-item .album .controls .touched.delete, .friend .ui-list-item .controls .touched.delete, .ui-list-item .friend .controls .touched.delete, .ui-list-item .album .controls .touched.delete, .album .ui-list-item .controls .touched.delete, .album .controls .touched.delete, .friend .album .controls .touched.delete, .album .friend .controls .touched.delete, .ui-list-item .friend .controls .touched.delete, .friend .ui-list-item .controls .touched.delete, .album .friend .controls .touched.delete, .friend .album .controls .touched.delete, .friend .controls .touched.delete, .ui-list-item .controls .touched.restore, .album .ui-list-item .controls .touched.restore, .ui-list-item .album .controls .touched.restore, .friend .ui-list-item .controls .touched.restore, .ui-list-item .friend .controls .touched.restore, .ui-list-item .album .controls .touched.restore, .album .ui-list-item .controls .touched.restore, .album .controls .touched.restore, .friend .album .controls .touched.restore, .album .friend .controls .touched.restore, .ui-list-item .friend .controls .touched.restore, .friend .ui-list-item .controls .touched.restore, .album .friend .controls .touched.restore, .friend .album .controls .touched.restore, .friend .controls .touched.restore, .ui-list-item .controls .touched.archive, .album .ui-list-item .controls .touched.archive, .ui-list-item .album .controls .touched.archive, .friend .ui-list-item .controls .touched.archive, .ui-list-item .friend .controls .touched.archive, .ui-list-item .album .controls .touched.archive, .album .ui-list-item .controls .touched.archive, .album .controls .touched.archive, .friend .album .controls .touched.archive, .album .friend .controls .touched.archive, .ui-list-item .friend .controls .touched.archive, .friend .ui-list-item .controls .touched.archive, .album .friend .controls .touched.archive, .friend .album .controls .touched.archive, .friend .controls .touched.archive, .ui-list-item .controls .touched.show-rate-controls, .album .ui-list-item .controls .touched.show-rate-controls, .ui-list-item .album .controls .touched.show-rate-controls, .friend .ui-list-item .controls .touched.show-rate-controls, .ui-list-item .friend .controls .touched.show-rate-controls, .ui-list-item .album .controls .touched.show-rate-controls, .album .ui-list-item .controls .touched.show-rate-controls, .album .controls .touched.show-rate-controls, .friend .album .controls .touched.show-rate-controls, .album .friend .controls .touched.show-rate-controls, .ui-list-item .friend .controls .touched.show-rate-controls, .friend .ui-list-item .controls .touched.show-rate-controls, .album .friend .controls .touched.show-rate-controls, .friend .album .controls .touched.show-rate-controls, .friend .controls .touched.show-rate-controls, .ui-list-item .controls .touched.add, .album .ui-list-item .controls .touched.add, .ui-list-item .album .controls .touched.add, .friend .ui-list-item .controls .touched.add, .ui-list-item .friend .controls .touched.add, .ui-list-item .album .controls .touched.add, .album .ui-list-item .controls .touched.add, .album .controls .touched.add, .friend .album .controls .touched.add, .album .friend .controls .touched.add, .ui-list-item .friend .controls .touched.add, .friend .ui-list-item .controls .touched.add, .album .friend .controls .touched.add, .friend .album .controls .touched.add, .friend .controls .touched.add, .ui-list-item .controls .rate span.touched, .album .ui-list-item .controls .rate span.touched, .ui-list-item .album .controls .rate span.touched, .friend .ui-list-item .controls .rate span.touched, .ui-list-item .friend .controls .rate span.touched, .ui-list-item .album .controls .rate span.touched, .album .ui-list-item .controls .rate span.touched, .album .controls .rate span.touched, .friend .album .controls .rate span.touched, .album .friend .controls .rate span.touched, .ui-list-item .friend .controls .rate span.touched, .friend .ui-list-item .controls .rate span.touched, .album .friend .controls .rate span.touched, .friend .album .controls .rate span.touched, .friend .controls .rate span.touched {
       color: blue; }
     .ui-list-item .controls .delete:before, .album .controls .delete:before, .friend .controls .delete:before {
-      font-size: 80px;
-      top: -7px;
+      font-size: 40px;
+      top: -4px;
       content: "✕"; }
     .ui-list-item .controls .delete:after, .album .controls .delete:after, .friend .controls .delete:after {
       content: "Delete"; }
     .ui-list-item .controls .restore:before, .album .controls .restore:before, .friend .controls .restore:before {
-      font-size: 70px;
+      font-size: 35px;
       content: "↩"; }
     .ui-list-item .controls .restore:after, .album .controls .restore:after, .friend .controls .restore:after {
       content: "Restore"; }
     .ui-list-item .controls .archive:before, .album .controls .archive:before, .friend .controls .archive:before {
-      font-size: 80px;
-      top: -9px;
+      font-size: 40px;
+      top: -5px;
       content: "✔"; }
     .ui-list-item .controls .archive:after, .album .controls .archive:after, .friend .controls .archive:after {
       content: "Archive"; }
     .ui-list-item .controls .show-rate-controls:before, .album .controls .show-rate-controls:before, .friend .controls .show-rate-controls:before {
-      font-size: 60px;
-      top: 5px;
+      font-size: 30px;
+      top: 3px;
       content: "★"; }
     .ui-list-item .controls .show-rate-controls:after, .album .controls .show-rate-controls:after, .friend .controls .show-rate-controls:after {
       content: "Rate"; }
     .ui-list-item .controls .add:before, .album .controls .add:before, .friend .controls .add:before {
-      font-size: 80px;
-      top: -7px;
+      font-size: 40px;
+      top: -4px;
       content: "+"; }
     .ui-list-item .controls .add:after, .album .controls .add:after, .friend .controls .add:after {
       content: "Add"; }
     .ui-list-item .controls .rate span:before, .album .controls .rate span:before, .friend .controls .rate span:before {
-      font-size: 80px;
+      font-size: 40px;
       content: "☆"; }
     .ui-list-item .controls .rate span.rated:before, .album .controls .rate span.rated:before, .friend .controls .rate span.rated:before {
-      font-size: 80px;
+      font-size: 40px;
       content: "★"; }
   .ui-list-item.in-my-list .add, .in-my-list.album .add, .in-my-list.friend .add {
     opacity: 0.5; }
 
 .new-album {
-  padding: 20px;
-  font-size: 30px; }
+  padding: 10px;
+  font-size: 15px; }
   .new-album label {
     color: #666666;
     display: block;
-    margin-bottom: 20px; }
+    margin-bottom: 10px; }
   .new-album input {
-    font-size: 30px;
-    width: 200px; }
+    font-size: 15px;
+    width: 100px; }
   .new-album button {
-    font-size: 26px; }
+    font-size: 13px; }
 
 .friend {
   overflow: hidden; }
   .friend img {
     float: left;
-    width: 120px;
-    height: 120px;
-    margin-right: 20px; }
+    width: 60px;
+    height: 60px;
+    margin-right: 10px; }
   .friend .info {
     overflow: hidden;
     padding: 0; }
     .friend .info .name {
-      margin-top: 20px; }
+      margin-top: 10px; }
