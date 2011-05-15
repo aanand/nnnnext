@@ -18,7 +18,7 @@ Views.Links = (function() {
 \
     <% if (signedIn) { %>\
       <div class="signout">\
-        <a href="/signout">Sign out</a>\
+        <a>Sign out</a>\
       </div>\
     <% } else { %>\
       <div class="signin">\
@@ -28,11 +28,15 @@ Views.Links = (function() {
   ');
   Links.prototype.render = function() {
     $(this.el).html(this.template({
-      signedIn: typeof UserInfo != "undefined" && UserInfo !== null
+      signedIn: UserInfo
     }));
     this.$('.about a').click(__bind(function(e) {
       e.preventDefault();
       return this.trigger("aboutClick");
+    }, this));
+    this.$('.signout a').click(__bind(function(e) {
+      e.preventDefault();
+      return this.trigger("signoutClick");
     }, this));
     return this;
   };
@@ -45,7 +49,7 @@ Touch.Links = (function() {
   __extends(Links, Views.Links);
   Links.prototype.render = function() {
     Links.__super__.render.call(this);
-    this.$('.signin a, .signout a').sitDownMan();
+    this.$('.signin a').sitDownMan();
     return this;
   };
   return Links;

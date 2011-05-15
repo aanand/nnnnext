@@ -15,7 +15,6 @@ ArchivedAlbums = new FilteredCollection
   comparator: (a) -> -a.get("stateChanged")
 
 Friends = new UserCollection
-Friends.url = "/friends"
 
 FriendsAlbums = new AlbumCollection
 

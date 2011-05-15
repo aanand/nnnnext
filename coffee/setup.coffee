@@ -1,3 +1,5 @@
+UserInfo = localStorage.user? && JSON.parse(localStorage.user)
+
 LocalSync =
   sync: (method, model, options) ->
     ret = Backbone.localSync(method, model, options)
@@ -18,7 +20,7 @@ LocalSync =
 LocalSync.nsPrefix   = "nnnnext"
 LocalSync.unsyncedNS = "#{LocalSync.nsPrefix}/unsynced"
 
-if UserInfo?
+if UserInfo
   LocalSync.ns = "#{LocalSync.nsPrefix}/#{UserInfo._id}"
   LocalSync.migrate(LocalSync.unsyncedNS, LocalSync.ns)
 else

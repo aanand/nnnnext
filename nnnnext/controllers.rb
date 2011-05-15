@@ -29,6 +29,23 @@ module Nnnnext::Controllers
     end
   end
 
+  class Manifest
+    def get
+      lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "NETWORK:", "*", "", "CACHE:"]
+      
+      lines << "favicon.ico"
+      lines << css_url
+      lines += js_includes
+
+      Dir["#{Nnnnext.root}/public/img/*"].each do |p|
+        lines << "/img/#{File.basename(p)}"
+      end
+
+      @headers["Content-Type"] = "text/cache-manifest; charset=utf-8"
+      lines.join "\n"
+    end
+  end
+
   class AuthTwitterCallback
     def get
       auth = @env['omniauth.auth']
@@ -37,18 +54,17 @@ module Nnnnext::Controllers
 
       user = User.find_or_create_by(twitter_uid: auth["uid"])
       user.attributes = auth["user_info"]
+      user.generate_auth_token!
       user.save!
 
-      @state[:user_id] = user.id
+      @headers["content-type"] = "text/html; charset=utf-8"
 
-      redirect '/'
-    end
-  end
-
-  class Signout
-    def get
-      @state[:user_id] = nil
-      redirect '/'
+      %{
+        <script type="text/javascript">
+          localStorage.user = #{user.to_json.inspect};
+          window.location.href = "/";
+        </script>
+      }
     end
   end
 
@@ -109,7 +125,7 @@ module Nnnnext::Controllers
             updated_albums.delete(user_album)
           end
         else
-          user.albums.create(user_album_attrs.merge(album: album))
+          user_album = user.albums.create(user_album_attrs.merge(album: album))
 
           logger.puts "Album #{id} is not in user's list on server."
           logger.puts "Created server copy: #{user_album.to_json}"

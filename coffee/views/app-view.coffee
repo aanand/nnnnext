@@ -29,6 +29,7 @@ class Views.AppView extends Views.View
     _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint")
 
     @navigation.bind  "navigate",        @navigate
+    @links.bind       "signoutClick",    @signout
     @links.bind       "aboutClick",      @showAboutPage
     @aboutPage.bind   "dismiss",         @hideAboutPage
     @header.bind      "syncButtonClick", @startSync
@@ -52,9 +53,9 @@ class Views.AppView extends Views.View
     @$(".header").show()
 
   startSync: ->
-    return unless UserInfo?
+    return unless UserInfo
     @header.syncing(true)
-    Sync.start(SavedAlbums, "/albums/sync")
+    Sync.start(SavedAlbums, "/albums/sync?auth_token=#{UserInfo.auth_token}")
 
   finishSync: ->
     window.setTimeout((=> @header.syncing(false)), 500)
@@ -79,6 +80,10 @@ class Views.AppView extends Views.View
   hideAboutPage: ->
     @$(".about-page").hide()
     @$(".ui").show()
+
+  signout: ->
+    localStorage.removeItem('user')
+    window.location.href = '/'
 
   handleKeypress: (e) ->
     switch e.keyCode
@@ -106,7 +111,7 @@ class Views.AppView extends Views.View
     $(elements[nextIndex]).focus()
 
   setHint: ->
-    hintClass = if UserInfo?
+    hintClass = if UserInfo
       if window.navigator.standalone
         null
       else
@@ -127,7 +132,7 @@ class Views.AppView extends Views.View
     @listManager.setHint(hint)
 
   isNewUser: ->
-    SavedAlbums.length == 0 and not(UserInfo?)
+    SavedAlbums.length == 0 and not(UserInfo)
 
   hasOneAlbum: ->
     SavedAlbums.length == 1 and SavedAlbums.models[0].get("state") == "current"

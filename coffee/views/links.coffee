@@ -6,7 +6,7 @@ class Views.Links extends Views.View
 
     <% if (signedIn) { %>
       <div class="signout">
-        <a href="/signout">Sign out</a>
+        <a>Sign out</a>
       </div>
     <% } else { %>
       <div class="signin">
@@ -16,17 +16,21 @@ class Views.Links extends Views.View
   ')
 
   render: ->
-    $(@el).html(@template({signedIn: UserInfo?}))
+    $(@el).html(@template({signedIn: UserInfo}))
 
     @$('.about a').click (e) =>
       e.preventDefault()
       @trigger("aboutClick")
+
+    @$('.signout a').click (e) =>
+      e.preventDefault()
+      @trigger("signoutClick")
 
     this
 
 class Touch.Links extends Views.Links
   render: ->
     super()
-    @$('.signin a, .signout a').sitDownMan()
+    @$('.signin a').sitDownMan()
     this
 

@@ -1,8 +1,16 @@
+require "digest/sha1"
+
 module Nnnnext::Models
   class User
     include Mongoid::Document
 
     references_many :albums, class_name: "Nnnnext::Models::UserAlbum"
+
+    field :auth_token, type: String
+
+    def generate_auth_token!
+      self.auth_token ||= Digest::SHA1.hexdigest(rand.to_s)
+    end
   end
 
   class UserAlbum

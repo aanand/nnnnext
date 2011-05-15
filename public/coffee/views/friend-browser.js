@@ -44,8 +44,9 @@ Views.FriendBrowser = (function() {
     return true;
   };
   FriendBrowser.prototype.loadFriends = function() {
-    if ((typeof UserInfo != "undefined" && UserInfo !== null) && Friends.length === 0) {
+    if (UserInfo && Friends.length === 0) {
       this.switchView("spinner");
+      Friends.url = "/friends?auth_token=" + UserInfo.auth_token;
       return Friends.fetch();
     } else {
       return this.switchView("friendList");

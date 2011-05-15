@@ -24,5 +24,4 @@ ArchivedAlbums = new FilteredCollection({
   }
 });
 Friends = new UserCollection;
-Friends.url = "/friends";
 FriendsAlbums = new AlbumCollection;

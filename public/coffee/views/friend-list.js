@@ -25,7 +25,7 @@ Views.FriendList = (function() {
   FriendList.prototype.render = function() {
     var hint;
     FriendList.__super__.render.call(this);
-    if (typeof UserInfo == "undefined" || UserInfo === null) {
+    if (!UserInfo) {
       hint = new UI.SignInHint({
         dismissButton: false
       });

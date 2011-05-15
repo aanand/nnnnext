@@ -1,4 +1,5 @@
-var LocalSync;
+var LocalSync, UserInfo;
+UserInfo = (localStorage.user != null) && JSON.parse(localStorage.user);
 LocalSync = {
   sync: function(method, model, options) {
     var ret;

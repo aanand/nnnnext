@@ -1,6 +1,15 @@
 module Nnnnext::Helpers
   def user
-    @user ||= (@state[:user_id] && Nnnnext::Models::User.find(@state[:user_id]))
+    @user ||= (@request[:auth_token] && Nnnnext::Models::User.where(auth_token: @request[:auth_token]).first)
+  end
+
+  def platform
+    case @env["HTTP_USER_AGENT"]
+    when /\bMobile\b/
+      "mobile"
+    else
+      "desktop"
+    end
   end
 
   def json(obj)
@@ -10,6 +19,10 @@ module Nnnnext::Helpers
 
   def logger
     defined?(LOGGER) ? LOGGER : STDOUT
+  end
+
+  def css_url
+    "/css/#{platform}.css?#{cachebuster}"
   end
 
   def js_includes
@@ -29,9 +42,10 @@ module Nnnnext::Helpers
             underscore
             backbone
             backbone.localStorage
+            debug-cache
            ).map { |n| "/js/#{n}.js" }
 
-    js += %w(local-sync
+    js += %w(setup
              models/album
              models/user
              collections/album-collection

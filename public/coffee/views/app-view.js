@@ -41,6 +41,7 @@ Views.AppView = (function() {
     }, this));
     _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint");
     this.navigation.bind("navigate", this.navigate);
+    this.links.bind("signoutClick", this.signout);
     this.links.bind("aboutClick", this.showAboutPage);
     this.aboutPage.bind("dismiss", this.hideAboutPage);
     this.header.bind("syncButtonClick", this.startSync);
@@ -62,11 +63,11 @@ Views.AppView = (function() {
     return this.$(".header").show();
   };
   AppView.prototype.startSync = function() {
-    if (typeof UserInfo == "undefined" || UserInfo === null) {
+    if (!UserInfo) {
       return;
     }
     this.header.syncing(true);
-    return Sync.start(SavedAlbums, "/albums/sync");
+    return Sync.start(SavedAlbums, "/albums/sync?auth_token=" + UserInfo.auth_token);
   };
   AppView.prototype.finishSync = function() {
     return window.setTimeout((__bind(function() {
@@ -95,6 +96,10 @@ Views.AppView = (function() {
   AppView.prototype.hideAboutPage = function() {
     this.$(".about-page").hide();
     return this.$(".ui").show();
+  };
+  AppView.prototype.signout = function() {
+    localStorage.removeItem('user');
+    return window.location.href = '/';
   };
   AppView.prototype.handleKeypress = function(e) {
     switch (e.keyCode) {
@@ -130,12 +135,12 @@ Views.AppView = (function() {
   };
   AppView.prototype.setHint = function() {
     var hint, hintClass;
-    hintClass = typeof UserInfo != "undefined" && UserInfo !== null ? window.navigator.standalone ? null : 'AppHint' : this.isNewUser() ? 'IntroHint' : this.hasOneAlbum() ? 'FirstAlbumHint' : 'SignInHint';
+    hintClass = UserInfo ? window.navigator.standalone ? null : 'AppHint' : this.isNewUser() ? 'IntroHint' : this.hasOneAlbum() ? 'FirstAlbumHint' : 'SignInHint';
     hint = hintClass != null ? Hint.isDismissed(hintClass) ? null : new UI[hintClass] : void 0;
     return this.listManager.setHint(hint);
   };
   AppView.prototype.isNewUser = function() {
-    return SavedAlbums.length === 0 && !(typeof UserInfo != "undefined" && UserInfo !== null);
+    return SavedAlbums.length === 0 && !UserInfo;
   };
   AppView.prototype.hasOneAlbum = function() {
     return SavedAlbums.length === 1 && SavedAlbums.models[0].get("state") === "current";

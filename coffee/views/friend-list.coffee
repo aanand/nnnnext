@@ -11,7 +11,7 @@ class Views.FriendList extends Views.List
   render: ->
     super()
 
-    unless UserInfo?
+    unless UserInfo
       hint = new UI.SignInHint({dismissButton: false})
       @appendHint(hint)
 

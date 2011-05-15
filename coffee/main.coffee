@@ -1,4 +1,4 @@
-if Mobile
+if Platform == "mobile"
   UI = Touch
 
   $('head')

@@ -28,8 +28,9 @@ class Views.FriendBrowser extends Views.View
   handleKeypress: (e) -> true
 
   loadFriends: ->
-    if UserInfo? and Friends.length == 0
+    if UserInfo and Friends.length == 0
       @switchView("spinner")
+      Friends.url = "/friends?auth_token=#{UserInfo.auth_token}"
       Friends.fetch()
     else
       @switchView("friendList")
