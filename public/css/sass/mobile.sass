@@ -7,28 +7,6 @@ $viewport-height: 960px
 =no-tap-highlight
   -webkit-tap-highlight-color: rgba(0,0,0,0)
 
-=header-button($text)
-  $offset: 12px
-  $border: 2px
-
-  display:  block
-  position: absolute
-  top:      $offset
-  bottom:   $offset
-  right:    $offset
-  border:   $border solid $dark
-
-  +border-radius(10px)
-  +vertical-gradient($light, $dark)
-
-  &:after
-    display:     inline-block
-    content:     $text
-    color:       white
-    font-size:   24px
-    font-weight: bold
-    margin:      (27px - $offset - $border) 20px
-
 *, input
   font-family: helvetica, sans-serif
 
@@ -61,12 +39,6 @@ a
     font-size:       40px
     font-weight:     bold
     color:           white
-
-  .signin a
-    +header-button("Sign in")
-
-  .signout a
-    +header-button("Sign out")
 
 .navigation
   height:  60px
