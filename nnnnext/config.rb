@@ -18,6 +18,13 @@ module Nnnnext
     end
   end
 
+  def self.oauth_consumer
+    @oauth_consumer ||= OAuth::Consumer.new(
+      omniauth[:consumer_key],
+      omniauth[:consumer_secret],
+      site: 'https://api.twitter.com')
+  end
+
   def self.session_secret
     secret_file = root + "config/session_secret.txt"
 

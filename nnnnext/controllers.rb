@@ -54,6 +54,7 @@ module Nnnnext::Controllers
 
       user = User.find_or_create_by(twitter_uid: auth["uid"])
       user.attributes = auth["user_info"]
+      user.oauth_credentials = auth["credentials"]
       user.generate_auth_token!
       user.save!
 
@@ -143,7 +144,7 @@ module Nnnnext::Controllers
         return "Unauthorized"
       end
 
-      ids     = Twitter.friends(user_id: user.twitter_uid)
+      ids     = Twitter.friends(user)
       friends = Models::User.where(twitter_uid: {:$in => ids})
 
       json(friends)

@@ -6,10 +6,22 @@ module Nnnnext::Models
 
     references_many :albums, class_name: "Nnnnext::Models::UserAlbum"
 
-    field :auth_token, type: String
+    field :auth_token,        type: String
+    field :oauth_credentials, type: Hash
 
     def generate_auth_token!
       self.auth_token ||= Digest::SHA1.hexdigest(rand.to_s)
+    end
+
+    def oauth_access_token
+      @access_token ||= OAuth::AccessToken.from_hash(
+        Nnnnext.oauth_consumer,
+        oauth_token:        oauth_credentials["token"],
+        oauth_token_secret: oauth_credentials["secret"])
+    end
+
+    def as_json(options=nil)
+      attributes.except(:oauth_credentials).as_json(options)
     end
   end
 
