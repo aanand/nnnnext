@@ -1,6 +1,6 @@
 module Nnnnext
   def self.env
-    @env ||= ENV.tap do |env|
+    @env ||= Hash.new { |hsh, key| ENV[key] }.tap do |env|
       env_file = root + "config/env.yml"
 
       if File.exist?(env_file)

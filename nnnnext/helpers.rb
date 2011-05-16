@@ -26,7 +26,7 @@ module Nnnnext::Helpers
   end
 
   def js_includes
-    if env["CONCATENATE_JS"] == "true"
+    if Nnnnext.env["CONCATENATE_JS"] == "true"
       ["/all.js"]
     else
       js_files
@@ -80,7 +80,7 @@ module Nnnnext::Helpers
   end
 
   def google_analytics_account
-    env["GOOGLE_ANALYTICS_ACCOUNT"]
+    Nnnnext.env["GOOGLE_ANALYTICS_ACCOUNT"]
   end
 end
 
