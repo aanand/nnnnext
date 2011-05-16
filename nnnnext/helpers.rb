@@ -22,12 +22,12 @@ module Nnnnext::Helpers
   end
 
   def css_url
-    "/css/#{platform}.css?#{cachebuster}"
+    "/css/#{platform}.css"
   end
 
   def js_includes
     if ENV["CONCATENATE_JS"] == "true"
-      ["/all.js?#{cachebuster}"]
+      ["/all.js"]
     else
       js_files
     end

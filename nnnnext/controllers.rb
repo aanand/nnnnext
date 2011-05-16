@@ -33,7 +33,7 @@ module Nnnnext::Controllers
     def get
       lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "NETWORK:", "*", "", "CACHE:"]
       
-      lines << "favicon.ico"
+      lines << "/favicon.ico"
       lines << css_url
       lines += js_includes
 
