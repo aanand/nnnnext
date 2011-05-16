@@ -31,7 +31,7 @@ module Nnnnext::Controllers
 
   class Manifest
     def get
-      lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "NETWORK:", "*", "", "CACHE:"]
+      lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "CACHE:"]
       
       lines << "/favicon.ico"
       lines << css_url
@@ -40,6 +40,8 @@ module Nnnnext::Controllers
       Dir["#{Nnnnext.root}/public/img/*"].each do |p|
         lines << "/img/#{File.basename(p)}"
       end
+
+      lines += ["", "NETWORK:", "*"]
 
       @headers["Content-Type"] = "text/cache-manifest; charset=utf-8"
       lines.join "\n"
