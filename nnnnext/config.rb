@@ -1,5 +1,15 @@
 module Nnnnext
-  if ENV.has_key?("NEW_RELIC_APPNAME")
+  def self.env
+    @env ||= ENV.tap do |env|
+      env_file = root + "config/env.yml"
+
+      if File.exist?(env_file)
+        env.merge!(YAML.load_file(env_file))
+      end
+    end
+  end
+
+  if env.has_key?("NEW_RELIC_APPNAME")
     require "newrelic_rpm"
     require "new_relic/agent/instrumentation/rack"
 
@@ -9,7 +19,7 @@ module Nnnnext
   end
 
   def self.omniauth
-    @omniauth ||= Hash.new { |hsh, key| ENV["OMNIAUTH_#{key.upcase}"] }.tap do |omniauth|
+    @omniauth ||= Hash.new { |hsh, key| env["OMNIAUTH_#{key.upcase}"] }.tap do |omniauth|
       omniauth_file = root + "config/omniauth.yml"
 
       if File.exist?(omniauth_file)
@@ -31,7 +41,7 @@ module Nnnnext
     if File.exist?(secret_file)
       File.read(secret_file).strip
     else
-      ENV["SESSION_SECRET"]
+      env["SESSION_SECRET"]
     end
   end
 
@@ -45,7 +55,7 @@ module Nnnnext
     secret: session_secret,
     expire_after: 60*60*24*30
 
-  unless ENV["RACK_ENV"] == "production"
+  unless env["RACK_ENV"] == "production"
     Sass::Plugin.options[:css_location] = root + "public/css"
     use Sass::Plugin::Rack
 
