@@ -26,7 +26,7 @@ module Nnnnext::Helpers
   end
 
   def js_includes
-    if Nnnnext.env["CONCATENATE_JS"] == "true"
+    if Nnnnext.env["CONCATENATE_JS"].to_s == "true"
       ["/all.js"]
     else
       js_files
