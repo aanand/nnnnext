@@ -16,6 +16,8 @@ cache.addEventListener('obsolete', logEvent, false);
 cache.addEventListener('progress', logEvent, false);
 cache.addEventListener('updateready', logEvent, false);
 
+console.log('cache status on page load: ' + cacheStatusValues[cache.status]);
+
 function logEvent(e) {
     var online, status, type, message;
     online = (navigator.onLine) ? 'yes' : 'no';
