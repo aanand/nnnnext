@@ -1,5 +1,3 @@
-ENV["PATH"] = "/usr/local/bin:#{ENV['PATH']}"
-
 STDOUT.sync = true
 STDERR.sync = true
 
