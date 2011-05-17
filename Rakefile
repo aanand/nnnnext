@@ -4,6 +4,15 @@ task :console do
   system "bundle exec irb -I. -rnnnnext"
 end
 
+task :assets => :env do
+  Nnnnext::Assets.generate_all
+end
+
+task :env do
+  $:.unshift "."
+  require "nnnnext"
+end
+
 module MongoDumpTasks
   namespace :mongo do
     namespace :dump do
