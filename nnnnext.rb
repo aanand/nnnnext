@@ -7,9 +7,6 @@ require "uri"
 
 # gems
 require "camping"
-require "camping/session"
-require "haml"
-require "sass/plugin/rack"
 require "oa-oauth"
 require "mongoid"
 
