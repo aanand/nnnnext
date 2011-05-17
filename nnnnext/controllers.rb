@@ -1,4 +1,10 @@
 module Nnnnext::Controllers
+  class Break
+    def get
+      raise "oh no i broke"
+    end
+  end
+
   class Wipe
     def get
       @headers["content-type"] = "text/html; charset=utf-8"
