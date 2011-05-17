@@ -1,11 +1,4 @@
 module Nnnnext::Controllers
-  class Index
-    def get
-      @headers["content-type"] = "text/html; charset=utf-8"
-      render :index
-    end
-  end
-
   class Wipe
     def get
       @headers["content-type"] = "text/html; charset=utf-8"
@@ -16,35 +9,6 @@ module Nnnnext::Controllers
           window.location.href = "/";
         </script>
       }
-    end
-  end
-
-  class ConcatenatedJavascript < R("/all.js")
-    def get
-      logger.puts "concatenating javascript..."
-      paths = js_files.map { |p| "#{Nnnnext.root}/public#{p}" }
-      @headers["Content-Type"] = "text/javascript; charset=utf-8"
-      @headers["Cache-Control"] = "public; max-age=3600"
-      paths.map { |p| File.read(p) }.join
-    end
-  end
-
-  class Manifest
-    def get
-      lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "CACHE:"]
-      
-      lines << "/favicon.ico"
-      lines << css_url
-      lines += js_includes
-
-      Dir["#{Nnnnext.root}/public/img/*"].each do |p|
-        lines << "/img/#{File.basename(p)}"
-      end
-
-      lines += ["", "NETWORK:", "*"]
-
-      @headers["Content-Type"] = "text/cache-manifest; charset=utf-8"
-      lines.join "\n"
     end
   end
 
