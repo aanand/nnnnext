@@ -4,15 +4,17 @@ STDERR.sync = true
 $:.unshift "."
 require "nnnnext"
 
-if ENV["RACK_ENV"] == "production"
+if api_key = Nnnnext.env["HOPTOAD_API_KEY"]
   require 'hoptoad_notifier'
 
   HoptoadNotifier.configure do |config|
-    config.api_key = 'f5e3e91d2de360d1824ea92b54e38c9d'
+    config.api_key = api_key
   end
 
   use HoptoadNotifier::Rack
-else
+end
+
+unless ENV["RACK_ENV"] == "production"
   use Nnnnext::Assets::Middleware
 
   use Rack::Static,
