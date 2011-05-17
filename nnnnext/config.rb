@@ -55,17 +55,6 @@ module Nnnnext
     secret: session_secret,
     expire_after: 60*60*24*30
 
-  unless env["RACK_ENV"] == "production"
-    Sass::Plugin.options[:css_location] = root + "public/css"
-    use Sass::Plugin::Rack
-
-    def self.spawn_coffee_watcher(input, output)
-      Daemon.spawn("coffee", "coffee --bare --watch --output #{output.to_s.inspect} #{input.to_s.inspect}")
-    end
-
-    spawn_coffee_watcher(root + "coffee", root + "public/coffee")
-  end
-
   use Rack::Static,
     root: root + "public",
     urls: ["/js", "/coffee", "/css", "/img", "/favicon.ico"]
