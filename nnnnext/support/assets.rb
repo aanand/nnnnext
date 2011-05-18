@@ -49,18 +49,17 @@ module Nnnnext::Assets
   end
 
   def manifest
-    lines = ["CACHE MANIFEST", "\# version #{cachebuster}", "", "CACHE:"]
-    
-    lines << "/favicon.ico"
-    lines += ["/css/desktop.css", "/css/mobile.css"]
-    lines += js_includes
+    paths = ["/favicon.ico"]
+    paths += ["/css/desktop.css", "/css/mobile.css"]
+    paths += js_includes
 
     Dir["public/img/*"].each do |p|
-      lines << "/img/#{File.basename(p)}"
+      paths << "/img/#{File.basename(p)}"
     end
 
-    lines += ["", "NETWORK:", "*"]
+    mtime = paths.map { |p| File.mtime("public"+p) }.max
 
+    lines = ["CACHE MANIFEST", "\# version #{mtime}", "", "CACHE:"] + paths + ["", "NETWORK:", "*"]
     lines.join "\n"
   end
 
@@ -117,10 +116,6 @@ module Nnnnext::Assets
              sync
              main
             ).map { |n| "/coffee/#{n}.js" }
-  end
-
-  def cachebuster
-    File.mtime(__FILE__).to_i.to_s
   end
 
   def google_analytics_account
