@@ -103,6 +103,7 @@ GEM
     rack-openid (1.2.0)
       rack (>= 1.1.0)
       ruby-openid (>= 2.1.8)
+    rake (0.8.7)
     rest-client (1.6.1)
       mime-types (>= 1.16)
     ruby-openid (2.1.8)
@@ -130,5 +131,6 @@ DEPENDENCIES
   mongoid (= 2.0.0.rc.7)
   newrelic_rpm
   omniauth
+  rake
   sass
   tilt

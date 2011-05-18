@@ -1,5 +1,6 @@
 source :rubygems
 
+gem "rake"
 gem "camping", git: "git://github.com/camping/camping.git", ref: "separate-gemspecs"
 gem "tilt"
 gem "haml"
