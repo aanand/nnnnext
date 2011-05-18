@@ -57,7 +57,7 @@ module Nnnnext::Assets
       paths << "/img/#{File.basename(p)}"
     end
 
-    mtime = paths.map { |p| File.mtime("public"+p) }.max
+    mtime = paths.map { |p| File.mtime("public"+p).to_i }.max
 
     lines = ["CACHE MANIFEST", "\# version #{mtime}", "", "CACHE:"] + paths + ["", "NETWORK:", "*"]
     lines.join "\n"
