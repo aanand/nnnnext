@@ -21,7 +21,12 @@ module Nnnnext::Models
     end
 
     def as_json(options=nil)
-      attributes.except(:oauth_credentials).as_json(options)
+      options ||= {}
+
+      exclude = [:oauth_credentials]
+      exclude << :auth_token unless options.fetch(:include_auth_token, false)
+
+      attributes.except(*exclude).as_json(options)
     end
   end
 

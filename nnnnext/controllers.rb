@@ -34,7 +34,7 @@ module Nnnnext::Controllers
 
       %{
         <script type="text/javascript">
-          localStorage.user = #{user.to_json.inspect};
+          localStorage.user = #{user.to_json(include_auth_token: true).inspect};
           window.location.href = "/";
         </script>
       }
