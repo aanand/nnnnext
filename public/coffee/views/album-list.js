@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AlbumList = (function() {
+  __extends(AlbumList, Views.List);
   function AlbumList() {
     AlbumList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumList, Views.List);
   AlbumList.prototype.className = 'album-list';
   AlbumList.prototype.makeView = function(album) {
     return album.view = new UI[this.itemViewClassName]({
@@ -31,10 +31,10 @@ Views.AlbumList = (function() {
   return AlbumList;
 })();
 Views.SavedAlbumsList = (function() {
+  __extends(SavedAlbumsList, Views.AlbumList);
   function SavedAlbumsList() {
     SavedAlbumsList.__super__.constructor.apply(this, arguments);
   }
-  __extends(SavedAlbumsList, Views.AlbumList);
   SavedAlbumsList.prototype.itemViewClassName = 'SavedAlbumView';
   SavedAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " saved-albums-list";
   SavedAlbumsList.prototype.initialize = function(options) {
@@ -65,10 +65,10 @@ Views.SavedAlbumsList = (function() {
   return SavedAlbumsList;
 })();
 Views.AlbumSearchList = (function() {
+  __extends(AlbumSearchList, Views.AlbumList);
   function AlbumSearchList() {
     AlbumSearchList.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchList, Views.AlbumList);
   AlbumSearchList.prototype.itemViewClassName = 'SearchAlbumView';
   AlbumSearchList.prototype.className = "" + Views.AlbumList.prototype.className + " album-search-list";
   AlbumSearchList.prototype.populate = function() {
@@ -87,10 +87,10 @@ Views.AlbumSearchList = (function() {
   return AlbumSearchList;
 })();
 Views.FriendsAlbumsList = (function() {
+  __extends(FriendsAlbumsList, Views.AlbumList);
   function FriendsAlbumsList() {
     FriendsAlbumsList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendsAlbumsList, Views.AlbumList);
   FriendsAlbumsList.prototype.itemViewClassName = 'FriendsAlbumView';
   FriendsAlbumsList.prototype.className = "" + Views.AlbumList.prototype.className + " friends-albums-list";
   FriendsAlbumsList.prototype.initialize = function(options) {

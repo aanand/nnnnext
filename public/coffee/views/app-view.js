@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AppView = (function() {
+  __extends(AppView, Views.View);
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, Views.View);
   AppView.prototype.el = $('#app');
   AppView.prototype.initialize = function() {
     SavedAlbums.fetch();
@@ -153,10 +153,10 @@ _.extend(Views.AppView.prototype, Views.Tabbable, {
   }
 });
 Desktop.AppView = (function() {
+  __extends(AppView, Views.AppView);
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, Views.AppView);
   AppView.prototype.template = _.template('\
     <div class="banner">\
       <div class="title"/>\
@@ -178,10 +178,10 @@ Desktop.AppView = (function() {
   return AppView;
 })();
 Touch.AppView = (function() {
+  __extends(AppView, Views.AppView);
   function AppView() {
     AppView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AppView, Views.AppView);
   AppView.prototype.template = _.template('\
     <div class="main">\
       <div class="banner">\

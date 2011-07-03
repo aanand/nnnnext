@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.List = (function() {
+  __extends(List, Views.View);
   function List() {
     List.__super__.constructor.apply(this, arguments);
   }
-  __extends(List, Views.View);
   List.prototype.tagName = 'ul';
   List.prototype.initialize = function(options) {
     return _.bindAll(this, "populate");

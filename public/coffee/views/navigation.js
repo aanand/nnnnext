@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.Navigation = (function() {
+  __extends(Navigation, Views.View);
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
-  __extends(Navigation, Views.View);
   Navigation.prototype.className = 'navigation';
   Navigation.prototype.template = _.template('\
     <div class="inner">\
@@ -47,10 +47,10 @@ Views.Navigation = (function() {
   return Navigation;
 })();
 Touch.Navigation = (function() {
+  __extends(Navigation, Views.Navigation);
   function Navigation() {
     Navigation.__super__.constructor.apply(this, arguments);
   }
-  __extends(Navigation, Views.Navigation);
   Navigation.prototype.show = function() {
     console.log("setting display: table");
     return $(this.el).css({

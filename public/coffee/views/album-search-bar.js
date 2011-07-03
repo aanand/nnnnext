@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AlbumSearchBar = (function() {
+  __extends(AlbumSearchBar, Views.View);
   function AlbumSearchBar() {
     AlbumSearchBar.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumSearchBar, Views.View);
   AlbumSearchBar.prototype.className = 'album-search-bar';
   AlbumSearchBar.prototype.tagName = 'form';
   AlbumSearchBar.prototype.template = _.template('\

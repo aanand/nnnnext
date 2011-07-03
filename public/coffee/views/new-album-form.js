@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.NewAlbumForm = (function() {
+  __extends(NewAlbumForm, Views.View);
   function NewAlbumForm() {
     NewAlbumForm.__super__.constructor.apply(this, arguments);
   }
-  __extends(NewAlbumForm, Views.View);
   NewAlbumForm.prototype.tagName = 'li';
   NewAlbumForm.prototype.className = 'new-album';
   NewAlbumForm.prototype.events = {

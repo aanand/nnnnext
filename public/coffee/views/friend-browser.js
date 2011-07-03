@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.FriendBrowser = (function() {
+  __extends(FriendBrowser, Views.View);
   function FriendBrowser() {
     FriendBrowser.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendBrowser, Views.View);
   FriendBrowser.prototype.className = 'friend-browser';
   FriendBrowser.prototype.initialize = function() {
     _.bindAll(this, "loadFriends", "loadFriendsAlbums");

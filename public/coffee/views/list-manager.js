@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.ListManager = (function() {
+  __extends(ListManager, Views.View);
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, Views.View);
   ListManager.prototype.initialize = function() {
     var coll, event, _i, _j, _len, _len2, _ref, _ref2;
     _.bindAll(this, "addAlbum", "startSearch", "finishSearch", "cancelSearch");
@@ -110,10 +110,10 @@ _.extend(Views.ListManager.prototype, Views.Tabbable, {
   }
 });
 Desktop.ListManager = (function() {
+  __extends(ListManager, Views.ListManager);
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, Views.ListManager);
   ListManager.prototype.addAlbum = function(album) {
     ListManager.__super__.addAlbum.call(this, album);
     return this.focusSearchBar();
@@ -121,10 +121,10 @@ Desktop.ListManager = (function() {
   return ListManager;
 })();
 Touch.ListManager = (function() {
+  __extends(ListManager, Views.ListManager);
   function ListManager() {
     ListManager.__super__.constructor.apply(this, arguments);
   }
-  __extends(ListManager, Views.ListManager);
   ListManager.prototype.finishSearch = function() {
     ListManager.__super__.finishSearch.call(this);
     console.log("blurring search bar");

@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AlbumView = (function() {
+  __extends(AlbumView, Views.View);
   function AlbumView() {
     AlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(AlbumView, Views.View);
   AlbumView.prototype.tagName = 'li';
   AlbumView.prototype.className = 'album';
   AlbumView.prototype.events = {
@@ -62,10 +62,10 @@ Views.AlbumView = (function() {
 })();
 _.extend(Views.AlbumView.prototype, Views.Tabbable);
 Views.SavedAlbumView = (function() {
+  __extends(SavedAlbumView, Views.AlbumView);
   function SavedAlbumView() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SavedAlbumView, Views.AlbumView);
   SavedAlbumView.prototype.template = _.template('\
     <div class="info">\
       <div class="title"><%= title %></div>\
@@ -121,10 +121,10 @@ Views.SavedAlbumView = (function() {
   return SavedAlbumView;
 })();
 Touch.SavedAlbumView = (function() {
+  __extends(SavedAlbumView, Views.SavedAlbumView);
   function SavedAlbumView() {
     SavedAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SavedAlbumView, Views.SavedAlbumView);
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
     _.bindAll(this, "showRateControls");
@@ -156,10 +156,10 @@ _.extend(Touch.SavedAlbumView.prototype, Views.Openable, {
   }
 });
 Views.SearchAlbumView = (function() {
+  __extends(SearchAlbumView, Views.AlbumView);
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SearchAlbumView, Views.AlbumView);
   SearchAlbumView.prototype.template = _.template('\
     <div class="info">\
       <div class="title"><%= title %></div>\
@@ -172,10 +172,10 @@ Views.SearchAlbumView = (function() {
   return SearchAlbumView;
 })();
 Touch.SearchAlbumView = (function() {
+  __extends(SearchAlbumView, Views.SearchAlbumView);
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(SearchAlbumView, Views.SearchAlbumView);
   SearchAlbumView.prototype.initialize = function(options) {
     SearchAlbumView.__super__.initialize.call(this, options);
     return $(this.el).tappable(__bind(function() {
@@ -185,10 +185,10 @@ Touch.SearchAlbumView = (function() {
   return SearchAlbumView;
 })();
 Views.FriendsAlbumView = (function() {
+  __extends(FriendsAlbumView, Views.AlbumView);
   function FriendsAlbumView() {
     FriendsAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendsAlbumView, Views.AlbumView);
   FriendsAlbumView.prototype.template = _.template('\
     <div class="info">\
       <div class="title"><%= title %></div>\
@@ -241,10 +241,10 @@ Views.FriendsAlbumView = (function() {
   return FriendsAlbumView;
 })();
 Touch.FriendsAlbumView = (function() {
+  __extends(FriendsAlbumView, Views.FriendsAlbumView);
   function FriendsAlbumView() {
     FriendsAlbumView.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendsAlbumView, Views.FriendsAlbumView);
   FriendsAlbumView.prototype.initialize = function(options) {
     FriendsAlbumView.__super__.initialize.call(this, options);
     return $(this.el).tappable(__bind(function() {

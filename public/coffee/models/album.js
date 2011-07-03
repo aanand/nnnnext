@@ -8,10 +8,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Album = (function() {
+  __extends(Album, Backbone.Model);
   function Album() {
     Album.__super__.constructor.apply(this, arguments);
   }
-  __extends(Album, Backbone.Model);
   Album.prototype.sync = LocalSync.sync;
   Album.prototype.addTo = function(collection) {
     this.collection = collection;

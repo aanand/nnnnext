@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.FriendList = (function() {
+  __extends(FriendList, Views.List);
   function FriendList() {
     FriendList.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendList, Views.List);
   FriendList.prototype.className = 'friend-list';
   FriendList.prototype.initialize = function(options) {
     FriendList.__super__.initialize.call(this, options);

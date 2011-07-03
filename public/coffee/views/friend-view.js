@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.FriendView = (function() {
+  __extends(FriendView, Views.View);
   function FriendView() {
     FriendView.__super__.constructor.apply(this, arguments);
   }
-  __extends(FriendView, Views.View);
   FriendView.prototype.tagName = 'li';
   FriendView.prototype.className = 'friend';
   FriendView.prototype.template = _.template('\

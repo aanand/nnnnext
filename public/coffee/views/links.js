@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.Links = (function() {
+  __extends(Links, Views.View);
   function Links() {
     Links.__super__.constructor.apply(this, arguments);
   }
-  __extends(Links, Views.View);
   Links.prototype.template = _.template('\
     <div class="about">\
       <a href="/about">About</a>\
@@ -43,10 +43,10 @@ Views.Links = (function() {
   return Links;
 })();
 Touch.Links = (function() {
+  __extends(Links, Views.Links);
   function Links() {
     Links.__super__.constructor.apply(this, arguments);
   }
-  __extends(Links, Views.Links);
   Links.prototype.render = function() {
     Links.__super__.render.call(this);
     this.$('.signin a').sitDownMan();

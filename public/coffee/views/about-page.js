@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 }, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.AboutPage = (function() {
+  __extends(AboutPage, Views.View);
   function AboutPage() {
     AboutPage.__super__.constructor.apply(this, arguments);
   }
-  __extends(AboutPage, Views.View);
   AboutPage.prototype.template = _.template('\
     <h2>About</h2>\
 \

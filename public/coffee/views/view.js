@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.View = (function() {
+  __extends(View, Backbone.View);
   function View() {
     View.__super__.constructor.apply(this, arguments);
   }
-  __extends(View, Backbone.View);
   View.prototype.show = function() {
     this.trigger("show");
     return $(this.el).show();

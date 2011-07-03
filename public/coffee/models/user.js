@@ -8,20 +8,20 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 User = (function() {
+  __extends(User, Backbone.Model);
   function User() {
     User.__super__.constructor.apply(this, arguments);
   }
-  __extends(User, Backbone.Model);
   User.prototype.albumsUrl = function() {
     return "/u/" + (this.get('nickname')) + "/albums";
   };
   return User;
 })();
 UserCollection = (function() {
+  __extends(UserCollection, Backbone.Collection);
   function UserCollection() {
     UserCollection.__super__.constructor.apply(this, arguments);
   }
-  __extends(UserCollection, Backbone.Collection);
   UserCollection.prototype.model = User;
   return UserCollection;
 })();

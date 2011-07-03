@@ -7,10 +7,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 Views.Header = (function() {
+  __extends(Header, Views.View);
   function Header() {
     Header.__super__.constructor.apply(this, arguments);
   }
-  __extends(Header, Views.View);
   Header.prototype.template = _.template('\
     <div class="navigation"/>\
 \
@@ -47,10 +47,10 @@ Views.Header = (function() {
   return Header;
 })();
 Desktop.Header = (function() {
+  __extends(Header, Views.Header);
   function Header() {
     Header.__super__.constructor.apply(this, arguments);
   }
-  __extends(Header, Views.Header);
   Header.prototype.show = function() {
     return $(this.el).slideDown('fast');
   };

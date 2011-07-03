@@ -8,10 +8,10 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   return child;
 };
 FilteredCollection = (function() {
+  __extends(FilteredCollection, Backbone.Collection);
   function FilteredCollection() {
     FilteredCollection.__super__.constructor.apply(this, arguments);
   }
-  __extends(FilteredCollection, Backbone.Collection);
   FilteredCollection.prototype.initialize = function(options) {
     _.bindAll(this, "parentAdded", "parentRefreshed", "parentChanged");
     this.parent = options.parent;
