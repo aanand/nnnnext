@@ -1,4 +1,4 @@
-web:    rackup
+web:    bundle exec rackup
 coffee: coffee --bare --watch --output public/coffee coffee
-sass:   sass --watch public/css/sass:public/css
+sass:   bundle exec sass --watch public/css/sass:public/css
 
