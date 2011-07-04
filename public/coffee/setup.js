@@ -1,4 +1,4 @@
-var LocalSync, UserInfo;
+var LocalSync, TouchDelay, UserInfo;
 UserInfo = (localStorage.user != null) && JSON.parse(localStorage.user);
 LocalSync = {
   sync: function(method, model, options) {
@@ -26,5 +26,6 @@ if (UserInfo) {
 } else {
   LocalSync.ns = LocalSync.unsyncedNS;
 }
+TouchDelay = 150;
 _.bindAll(LocalSync, "sync");
 _.extend(LocalSync, Backbone.Events);

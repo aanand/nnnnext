@@ -49,7 +49,6 @@ class Views.AlbumSearchBar extends Views.View
     e.preventDefault() if e
 
     @clear()
-    @focus()
     @trigger("clear")
     @showOrHideCancel()
 

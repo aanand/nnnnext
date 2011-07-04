@@ -43,3 +43,9 @@ class Views.FriendBrowser extends Views.View
 _.extend Views.FriendBrowser.prototype, Views.Tabbable,
   getTabbableElements: -> [@currentView]
 
+class Touch.FriendBrowser extends Views.FriendBrowser
+  switchView: (viewName) ->
+    @views.forEach (v) -> $(v.el).children().removeClass('touched')
+    super(viewName)
+
+  

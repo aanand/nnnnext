@@ -26,6 +26,8 @@ if UserInfo
 else
   LocalSync.ns = LocalSync.unsyncedNS
 
+TouchDelay = 150
+
 _.bindAll(LocalSync, "sync")
 _.extend(LocalSync, Backbone.Events)
 

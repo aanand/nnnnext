@@ -114,7 +114,7 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
   initialize: (options) ->
     super(options)
     _.bindAll(this, "showRateControls")
-    $(@el).tappable => @toggleOpen()
+    $(@el).tappable(callback: (=> @toggleOpen()), touchDelay: TouchDelay)
 
   render: (options) ->
     super(options)
@@ -149,7 +149,12 @@ class Views.SearchAlbumView extends Views.AlbumView
 class Touch.SearchAlbumView extends Views.SearchAlbumView
   initialize: (options) ->
     super(options)
-    $(@el).tappable => @select()
+
+    callback = =>
+      $(@el).addClass('touched')
+      window.setTimeout((=> @select()), 0)
+
+    $(@el).tappable(callback: callback, touchDelay: TouchDelay)
 
 class Views.FriendsAlbumView extends Views.AlbumView
   template: _.template('
@@ -203,7 +208,7 @@ class Views.FriendsAlbumView extends Views.AlbumView
 class Touch.FriendsAlbumView extends Views.FriendsAlbumView
   initialize: (options) ->
     super(options)
-    $(@el).tappable => @toggleOpen()
+    $(@el).tappable(callback: (=> @toggleOpen()), touchDelay: TouchDelay)
 
 _.extend Touch.FriendsAlbumView.prototype, Views.Openable
 

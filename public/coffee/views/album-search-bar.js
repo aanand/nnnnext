@@ -64,7 +64,6 @@ Views.AlbumSearchBar = (function() {
       e.preventDefault();
     }
     this.clear();
-    this.focus();
     this.trigger("clear");
     return this.showOrHideCancel();
   };

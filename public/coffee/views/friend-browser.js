@@ -64,3 +64,16 @@ _.extend(Views.FriendBrowser.prototype, Views.Tabbable, {
     return [this.currentView];
   }
 });
+Touch.FriendBrowser = (function() {
+  __extends(FriendBrowser, Views.FriendBrowser);
+  function FriendBrowser() {
+    FriendBrowser.__super__.constructor.apply(this, arguments);
+  }
+  FriendBrowser.prototype.switchView = function(viewName) {
+    this.views.forEach(function(v) {
+      return $(v.el).children().removeClass('touched');
+    });
+    return FriendBrowser.__super__.switchView.call(this, viewName);
+  };
+  return FriendBrowser;
+})();

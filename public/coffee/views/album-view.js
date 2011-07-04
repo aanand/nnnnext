@@ -128,9 +128,12 @@ Touch.SavedAlbumView = (function() {
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
     _.bindAll(this, "showRateControls");
-    return $(this.el).tappable(__bind(function() {
-      return this.toggleOpen();
-    }, this));
+    return $(this.el).tappable({
+      callback: (__bind(function() {
+        return this.toggleOpen();
+      }, this)),
+      touchDelay: TouchDelay
+    });
   };
   SavedAlbumView.prototype.render = function(options) {
     var rateButton;
@@ -177,10 +180,18 @@ Touch.SearchAlbumView = (function() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
   }
   SearchAlbumView.prototype.initialize = function(options) {
+    var callback;
     SearchAlbumView.__super__.initialize.call(this, options);
-    return $(this.el).tappable(__bind(function() {
-      return this.select();
-    }, this));
+    callback = __bind(function() {
+      $(this.el).addClass('touched');
+      return window.setTimeout((__bind(function() {
+        return this.select();
+      }, this)), 0);
+    }, this);
+    return $(this.el).tappable({
+      callback: callback,
+      touchDelay: TouchDelay
+    });
   };
   return SearchAlbumView;
 })();
@@ -247,9 +258,12 @@ Touch.FriendsAlbumView = (function() {
   }
   FriendsAlbumView.prototype.initialize = function(options) {
     FriendsAlbumView.__super__.initialize.call(this, options);
-    return $(this.el).tappable(__bind(function() {
-      return this.toggleOpen();
-    }, this));
+    return $(this.el).tappable({
+      callback: (__bind(function() {
+        return this.toggleOpen();
+      }, this)),
+      touchDelay: TouchDelay
+    });
   };
   return FriendsAlbumView;
 })();

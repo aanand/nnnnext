@@ -5,7 +5,7 @@ var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, par
   child.prototype = new ctor;
   child.__super__ = parent.prototype;
   return child;
-};
+}, __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.FriendView = (function() {
   __extends(FriendView, Views.View);
   function FriendView() {
@@ -30,13 +30,19 @@ Views.FriendView = (function() {
     "click .back": "back"
   };
   FriendView.prototype.initialize = function(options) {
-    var _ref;
-    _.bindAll(this, "select");
+    var callback, _ref;
     this.list = options.list;
     this.backButton = (_ref = options.backButton) != null ? _ref : false;
-    if (this.list != null) {
-      return $(this.el).tappable(this.select);
-    }
+    callback = __bind(function() {
+      $(this.el).addClass('touched');
+      return window.setTimeout((__bind(function() {
+        return this.select();
+      }, this)), 0);
+    }, this);
+    return $(this.el).tappable({
+      callback: callback,
+      touchDelay: TouchDelay
+    });
   };
   FriendView.prototype.render = function() {
     var vars;
