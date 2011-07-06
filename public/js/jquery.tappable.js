@@ -14,7 +14,15 @@
  *  - Highlighting and firing of the callback is cancelled if the user moves
  *    their finger (though this can be disabled).
  *
+ *  - If the browser doesn't support touch events, it falls back to click events.
+ *
  * See it in action here: http://nnnnext.com
+ *
+ * I recommend that you add a `-webkit-tap-highlight-color: rgba(0,0,0,0)`
+ * style rule to any elements you wish to make tappable, to hide the ugly grey
+ * click overlay.
+ *
+ * Tested on iOS 4.3 and some version of Android, I don't know. Leave me alone.
  *
  * Basic usage:
  *
