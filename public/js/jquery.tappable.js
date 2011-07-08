@@ -34,7 +34,7 @@
  *     callback:     function() { console.log("Hello World!") },
  *     cancelOnMove: false,
  *     touchDelay:   150,
- *     onlyIf:       function() { return Math.random() > 0.5 }
+ *     onlyIf:       function(el) { return $(el).hasClass('enabled') }
  *   })
  *
  * Options:
@@ -102,15 +102,10 @@
         var el = this
 
         if (onlyIf(this)) {
-          $(el)
-            .removeClass('touched')
-            .removeClass('touch-ended')
-            .addClass('touch-started')
+          $(el).addClass('touch-started')
 
           window.setTimeout(function() {
-            if ($(el).hasClass('touch-ended')) {
-              fireCallback(el, event)
-            } else if ($(el).hasClass('touch-started')) {
+            if ($(el).hasClass('touch-started')) {
               $(el).addClass('touched')
             }
           }, touchDelay)
@@ -122,13 +117,12 @@
       this.bind('touchend', function(event) {
         var el = this
 
-        if ($(el).hasClass('touched')) {
-          $(el).removeClass('touched')
-          fireCallback(el, event)
-        } else if ($(el).hasClass('touch-started')) {
+        if ($(el).hasClass('touch-started')) {
           $(el)
+            .removeClass('touched')
             .removeClass('touch-started')
-            .addClass('touch-ended')
+
+          fireCallback(el, event)
         }
 
         return true
@@ -143,7 +137,6 @@
           $(this)
             .removeClass('touched')
             .removeClass('touch-started')
-            .removeClass('touch-ended')
         })
       }
     } else if (typeof callback == 'function') {
