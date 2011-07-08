@@ -25,7 +25,7 @@ class Views.FriendView extends Views.View
 
     callback = =>
       $(@el).addClass('touched')
-      window.setTimeout((=> @select()), 0)
+      @select()
 
     $(@el).tappable(callback: callback, touchDelay: TouchDelay)
 

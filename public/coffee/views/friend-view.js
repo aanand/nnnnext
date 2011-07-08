@@ -35,9 +35,7 @@ Views.FriendView = (function() {
     this.backButton = (_ref = options.backButton) != null ? _ref : false;
     callback = __bind(function() {
       $(this.el).addClass('touched');
-      return window.setTimeout((__bind(function() {
-        return this.select();
-      }, this)), 0);
+      return this.select();
     }, this);
     return $(this.el).tappable({
       callback: callback,
