@@ -152,7 +152,7 @@ class Touch.SearchAlbumView extends Views.SearchAlbumView
 
     callback = =>
       $(@el).addClass('touched')
-      window.setTimeout((=> @select()), 0)
+      window.setTimeout((=> @select()), 50)
 
     $(@el).tappable(callback: callback, touchDelay: TouchDelay)
 

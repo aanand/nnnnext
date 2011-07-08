@@ -1,3 +1,4 @@
+var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 Views.Openable = {
   toggleOpen: function(e) {
     if ($(this.el).hasClass('open')) {
@@ -8,7 +9,10 @@ Views.Openable = {
   },
   open: function() {
     if (!$(this.el).hasClass('open')) {
-      $(this.el).addClass('open');
+      $(this.el).addClass('touched').addClass('open');
+      window.setTimeout((__bind(function() {
+        return $(this.el).removeClass('touched');
+      }, this)), 400);
       return this.list.albumOpened(this.model);
     }
   },

@@ -186,7 +186,7 @@ Touch.SearchAlbumView = (function() {
       $(this.el).addClass('touched');
       return window.setTimeout((__bind(function() {
         return this.select();
-      }, this)), 0);
+      }, this)), 50);
     }, this);
     return $(this.el).tappable({
       callback: callback,

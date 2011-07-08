@@ -7,7 +7,12 @@ Views.Openable =
 
   open: ->
     unless $(@el).hasClass('open')
-      $(@el).addClass('open')
+      $(@el)
+        .addClass('touched')
+        .addClass('open')
+
+      window.setTimeout((=> $(@el).removeClass('touched')), 400)
+
       @list.albumOpened(this.model)
 
   close: ->
