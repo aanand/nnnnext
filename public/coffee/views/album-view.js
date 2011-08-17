@@ -21,7 +21,7 @@ Views.AlbumView = (function() {
   };
   AlbumView.prototype.ratingTemplate = _.template('\
     <div class="rate">\
-      <span data-rating="1"></span><span data-rating="2"></span><span data-rating="3"></span><span data-rating="4"></span><span data-rating="5"></span>\
+      <span data-rating="1">★</span><span data-rating="2">★</span><span data-rating="3">★</span><span data-rating="4">★</span><span data-rating="5">★</span>\
     </div>\
   ');
   AlbumView.prototype.showRating = false;
