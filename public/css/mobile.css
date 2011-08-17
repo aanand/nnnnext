@@ -185,11 +185,10 @@ a {
     .ui-list-item .info .rate, .album .info .rate, .friend .info .rate {
       float: right;
       margin-left: 10px; }
-      .ui-list-item .info .rate span:before, .album .info .rate span:before, .friend .info .rate span:before {
+      .ui-list-item .info .rate span, .album .info .rate span, .friend .info .rate span {
         font-size: 15px;
-        content: "★";
         color: #cccccc; }
-      .ui-list-item .info .rate span.rated:before, .album .info .rate span.rated:before, .friend .info .rate span.rated:before {
+      .ui-list-item .info .rate span.rated, .album .info .rate span.rated, .friend .info .rate span.rated {
         color: #ddaa44; }
   .ui-list-item.touched .info, .touched.album .info, .touched.friend .info {
     background-image: -webkit-gradient(linear, left top, left bottom, from(#4286f5), to(#194fdb));
@@ -262,9 +261,14 @@ a {
       content: "+"; }
     .ui-list-item .controls .add:after, .album .controls .add:after, .friend .controls .add:after {
       content: "Add"; }
+    .ui-list-item .controls .rate span, .album .controls .rate span, .friend .controls .rate span, .ui-list-item .controls .rate span.touched, .album .controls .rate span.touched, .friend .controls .rate span.touched {
+      color: rgba(0, 0, 0, 0); }
     .ui-list-item .controls .rate span:before, .album .controls .rate span:before, .friend .controls .rate span:before {
       font-size: 40px;
-      content: "☆"; }
+      content: "☆";
+      color: white; }
+    .ui-list-item .controls .rate span.touched:before, .album .controls .rate span.touched:before, .friend .controls .rate span.touched:before {
+      color: blue; }
     .ui-list-item .controls .rate span.rated:before, .album .controls .rate span.rated:before, .friend .controls .rate span.rated:before {
       font-size: 40px;
       content: "★"; }

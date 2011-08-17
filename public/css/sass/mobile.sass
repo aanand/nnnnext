@@ -238,12 +238,11 @@ a
       float: right
       margin-left: 10px
 
-      span:before
+      span
         font-size: 15px
-        content:   "★"
         color: $control-normal
 
-      span.rated:before
+      span.rated
         color: $control-yellow
 
   &.touched .info
@@ -271,8 +270,11 @@ a
     $dark:  #333
     $light: #444
 
+    $control-color: white
+    $touched-color: blue
+
     background-image: -webkit-gradient(linear, left top, left bottom, from($dark), color-stop(0.33, $light), color-stop(0.67, $light), to($dark))
-    color:            white
+    color:            $control-color
     text-shadow:      0 0 15px $dark/2
 
     .button
@@ -296,7 +298,7 @@ a
       font-size:   10px
 
     .button.touched
-      color: blue
+      color: $touched-color
   
     .delete, .restore, .archive, .show-rate-controls, .add
       @extend .button
@@ -344,9 +346,16 @@ a
       span
         @extend .button
 
+      span, span.touched
+        color: rgba(0,0,0,0)
+
       span:before
         font-size: 40px
         content:   "☆"
+        color:     $control-color
+
+      span.touched:before
+        color: $touched-color
 
       span.rated:before
         font-size: 40px
