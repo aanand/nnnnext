@@ -10,7 +10,7 @@ class Views.AlbumView extends Views.View
 
   ratingTemplate: _.template('
     <div class="rate">
-      <span data-rating="1">★</span><span data-rating="2">★</span><span data-rating="3">★</span><span data-rating="4">★</span><span data-rating="5">★</span>
+      <span data-rating="1">\u2605</span><span data-rating="2">\u2605</span><span data-rating="3">\u2605</span><span data-rating="4">\u2605</span><span data-rating="5">\u2605</span>
     </div>
   ')
 
