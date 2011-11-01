@@ -2,7 +2,7 @@ $:.unshift(File.expand_path('./lib', ENV['rvm_path'])) # Add RVM's lib directory
 require "rvm/capistrano"                               # Load RVM's capistrano plugin.
 set :rvm_type, :user
 
-set :host,        "nnnnext.linode"
+set :host,        "nnnnext.com"
 set :user,        "aanand"
 set :application, "nnnnext"
 
