@@ -103,7 +103,7 @@ Views.FriendsAlbumsList = (function() {
     var userView;
     FriendsAlbumsList.__super__.populate.call(this);
     if (this.collection.length === 0) {
-      $(this.el).append("<li class='nothing-found'>" + (this.user.get("nickname")) + " doesn’t have any albums queued.</li>");
+      $(this.el).append("<li class='nothing-found'>" + (this.user.get("nickname")) + " doesn\u2019t have any albums queued.</li>");
     }
     if (this.user != null) {
       userView = new UI.FriendView({

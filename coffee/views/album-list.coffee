@@ -61,7 +61,7 @@ class Views.FriendsAlbumsList extends Views.AlbumList
     super()
 
     if @collection.length == 0
-      $(@el).append("<li class='nothing-found'>#{@user.get("nickname")} doesn’t have any albums queued.</li>")
+      $(@el).append("<li class='nothing-found'>#{@user.get("nickname")} doesn\u2019t have any albums queued.</li>")
 
     if @user?
       userView = new UI.FriendView({model: @user, highlightable: false, backButton: true})
