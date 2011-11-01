@@ -21,8 +21,9 @@ class Views.FriendBrowser extends Views.View
 
   render: ->
     $(@el).append(@spinner)
-    $(@el).append(@friendList.render().el)
-    $(@el).append(@albumList.render().el)
+    for v in [@friendList, @albumList]
+      $(@el).append(v.el)
+      v.render()
     this
 
   handleKeypress: (e) -> true

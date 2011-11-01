@@ -97,6 +97,19 @@
       }
     }
 
+    this.each(function() {
+      var node = this,
+          elementDesc = [this.tagName.toLowerCase()].concat(this.className.split(/\s+/)).join('.');
+
+      while (node.parentNode) { node = node.parentNode; }
+
+      if (node !== window.document) {
+        var nodeDesc = node.tagName ? [node.tagName.toLowerCase()].concat(node.className.split(/\s+/)).join('.') : node.toString();
+        console.log("expected to find window.document, but got " + nodeDesc + " with parentNode = " + node.parentNode);
+        console.error('warning: jQuery.fn.tappable called on an element (' + elementDesc + ') that is not in the DOM. Touch events will not fire in iOS 5+.');
+      }
+    });
+
     if (touchSupported) {
       this.bind('touchstart', function(event) {
         var el = this

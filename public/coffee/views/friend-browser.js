@@ -35,9 +35,14 @@ Views.FriendBrowser = (function() {
     }, this));
   };
   FriendBrowser.prototype.render = function() {
+    var v, _i, _len, _ref;
     $(this.el).append(this.spinner);
-    $(this.el).append(this.friendList.render().el);
-    $(this.el).append(this.albumList.render().el);
+    _ref = [this.friendList, this.albumList];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      v = _ref[_i];
+      $(this.el).append(v.el);
+      v.render();
+    }
     return this;
   };
   FriendBrowser.prototype.handleKeypress = function(e) {

@@ -25,11 +25,10 @@ class Views.ListManager extends Views.View
   isSearching: -> @currentView == @searchResultsList
 
   render: ->
-    $(@el).append(@searchBar.render().el)
-    $(@el).append(@searchResultsList.render().el)
-    $(@el).append(@currentAlbumsList.render().el)
-    $(@el).append(@archivedAlbumsList.render().el)
-    
+    for v in [@searchBar, @searchResultsList, @currentAlbumsList, @archivedAlbumsList]
+      $(@el).append(v.el)
+      v.render()
+
     @currentAlbumsList.populate()
     @archivedAlbumsList.populate()
 

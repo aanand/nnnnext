@@ -23,16 +23,17 @@ class Views.FriendView extends Views.View
     @list = options.list
     @backButton = options.backButton ? false
 
+  render: ->
+    vars = @model.toJSON()
+    vars.backButton = @backButton
+    $(@el).html(@template(vars))
+
     callback = =>
       $(@el).addClass('touched')
       @select()
 
     $(@el).tappable(callback: callback, touchDelay: TouchDelay)
 
-  render: ->
-    vars = @model.toJSON()
-    vars.backButton = @backButton
-    $(@el).html(@template(vars))
     this
 
   back: ->

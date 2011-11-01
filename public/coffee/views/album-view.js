@@ -127,20 +127,20 @@ Touch.SavedAlbumView = (function() {
   }
   SavedAlbumView.prototype.initialize = function(options) {
     SavedAlbumView.__super__.initialize.call(this, options);
-    _.bindAll(this, "showRateControls");
-    return $(this.el).tappable({
+    return _.bindAll(this, "showRateControls");
+  };
+  SavedAlbumView.prototype.render = function(options) {
+    var rateButton;
+    SavedAlbumView.__super__.render.call(this, options);
+    $(this.el).tappable({
       callback: (__bind(function() {
         return this.toggleOpen();
       }, this)),
       touchDelay: TouchDelay
     });
-  };
-  SavedAlbumView.prototype.render = function(options) {
-    var rateButton;
-    SavedAlbumView.__super__.render.call(this, options);
     rateButton = $("<div class='show-rate-controls'/>");
-    rateButton.tappable(this.showRateControls);
     this.$(".actions").prepend(rateButton);
+    rateButton.tappable(this.showRateControls);
     return this;
   };
   SavedAlbumView.prototype.showRateControls = function(e) {
@@ -169,6 +169,13 @@ Views.SearchAlbumView = (function() {
       <div class="artist"><%= artist %></div>\
     </div>\
   ');
+  return SearchAlbumView;
+})();
+Desktop.SearchAlbumView = (function() {
+  __extends(SearchAlbumView, Views.SearchAlbumView);
+  function SearchAlbumView() {
+    SearchAlbumView.__super__.constructor.apply(this, arguments);
+  }
   SearchAlbumView.prototype.events = _.extend(_.clone(Views.AlbumView.prototype.events), {
     click: "select"
   });
@@ -179,9 +186,9 @@ Touch.SearchAlbumView = (function() {
   function SearchAlbumView() {
     SearchAlbumView.__super__.constructor.apply(this, arguments);
   }
-  SearchAlbumView.prototype.initialize = function(options) {
+  SearchAlbumView.prototype.render = function() {
     var callback;
-    SearchAlbumView.__super__.initialize.call(this, options);
+    SearchAlbumView.__super__.render.call(this);
     callback = __bind(function() {
       $(this.el).addClass('touched');
       return window.setTimeout((__bind(function() {
@@ -256,8 +263,8 @@ Touch.FriendsAlbumView = (function() {
   function FriendsAlbumView() {
     FriendsAlbumView.__super__.constructor.apply(this, arguments);
   }
-  FriendsAlbumView.prototype.initialize = function(options) {
-    FriendsAlbumView.__super__.initialize.call(this, options);
+  FriendsAlbumView.prototype.render = function(options) {
+    FriendsAlbumView.__super__.render.call(this, options);
     return $(this.el).tappable({
       callback: (__bind(function() {
         return this.toggleOpen();

@@ -18,7 +18,10 @@ Views.List = (function() {
   List.prototype.populate = function() {
     $(this.el).empty();
     this.collection.forEach(__bind(function(model) {
-      return $(this.el).append(this.makeView(model).render().el);
+      var view;
+      view = this.makeView(model);
+      $(this.el).append(view.el);
+      return view.render();
     }, this));
     return this.reTab();
   };

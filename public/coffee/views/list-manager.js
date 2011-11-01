@@ -52,10 +52,13 @@ Views.ListManager = (function() {
     return this.currentView === this.searchResultsList;
   };
   ListManager.prototype.render = function() {
-    $(this.el).append(this.searchBar.render().el);
-    $(this.el).append(this.searchResultsList.render().el);
-    $(this.el).append(this.currentAlbumsList.render().el);
-    $(this.el).append(this.archivedAlbumsList.render().el);
+    var v, _i, _len, _ref;
+    _ref = [this.searchBar, this.searchResultsList, this.currentAlbumsList, this.archivedAlbumsList];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      v = _ref[_i];
+      $(this.el).append(v.el);
+      v.render();
+    }
     this.currentAlbumsList.populate();
     this.archivedAlbumsList.populate();
     return this;

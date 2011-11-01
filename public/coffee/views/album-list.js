@@ -46,11 +46,13 @@ Views.SavedAlbumsList = (function() {
     return this.collection.bind("change", this.change);
   };
   SavedAlbumsList.prototype.add = function(album) {
+    var view;
     if ((album.view != null) && album.view.el.parentNode !== this.el) {
       album.removeView();
     }
-    this.makeView(album).render();
-    return $(this.el).insertAt(album.view.el, this.collection.indexOf(album));
+    view = this.makeView(album);
+    $(this.el).insertAt(album.view.el, this.collection.indexOf(album));
+    return view.render();
   };
   SavedAlbumsList.prototype.remove = function(album) {
     if ((album.view != null) && album.view.el.parentNode === this.el) {
@@ -112,7 +114,8 @@ Views.FriendsAlbumsList = (function() {
       userView.bind("back", __bind(function() {
         return this.trigger("back");
       }, this));
-      return $(this.el).prepend(userView.render().el);
+      $(this.el).prepend(userView.el);
+      return userView.render();
     }
   };
   return FriendsAlbumsList;

@@ -24,7 +24,9 @@ class Views.AppView extends Views.View
     @links.render()
     @header.render()
     @aboutPage.render()
-    @views.forEach (v) => @$(".views").append(v.render().el)
+    @views.forEach (v) =>
+      @$(".views").append(v.el)
+      v.render()
 
     _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint")
 

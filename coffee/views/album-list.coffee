@@ -25,8 +25,9 @@ class Views.SavedAlbumsList extends Views.AlbumList
 
   add: (album) ->
     album.removeView() if album.view? and album.view.el.parentNode != @el
-    @makeView(album).render()
+    view = @makeView(album)
     $(@el).insertAt(album.view.el, @collection.indexOf(album))
+    view.render()
 
   remove: (album) ->
     album.removeView() if album.view? and album.view.el.parentNode == @el
@@ -65,5 +66,6 @@ class Views.FriendsAlbumsList extends Views.AlbumList
     if @user?
       userView = new UI.FriendView({model: @user, highlightable: false, backButton: true})
       userView.bind "back", => @trigger("back")
-      $(@el).prepend(userView.render().el)
+      $(@el).prepend(userView.el)
+      userView.render()
 

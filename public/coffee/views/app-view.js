@@ -37,7 +37,8 @@ Views.AppView = (function() {
     this.header.render();
     this.aboutPage.render();
     this.views.forEach(__bind(function(v) {
-      return this.$(".views").append(v.render().el);
+      this.$(".views").append(v.el);
+      return v.render();
     }, this));
     _.bindAll(this, "navigate", "showAboutPage", "hideAboutPage", "startSync", "finishSync", "handleKeypress", "showHeader", "setHint");
     this.navigation.bind("navigate", this.navigate);

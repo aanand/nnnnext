@@ -114,13 +114,13 @@ class Touch.SavedAlbumView extends Views.SavedAlbumView
   initialize: (options) ->
     super(options)
     _.bindAll(this, "showRateControls")
-    $(@el).tappable(callback: (=> @toggleOpen()), touchDelay: TouchDelay)
 
   render: (options) ->
     super(options)
+    $(@el).tappable(callback: (=> @toggleOpen()), touchDelay: TouchDelay)
     rateButton = $("<div class='show-rate-controls'/>")
-    rateButton.tappable(@showRateControls)
     @$(".actions").prepend(rateButton)
+    rateButton.tappable(@showRateControls)
     this
 
   showRateControls: (e) ->
@@ -142,13 +142,14 @@ class Views.SearchAlbumView extends Views.AlbumView
     </div>
   ')
 
+class Desktop.SearchAlbumView extends Views.SearchAlbumView
   events:
     _.extend _.clone(Views.AlbumView.prototype.events),
       click: "select"
 
 class Touch.SearchAlbumView extends Views.SearchAlbumView
-  initialize: (options) ->
-    super(options)
+  render: ->
+    super()
 
     callback = =>
       $(@el).addClass('touched')
@@ -206,7 +207,7 @@ class Views.FriendsAlbumView extends Views.AlbumView
     @inMyListCheck()
 
 class Touch.FriendsAlbumView extends Views.FriendsAlbumView
-  initialize: (options) ->
+  render: (options) ->
     super(options)
     $(@el).tappable(callback: (=> @toggleOpen()), touchDelay: TouchDelay)
 

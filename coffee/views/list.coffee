@@ -8,7 +8,9 @@ class Views.List extends Views.View
     $(@el).empty()
 
     @collection.forEach (model) =>
-      $(@el).append(@makeView(model).render().el)
+      view = @makeView(model)
+      $(@el).append(view.el)
+      view.render()
 
     @reTab()
 

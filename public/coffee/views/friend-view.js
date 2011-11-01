@@ -30,23 +30,23 @@ Views.FriendView = (function() {
     "click .back": "back"
   };
   FriendView.prototype.initialize = function(options) {
-    var callback, _ref;
+    var _ref;
     this.list = options.list;
-    this.backButton = (_ref = options.backButton) != null ? _ref : false;
+    return this.backButton = (_ref = options.backButton) != null ? _ref : false;
+  };
+  FriendView.prototype.render = function() {
+    var callback, vars;
+    vars = this.model.toJSON();
+    vars.backButton = this.backButton;
+    $(this.el).html(this.template(vars));
     callback = __bind(function() {
       $(this.el).addClass('touched');
       return this.select();
     }, this);
-    return $(this.el).tappable({
+    $(this.el).tappable({
       callback: callback,
       touchDelay: TouchDelay
     });
-  };
-  FriendView.prototype.render = function() {
-    var vars;
-    vars = this.model.toJSON();
-    vars.backButton = this.backButton;
-    $(this.el).html(this.template(vars));
     return this;
   };
   FriendView.prototype.back = function() {
