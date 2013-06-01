@@ -5,7 +5,9 @@ task :console do
   system "bundle exec irb -I. -rnnnnext"
 end
 
-task :assets => :env do
+task :assets do
+  $LOAD_PATH << "."
+  require "nnnnext/support/assets"
   Nnnnext::Assets.generate_all
 end
 
@@ -15,6 +17,8 @@ task :env do
 end
 
 module MongoDumpTasks
+  extend Rake::DSL
+
   namespace :mongo do
     namespace :dump do
       desc "Download a dump of the remote MongoDB database to your machine"

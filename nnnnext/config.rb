@@ -1,4 +1,8 @@
 module Nnnnext
+  def self.root
+    @root ||= Pathname.new(File.expand_path('../../..', __FILE__))
+  end
+
   def self.env
     @env ||= Hash.new { |hsh, key| ENV[key] }.tap do |env|
       env_file = root + "config/env.yml"
@@ -44,15 +48,5 @@ module Nnnnext
       env["SESSION_SECRET"]
     end
   end
-
-  set :views, root + "views"
-
-  use OmniAuth::Strategies::Twitter,
-    omniauth[:consumer_key],
-    omniauth[:consumer_secret]
-
-  use Rack::Session::Cookie,
-    secret: session_secret,
-    expire_after: 60*60*24*30
-end  
+end
 

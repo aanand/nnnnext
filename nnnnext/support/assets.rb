@@ -1,3 +1,4 @@
+require "nnnnext/config"
 require "haml"
 
 module Nnnnext::Assets

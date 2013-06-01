@@ -1,16 +1,20 @@
-source :rubygems
+source 'https://rubygems.org'
 
 gem "rake"
-gem "camping", git: "git://github.com/camping/camping.git", ref: "separate-gemspecs"
+gem "camping", git: "git://github.com/camping/camping.git", ref: "381c3d0add9c63f00e4c340fdb48929af9929cd4"
 gem "tilt"
 gem "haml"
 gem "sass"
 gem "httparty"
 gem "omniauth"
+gem "omniauth-twitter"
 gem "mongoid", "2.0.0.rc.7"
 gem "bson_ext", "1.2.4"
 gem "newrelic_rpm"
 gem "hoptoad_notifier"
 gem "foreman"
 gem "capistrano"
-
+gem "nokogiri", "~> 1.5.4"
+gem "rack", "~> 1.2.2"
+gem "mongo", "~> 1.2.4"
+gem "bson", "~> 1.2.4"
